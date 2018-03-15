@@ -1,0 +1,25 @@
+Entities:
+ - Player : Drawable, Animatable, Positionable, Collidable, Alive, Movable
+ - Map Tile : Drawable, Animatable, Positionable, Collidable
+ - Heart : Drawable, Positionable, Collidable, Collectible
+ - Sword : Drawable, Positionable, Collidable, Collectible, Equipable
+ - Gold : Drawable, Positionable, Collidable, Collectible
+
+Components:
+ - Drawable : Texture
+ - Positionable : BigX, BigY, SmallX, SmallY
+ - Collidable : bool
+ - Movable : bool
+ 
+ for later:
+ - Animatable
+ - Killable
+ - Collectible
+ - Equipable
+ 
+Systems:
+ - Input
+ - Drawing
+ - Collision Detection
+ - Game Logic
+ - 
