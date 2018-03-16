@@ -22,32 +22,34 @@ namespace EfD2.Samples
 		{
 			foreach (Entity e in Compatible)
 			{
-				foreach (IComponent ic in e.Components.Where(_ => _.GetType() == typeof(Collidable)))
+				foreach (IComponent ic in e.Components.Where(_ => _.GetType() == typeof(Collidable) && ((Collidable)_).Colliding == true))
 				{
 					var col = ((Collidable)ic);
 
-					if (col.Colliding == true)
+					switch (col.Type)
 					{
-						switch (col.Type)
-						{
-							case EntityType.Player:
-								foreach (Entity oe in col.CollidingEntities)
+						case EntityType.Player:
+							foreach (Entity oe in col.CollidingEntities)
+							{
+								foreach (IComponent oic in oe.Components.Where(_ => _.GetType() == typeof(Collidable)))
 								{
-									foreach (IComponent oic in oe.Components.Where(_ => _.GetType() == typeof(Collidable)))
+									if (((Collidable)oic).Type == EntityType.Wall)
 									{
-										if (((Collidable)oic).Type == EntityType.Wall)
-										{
-											((Positionable)ic).CurrentPosition = ((Positionable)ic).PreviousPosition;
-											((Movable)ic).Direction = MoveDirection.None;
-											((Movable)ic).MoveSpeed = 0f;
-										}
+										var pos1 = e.GetComponent<Positionable>();
+										var mov1 = e.GetComponent<Movable>();
+										var col1 = e.GetComponent<Collidable>();
+
+										pos1.CurrentPosition = pos1.PreviousPosition;
+										mov1.Direction = MoveDirection.None;
+										//mov1.MoveSpeed = 0f;
+										col1.Colliding = false;
 									}
 								}
-								break;
+							}
+							break;
 
-							case EntityType.Wall:
-								break;
-						}
+						case EntityType.Wall:
+							break;
 					}
 				}
 			}

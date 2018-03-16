@@ -72,7 +72,7 @@ namespace EfD2.Samples
 
 			otherEntity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
 			otherEntity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
-			otherEntity += new Collidable() { Type = EntityType.Player };
+			otherEntity += new Collidable() { Type = EntityType.Wall };
 
 			/*
 			// Alternate way.
