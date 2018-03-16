@@ -12,7 +12,7 @@ using System.Collections.Generic;
 
 using IndependentResolutionRendering;
 
-namespace SharpECS.Samples
+namespace EfD2.Samples
 {
     internal class Game 
         : Microsoft.Xna.Framework.Game
@@ -30,10 +30,11 @@ namespace SharpECS.Samples
 
         DrawingSystem drawingSystem;
 		InputSystem inputSystem;
-
-		Texture2D playerTexture;
+		CollisionSystem collisionSystem;
+		PhysicsSystem physicsSystem;
 
         Entity playerEntity;
+		Entity otherEntity;
 
         public Game()
         {
@@ -53,17 +54,25 @@ namespace SharpECS.Samples
 		{
 			entityPool = EntityPool.New("EntityPool");
 
-			playerEntity = entityPool.CreateEntity("Player");
-
 			// Systems will refresh when new Entities have compatible components added to them.
 			drawingSystem = new DrawingSystem(entityPool);
 			inputSystem = new InputSystem(entityPool);
+			collisionSystem = new CollisionSystem(entityPool);
+			physicsSystem = new PhysicsSystem(entityPool);
+
+			playerEntity = entityPool.CreateEntity("Player");
+			otherEntity = entityPool.CreateEntity("Wall");
+
 
 			// One way of adding components.
-			playerEntity += new Positionable() { Position = new Vector2(10, 10) };
+			playerEntity += new Positionable() { CurrentPosition = new Vector2(10, 10) };
 			playerEntity += new Drawable() { Texture = Content.Load<Texture2D>("player0") };
 			playerEntity += new Movable() { MoveSpeed = 100 };
-			//playerEntity += new ControllerComponent() { MoveSpeed = 100 };
+			playerEntity += new Collidable() { Type = EntityType.Player };
+
+			otherEntity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
+			otherEntity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
+			otherEntity += new Collidable() { Type = EntityType.Player };
 
 			/*
 			// Alternate way.
@@ -91,8 +100,6 @@ namespace SharpECS.Samples
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-			playerTexture = Content.Load<Texture2D>("player0");
         }
 
         protected override void UnloadContent()
@@ -135,6 +142,8 @@ namespace SharpECS.Samples
 			*/
             
 			inputSystem?.Update(gameTime);
+			collisionSystem?.Update(gameTime);
+			physicsSystem?.Update(gameTime);
 
             previousMouse = mouse;
             previousKeyboard = keyboard;

@@ -14,18 +14,26 @@ namespace EfD2.Components
 	{
 		public Entity Owner { get; set; }
         
-        private Vector2 _position;
+		private Vector2 _currentPosition;
 
-        public Vector2 Position
+        public Vector2 CurrentPosition
         {
-            get { return _position; }
-            set { _position = value; }
+            get { return _currentPosition; }
+            set { _currentPosition = value; }
         }
+
+		private Vector2 _previouisPosition;
+
+		public Vector2 PreviousPosition
+		{
+			get { return _previouisPosition; }
+			set { _previouisPosition = value; }
+		}
 
         public Rectangle Rect { get; set; }
 
-        public void SetX(float newX) => _position.X = newX;
-        public void SetY(float newY) => _position.Y = newY;
+        public void SetX(float newX) =>_currentPosition.X = newX;
+        public void SetY(float newY) => _currentPosition.Y = newY;
 
         public Positionable()
         {

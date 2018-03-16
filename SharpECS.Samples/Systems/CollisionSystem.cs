@@ -9,36 +9,66 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpECS;
 using EfD2.Components;
 
-namespace SharpECS.Samples
+namespace EfD2.Samples
 {
 	internal class CollisionSystem
 		: EntitySystem
 	{
 		public CollisionSystem(EntityPool pool)
-	        : base(pool, typeof(Positionable), typeof(Collidable))
-	    { }
+			: base(pool, typeof(Positionable), typeof(Collidable), typeof(Drawable))
+		{ }
 
-		public void Draw(SpriteBatch spriteBatch)
-	    {
-			foreach(Entity in Compatible)
+		public void Update(GameTime gameTime)
+		{
+			bool collision = false;
+
+			foreach (Entity e in Compatible.Where(_ => _.State == EntityState.Active))
 			{
+				var pos1 = e.GetComponent<Positionable>();
+				var col1 = e.GetComponent<Collidable>();
+				var draw1 = e.GetComponent<Drawable>();
+
+				pos1.Rect = new Rectangle((int)pos1.CurrentPosition.X, (int)pos1.CurrentPosition.Y, draw1.Texture.Width, draw1.Texture.Height);
+
+				foreach (Entity o in Compatible.Where(_ => _.State == EntityState.Active && !_.Equals(e)))
+				{
+					var pos2 = o.GetComponent<Positionable>();
+					var col2 = o.GetComponent<Collidable>();
+					var draw2 = o.GetComponent<Drawable>();
+
+					pos2.Rect = new Rectangle((int)pos2.CurrentPosition.X, (int)pos2.CurrentPosition.Y, draw2.Texture.Width, draw2.Texture.Height);
+
+					if (pos1.Rect.Intersects(pos2.Rect))
+					{
+						col1.Colliding = true;
+						col2.Colliding = true;
+
+						if(!col1.CollidingEntities.Contains(o))
+							col1.CollidingEntities.Add(o);
+
+						if (!col2.CollidingEntities.Contains(e))
+							col2.CollidingEntities.Add(e);
+
+						collision = true;
+					}
+				}
 			}
 
-			for (int i = 0; i < Compatible.Count; i++)
-	        {
-	            var position = Compatible[i].GetComponent<Positionable>();
-	            var drawable = Compatible[i].GetComponent<Drawable>();
+			if (collision == true)
+			{
+				foreach (Entity e in Compatible)
+				{
+					foreach(IComponent ic in e.Components.Where(_ => _.GetType() == typeof(Collidable)))
+					{
+						Console.WriteLine("Colliding = " + ((Collidable)ic).Type);
 
-	            position.Rect = new Rectangle((int)position.Position.X, (int)position.Position.Y, drawable.Texture.Width, drawable.Texture.Height);
-
-	            if (Compatible[i].State == EntityState.Active)
-	            {
-	                var texture = drawable.Texture;
-	                var pos = position.Position;
-
-					spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-	            }
-	        }
+						foreach(Entity c in ((Collidable)ic).CollidingEntities)
+						{
+							Console.WriteLine("  Entity = " + c.Id);
+						}
+					}
+				}
+			}
 		}
 	}
 }

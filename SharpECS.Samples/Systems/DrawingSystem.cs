@@ -25,12 +25,12 @@ namespace EfD2.Systems
                 var position = Compatible[i].GetComponent<Positionable>();
                 var drawable = Compatible[i].GetComponent<Drawable>();
 
-                position.Rect = new Rectangle((int)position.Position.X, (int)position.Position.Y, drawable.Texture.Width, drawable.Texture.Height);
+                position.Rect = new Rectangle((int)position.CurrentPosition.X, (int)position.CurrentPosition.Y, drawable.Texture.Width, drawable.Texture.Height);
 
                 if (Compatible[i].State == EntityState.Active)
                 {
                     var texture = drawable.Texture;
-                    var pos = position.Position;
+                    var pos = position.CurrentPosition;
 
 					spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
                 }

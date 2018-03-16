@@ -26,12 +26,33 @@ namespace EfD2.Systems
                 if (Compatible[i].State == EntityState.Active)
                 {
                     var position = Compatible[i].GetComponent<Positionable>();
-                    var moveSpeed = Compatible[i].GetComponent<Movable>().MoveSpeed;
+					var move = Compatible[i].GetComponent<Movable>();
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.D)) { position.SetX(position.Position.X + moveSpeed * delta); }
-                    if (Keyboard.GetState().IsKeyDown(Keys.A)) { position.SetX(position.Position.X - moveSpeed * delta); }
-                    if (Keyboard.GetState().IsKeyDown(Keys.W)) { position.SetY(position.Position.Y - moveSpeed * delta); }
-                    if (Keyboard.GetState().IsKeyDown(Keys.S)) { position.SetY(position.Position.Y + moveSpeed * delta); }
+					position.PreviousPosition = position.CurrentPosition;
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.D)) 
+					{
+						position.SetX(position.CurrentPosition.X + move.MoveSpeed * delta);
+						move.Direction = MoveDirection.Right;
+					}
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.A)) 
+					{ 
+						position.SetX(position.CurrentPosition.X - move.MoveSpeed * delta);
+						move.Direction = MoveDirection.Left;
+					}
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.W)) 
+					{ 
+						position.SetY(position.CurrentPosition.Y - move.MoveSpeed * delta); 
+						move.Direction = MoveDirection.Up;
+					}
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.S)) 
+					{ 
+						position.SetY(position.CurrentPosition.Y + move.MoveSpeed * delta); 
+						move.Direction = MoveDirection.Down;
+					}
                 }
             }
         }

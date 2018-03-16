@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SharpECS.Samples
+namespace EfD2.Samples
 {
 #if WINDOWS || LINUX
     /// <summary>
