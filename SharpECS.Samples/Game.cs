@@ -34,7 +34,8 @@ namespace EfD2.Samples
 		PhysicsSystem physicsSystem;
 
         Entity playerEntity;
-		Entity otherEntity;
+		Entity wall1Entity;
+		Entity wall2Entity;
 
         public Game()
         {
@@ -61,7 +62,8 @@ namespace EfD2.Samples
 			physicsSystem = new PhysicsSystem(entityPool);
 
 			playerEntity = entityPool.CreateEntity("Player");
-			otherEntity = entityPool.CreateEntity("Wall");
+			wall1Entity = entityPool.CreateEntity("Wall1");
+			wall2Entity = entityPool.CreateEntity("Wall2");
 
 
 			// One way of adding components.
@@ -70,9 +72,13 @@ namespace EfD2.Samples
 			playerEntity += new Movable() { MoveSpeed = 100 };
 			playerEntity += new Collidable() { Type = EntityType.Player };
 
-			otherEntity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
-			otherEntity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
-			otherEntity += new Collidable() { Type = EntityType.Wall };
+			wall1Entity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
+			wall1Entity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
+			wall1Entity += new Collidable() { Type = EntityType.Wall };
+
+			wall2Entity += new Positionable() { CurrentPosition = new Vector2(100, 60) };
+			wall2Entity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
+			wall2Entity += new Collidable() { Type = EntityType.Wall };
 
 			/*
 			// Alternate way.
@@ -112,7 +118,8 @@ namespace EfD2.Samples
             keyboard = Keyboard.GetState();
             mouse = Mouse.GetState();
 
-            if (keyboard.IsKeyDown(Keys.Escape)) Exit();
+            if (keyboard.IsKeyDown(Keys.Escape)) 
+				Exit();
 
 			/*
             if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released
@@ -155,7 +162,7 @@ namespace EfD2.Samples
         {
 			Resolution.BeginDraw();
 
-            graphics.GraphicsDevice.Clear(Color.CornflowerBlue);
+            graphics.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
             	drawingSystem?.Draw(spriteBatch);

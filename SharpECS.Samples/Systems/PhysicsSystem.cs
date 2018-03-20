@@ -41,7 +41,6 @@ namespace EfD2.Samples
 
 										pos1.CurrentPosition = pos1.PreviousPosition;
 										mov1.Direction = MoveDirection.None;
-										//mov1.MoveSpeed = 0f;
 										col1.Colliding = false;
 									}
 								}

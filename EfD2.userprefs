@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{12C1AF6D-3B23-4F8F-8228-7852EE90E7EA}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SharpECS/Source/Entity.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SharpECS.Samples/Systems/PhysicsSystem.cs">
     <Files>
-      <File FileName="SharpECS.Samples/Game.cs" Line="64" Column="50" />
-      <File FileName="SharpECS.Samples/Systems/PhysicsSystem.cs" Line="40" Column="56" />
+      <File FileName="SharpECS.Samples/Game.cs" Line="122" Column="5" />
+      <File FileName="SharpECS.Samples/Systems/PhysicsSystem.cs" Line="43" Column="47" />
       <File FileName="SharpECS.Samples/Systems/CollisionSystem.cs" Line="27" Column="5" />
       <File FileName="SharpECS.Samples/Globals.cs" Line="14" Column="27" />
       <File FileName="SharpECS.Samples/Components/Collidable.cs" Line="1" Column="1" />
