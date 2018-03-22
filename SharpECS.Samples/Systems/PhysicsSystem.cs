@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpECS;
 using EfD2.Components;
 
-namespace EfD2.Samples
+namespace EfD2.Systems
 {
 	internal class PhysicsSystem
 		: EntitySystem
@@ -40,7 +40,9 @@ namespace EfD2.Samples
 										var col1 = e.GetComponent<Collidable>();
 
 										pos1.CurrentPosition = pos1.PreviousPosition;
-										mov1.Direction = MoveDirection.None;
+										mov1.CurrentDirection = MoveDirection.None;
+										mov1.PreviousDirection = MoveDirection.None;
+										mov1.Acceleration = 0;
 										col1.Colliding = false;
 									}
 								}

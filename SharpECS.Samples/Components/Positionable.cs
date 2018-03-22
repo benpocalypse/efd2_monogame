@@ -30,14 +30,14 @@ namespace EfD2.Components
 			set { _previouisPosition = value; }
 		}
 
-        public Rectangle Rect { get; set; }
+        public RectangleF Rect { get; set; }
 
         public void SetX(float newX) =>_currentPosition.X = newX;
         public void SetY(float newY) => _currentPosition.Y = newY;
 
         public Positionable()
         {
-            Rect = new Rectangle();
+            Rect = new RectangleF();
         }
 	}
 }

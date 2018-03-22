@@ -32,6 +32,7 @@ namespace EfD2.Samples
 		InputSystem inputSystem;
 		CollisionSystem collisionSystem;
 		PhysicsSystem physicsSystem;
+		AnimationSystem animationSystem;
 
         Entity playerEntity;
 		Entity wall1Entity;
@@ -60,6 +61,7 @@ namespace EfD2.Samples
 			inputSystem = new InputSystem(entityPool);
 			collisionSystem = new CollisionSystem(entityPool);
 			physicsSystem = new PhysicsSystem(entityPool);
+			animationSystem = new AnimationSystem(entityPool);
 
 			playerEntity = entityPool.CreateEntity("Player");
 			wall1Entity = entityPool.CreateEntity("Wall1");
@@ -68,17 +70,54 @@ namespace EfD2.Samples
 
 			// One way of adding components.
 			playerEntity += new Positionable() { CurrentPosition = new Vector2(10, 10) };
-			playerEntity += new Drawable() { Texture = Content.Load<Texture2D>("player0") };
-			playerEntity += new Movable() { MoveSpeed = 100 };
+			//playerEntity += new Drawable() { Texture = Content.Load<Texture2D>("player0") };
+			playerEntity += new Movable() { MoveSpeed = 75 };
 			playerEntity += new Collidable() { Type = EntityType.Player };
 
+
+			List<Texture2D> tl = new List<Texture2D>();
+			tl.Add(Content.Load<Texture2D>("player0"));
+
+			Animation anim1 = new Animation();
+			anim1.Type = AnimationType.Idle;
+			anim1.FrameList = tl;
+
+			tl = new List<Texture2D>();
+			tl.Add(Content.Load<Texture2D>("player0"));
+			tl.Add(Content.Load<Texture2D>("player1"));
+			tl.Add(Content.Load<Texture2D>("player0"));
+			tl.Add(Content.Load<Texture2D>("player2"));
+
+			Animation anim2 = new Animation();
+			anim2.Type = AnimationType.Running;
+			anim2.FrameList = tl;
+
+			playerEntity += new Drawable();
+			var pAnim = playerEntity.GetComponent<Drawable>();
+			pAnim.AddAnimation(anim1);
+			pAnim.AddAnimation(anim2);
+
+
+			tl = new List<Texture2D>();
+			tl.Add(Content.Load<Texture2D>("wall1_1"));
+
+			anim1 = new Animation();
+			anim1.Type = AnimationType.None;
+			anim1.FrameList = tl;
+
 			wall1Entity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
-			wall1Entity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
+			wall1Entity += new Drawable();
 			wall1Entity += new Collidable() { Type = EntityType.Wall };
 
+			var wAnim = wall1Entity.GetComponent<Drawable>();
+			wAnim.AddAnimation(anim1);
+
 			wall2Entity += new Positionable() { CurrentPosition = new Vector2(100, 60) };
-			wall2Entity += new Drawable() { Texture = Content.Load<Texture2D>("wall1_1") };
+			wall2Entity += new Drawable();
 			wall2Entity += new Collidable() { Type = EntityType.Wall };
+
+			wAnim = wall2Entity.GetComponent<Drawable>();
+			wAnim.AddAnimation(anim1);
 
 			/*
 			// Alternate way.
@@ -166,6 +205,7 @@ namespace EfD2.Samples
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
             	drawingSystem?.Draw(spriteBatch);
+				animationSystem?.Animate(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

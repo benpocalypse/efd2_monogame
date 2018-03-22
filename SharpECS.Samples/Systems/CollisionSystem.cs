@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using SharpECS;
 using EfD2.Components;
 
-namespace EfD2.Samples
+namespace EfD2.Systems
 {
 	internal class CollisionSystem
 		: EntitySystem
@@ -20,23 +20,21 @@ namespace EfD2.Samples
 
 		public void Update(GameTime gameTime)
 		{
-			bool collision = false;
-
 			foreach (Entity e in Compatible.Where(_ => _.State == EntityState.Active))
 			{
 				var pos1 = e.GetComponent<Positionable>();
 				var col1 = e.GetComponent<Collidable>();
-				var draw1 = e.GetComponent<Drawable>();
+				Drawable draw1 = e.GetComponent<Drawable>();
 
-				pos1.Rect = new Rectangle((int)pos1.CurrentPosition.X, (int)pos1.CurrentPosition.Y, draw1.Texture.Width, draw1.Texture.Height);
+				pos1.Rect = new RectangleF(pos1.CurrentPosition.X, pos1.CurrentPosition.Y, draw1.AnimationList[0].FrameList[0].Width, draw1.AnimationList[0].FrameList[0].Height);
 
 				foreach (Entity o in Compatible.Where(_ => _.State == EntityState.Active && !_.Equals(e)))
 				{
 					var pos2 = o.GetComponent<Positionable>();
 					var col2 = o.GetComponent<Collidable>();
-					var draw2 = o.GetComponent<Drawable>();
+					Drawable draw2 = o.GetComponent<Drawable>();
 
-					pos2.Rect = new Rectangle((int)pos2.CurrentPosition.X, (int)pos2.CurrentPosition.Y, draw2.Texture.Width, draw2.Texture.Height);
+					pos2.Rect = new RectangleF(pos2.CurrentPosition.X, pos2.CurrentPosition.Y, draw2.AnimationList[0].FrameList[0].Width, draw2.AnimationList[0].FrameList[0].Height);
 
 					if (pos1.Rect.Intersects(pos2.Rect))
 					{
@@ -48,24 +46,6 @@ namespace EfD2.Samples
 
 						if (!col2.CollidingEntities.Contains(e))
 							col2.CollidingEntities.Add(e);
-
-						collision = true;
-					}
-				}
-			}
-
-			if (collision == true)
-			{
-				foreach (Entity e in Compatible)
-				{
-					foreach(IComponent ic in e.Components.Where(_ => _.GetType() == typeof(Collidable)))
-					{
-						Console.WriteLine("Colliding = " + ((Collidable)ic).Type);
-
-						foreach(Entity c in ((Collidable)ic).CollidingEntities)
-						{
-							Console.WriteLine("  Entity = " + c.Id);
-						}
 					}
 				}
 			}
