@@ -28,11 +28,10 @@ namespace EfD2.Samples
 
         EntityPool entityPool;
 
-        DrawingSystem drawingSystem;
 		InputSystem inputSystem;
 		CollisionSystem collisionSystem;
 		PhysicsSystem physicsSystem;
-		AnimationSystem animationSystem;
+		DrawingSystem drawingSystem;
 
         Entity playerEntity;
 		Entity wall1Entity;
@@ -61,7 +60,7 @@ namespace EfD2.Samples
 			inputSystem = new InputSystem(entityPool);
 			collisionSystem = new CollisionSystem(entityPool);
 			physicsSystem = new PhysicsSystem(entityPool);
-			animationSystem = new AnimationSystem(entityPool);
+			drawingSystem = new DrawingSystem(entityPool);
 
 			playerEntity = entityPool.CreateEntity("Player");
 			wall1Entity = entityPool.CreateEntity("Wall1");
@@ -204,8 +203,7 @@ namespace EfD2.Samples
             graphics.GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
-            	drawingSystem?.Draw(spriteBatch);
-				animationSystem?.Animate(spriteBatch, gameTime);
+				drawingSystem?.Animate(spriteBatch, gameTime);
             spriteBatch.End();
 
             base.Draw(gameTime);

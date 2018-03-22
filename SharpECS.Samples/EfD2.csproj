@@ -52,14 +52,13 @@
     <Compile Include="Components\Positionable.cs" />
     <Compile Include="Components\Collidable.cs" />
     <Compile Include="Components\Movable.cs" />
-    <Compile Include="Systems\DrawingSystem.cs" />
     <Compile Include="Systems\InputSystem.cs" />
     <Compile Include="Resolution.cs" />
     <Compile Include="Systems\CollisionSystem.cs" />
     <Compile Include="Systems\PhysicsSystem.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Components\Animatable.cs" />
     <Compile Include="Systems\AnimationSystem.cs" />
+    <Compile Include="Components\Drawable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
