@@ -57,8 +57,8 @@
     <Compile Include="Systems\CollisionSystem.cs" />
     <Compile Include="Systems\PhysicsSystem.cs" />
     <Compile Include="Globals.cs" />
-    <Compile Include="Systems\AnimationSystem.cs" />
     <Compile Include="Components\Drawable.cs" />
+    <Compile Include="Systems\DrawingSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

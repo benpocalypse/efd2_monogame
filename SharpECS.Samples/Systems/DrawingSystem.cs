@@ -11,10 +11,10 @@ using EfD2.Components;
 
 namespace EfD2.Systems
 {
-	internal class AnimationSystem 
+	internal class DrawingSystem 
 		: EntitySystem
 	{
-		public AnimationSystem(EntityPool pool)
+		public DrawingSystem(EntityPool pool)
 			: base(pool, typeof(Positionable), typeof(Drawable))
 		{ }
 
