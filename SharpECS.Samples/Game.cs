@@ -82,7 +82,12 @@ namespace EfD2.Samples
 
 		private void CreateRoom()
 		{
-			var wallAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
+			var wall1Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
+			var wall2Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_2"));
+			var wall3Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_3"));
+			var wall4Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_4"));
+			var wall5Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_5"));
+			var wall6Anim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_6"));
 			var floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_2"));
 
 			for(int i = 0; i < 10; i++)
@@ -111,45 +116,86 @@ namespace EfD2.Samples
 				switch(i)
 				{
 					case 0:
+						wall0 += new Positionable() { CurrentPosition = new Vector2(20 + 0, 20 + (i * 8)) };
+						wall0 += new Drawable(wall5Anim);
+						wall0 += new Collidable() { Type = EntityType.Wall };
+
+						wall1 += new Positionable() { CurrentPosition = new Vector2(20 + 8, 20 + (i * 8)) };
+						wall1 += new Drawable(wall1Anim);
+						wall1 += new Collidable() { Type = EntityType.Wall };
+
+						wall2 += new Positionable() { CurrentPosition = new Vector2(20 + 16, 20 + (i * 8)) };
+						wall2 += new Drawable(wall1Anim);
+						wall2 += new Collidable() { Type = EntityType.Wall };
+
+						wall3 += new Positionable() { CurrentPosition = new Vector2(20 + 24, 20 + (i * 8)) };
+						wall3 += new Drawable(wall1Anim);
+						wall3 += new Collidable() { Type = EntityType.Wall };
+
+						wall4 += new Positionable() { CurrentPosition = new Vector2(20 + 32, 20 + (i * 8)) };
+						wall4 += new Drawable(wall1Anim);
+						wall4 += new Collidable() { Type = EntityType.Wall };
+
+						wall5 += new Positionable() { CurrentPosition = new Vector2(20 + 40, 20 + (i * 8)) };
+						wall5 += new Drawable(wall1Anim);
+						wall5 += new Collidable() { Type = EntityType.Wall };
+
+						wall6 += new Positionable() { CurrentPosition = new Vector2(20 + 48, 20 + (i * 8)) };
+						wall6 += new Drawable(wall1Anim);
+						wall6 += new Collidable() { Type = EntityType.Wall };
+
+						wall7 += new Positionable() { CurrentPosition = new Vector2(20 + 56, 20 + (i * 8)) };
+						wall7 += new Drawable(wall1Anim);
+						wall7 += new Collidable() { Type = EntityType.Wall };
+
+						wall8 += new Positionable() { CurrentPosition = new Vector2(20 + 64, 20 + (i * 8)) };
+						wall8 += new Drawable(wall1Anim);
+						wall8 += new Collidable() { Type = EntityType.Wall };
+
+						wall9 += new Positionable() { CurrentPosition = new Vector2(20 + 72, 20 + (i * 8)) };
+						wall9 += new Drawable(wall6Anim);
+						wall9 += new Collidable() { Type = EntityType.Wall };
+						break;
+						
 					case 9:
 						wall0 += new Positionable() { CurrentPosition = new Vector2(20+0, 20+(i*8)) };
-						wall0 += new Drawable(wallAnim);
+						wall0 += new Drawable(wall4Anim);
 						wall0 += new Collidable() { Type = EntityType.Wall };
 
 						wall1 += new Positionable() { CurrentPosition = new Vector2(20+8, 20+(i*8)) };
-						wall1 += new Drawable(wallAnim);
+						wall1 += new Drawable(wall1Anim);
 						wall1 += new Collidable() { Type = EntityType.Wall };
 
 						wall2 += new Positionable() { CurrentPosition = new Vector2(20+16, 20+(i*8)) };
-						wall2 += new Drawable(wallAnim);
+						wall2 += new Drawable(wall1Anim);
 						wall2 += new Collidable() { Type = EntityType.Wall };
 
 						wall3 += new Positionable() { CurrentPosition = new Vector2(20+24, 20+(i*8)) };
-						wall3 += new Drawable(wallAnim);
+						wall3 += new Drawable(wall1Anim);
 						wall3 += new Collidable() { Type = EntityType.Wall };
 
 						wall4 += new Positionable() { CurrentPosition = new Vector2(20+32, 20+(i*8)) };
-						wall4 += new Drawable(wallAnim);
+						wall4 += new Drawable(wall1Anim);
 						wall4 += new Collidable() { Type = EntityType.Wall };
 
 						wall5 += new Positionable() { CurrentPosition = new Vector2(20+40, 20+(i*8)) };
-						wall5 += new Drawable(wallAnim);
+						wall5 += new Drawable(wall1Anim);
 						wall5 += new Collidable() { Type = EntityType.Wall };
 
 						wall6 += new Positionable() { CurrentPosition = new Vector2(20+48, 20+(i*8)) };
-						wall6 += new Drawable(wallAnim);
+						wall6 += new Drawable(wall1Anim);
 						wall6 += new Collidable() { Type = EntityType.Wall };
 
 						wall7 += new Positionable() { CurrentPosition = new Vector2(20+56, 20+(i*8)) };
-						wall7 += new Drawable(wallAnim);
+						wall7 += new Drawable(wall1Anim);
 						wall7 += new Collidable() { Type = EntityType.Wall };
 
 						wall8 += new Positionable() { CurrentPosition = new Vector2(20+64, 20+(i*8)) };
-						wall8 += new Drawable(wallAnim);
+						wall8 += new Drawable(wall1Anim);
 						wall8 += new Collidable() { Type = EntityType.Wall };
 
 						wall9 += new Positionable() { CurrentPosition = new Vector2(20+72, 20+(i*8)) };
-						wall9 += new Drawable(wallAnim);
+						wall9 += new Drawable(wall3Anim);
 						wall9 += new Collidable() { Type = EntityType.Wall };
 						break;
 
@@ -162,7 +208,7 @@ namespace EfD2.Samples
 					case 7:
 					case 8:
 						wall0 += new Positionable() { CurrentPosition = new Vector2(20+0, 20+(i*8)) };
-						wall0 += new Drawable(wallAnim);
+						wall0 += new Drawable(wall2Anim);
 						wall0 += new Collidable() { Type = EntityType.Wall };
 
 						floor0 += new Positionable() { CurrentPosition = new Vector2(20+8, 20+(i*8)) };
@@ -190,7 +236,7 @@ namespace EfD2.Samples
 						floor7 += new Drawable(floorAnim);
 
 						wall1 += new Positionable() { CurrentPosition = new Vector2(20+72, 20+(i*8)) };
-						wall1 += new Drawable(wallAnim);
+						wall1 += new Drawable(wall2Anim);
 						wall1 += new Collidable() { Type = EntityType.Wall };
 						break;
 				}

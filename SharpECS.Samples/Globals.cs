@@ -64,7 +64,8 @@ namespace EfD2
 	{
 		public static Globals Instance { get; private set; }
 
-		//private APIClass _APIClass; 
+		public const float Acceleration = 0.05f;
+		public const float Decceleration = 0.1f;
 
 		private Globals()
 		{

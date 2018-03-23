@@ -47,88 +47,12 @@ namespace EfD2.Systems
 						{
 							var texture = a.FrameList[a.CurrentFrame];
 							var pos = position.CurrentPosition;
+
 							if(animatable.FlipOnXAxis == false)
 								spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, position.ZOrder);
 							else
 								spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.FlipHorizontally, position.ZOrder);
 						}
-
-						/*
-						switch (a.Type)
-						{
-							case AnimationType.None:
-								if (frameCounter >= a.FrameSpeed)
-								{
-									frameCounter = 0;
-									a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
-								}
-
-								position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
-
-								if (Compatible[i].State == EntityState.Active)
-								{
-									var texture = a.FrameList[a.CurrentFrame];
-									var pos = position.CurrentPosition;
-
-									spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-								}
-								break;
-
-							case AnimationType.Idle:
-								if (frameCounter >= a.FrameSpeed)
-								{
-									frameCounter = 0;
-									a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
-								}
-
-								position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
-
-								if (Compatible[i].State == EntityState.Active)
-								{
-									var texture = a.FrameList[a.CurrentFrame];
-									var pos = position.CurrentPosition;
-
-									spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-								}
-								break;
-
-							case AnimationType.Running:
-								if (frameCounter >= a.FrameSpeed)
-								{
-									frameCounter = 0;
-									a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
-								}
-
-								position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
-
-								if (Compatible[i].State == EntityState.Active)
-								{
-									var texture = a.FrameList[a.CurrentFrame];
-									var pos = position.CurrentPosition;
-
-									spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-								}
-								break;
-
-							case AnimationType.Attacking:
-								if (frameCounter >= a.FrameSpeed)
-								{
-									frameCounter = 0;
-									a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
-								}
-
-								position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
-
-								if (Compatible[i].State == EntityState.Active)
-								{
-									var texture = a.FrameList[a.CurrentFrame];
-									var pos = position.CurrentPosition;
-
-									spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, 0f);
-								}
-								break;
-						}
-						*/
 					}
 				}
             }

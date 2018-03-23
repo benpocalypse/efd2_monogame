@@ -65,7 +65,7 @@ namespace EfD2.Systems
 						if (move.CurrentDirection == move.PreviousDirection)
 						{
 							if (move.Acceleration < move.MaxAcceleration)
-								move.Acceleration += 0.1f;
+								move.Acceleration += Globals.Acceleration;
 						}
 						else
 						{
@@ -94,7 +94,7 @@ namespace EfD2.Systems
 					else
 					{
 						if (move.Acceleration > 0.0f)
-							move.Acceleration -= 0.2f;
+							move.Acceleration -= Globals.Decceleration;
 
 						if (move.Acceleration <= 0.0f)
 						{
