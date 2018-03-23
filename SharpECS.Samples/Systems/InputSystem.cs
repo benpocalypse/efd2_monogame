@@ -14,7 +14,7 @@ namespace EfD2.Systems
 		: EntitySystem
 	{
 		public InputSystem(EntityPool pool)
-			: base(pool, typeof(Positionable), typeof(Movable))
+			: base(pool, typeof(Positionable), typeof(Movable), typeof(Drawable))
         { }
 
         public void Update(GameTime gameTime)
@@ -27,6 +27,7 @@ namespace EfD2.Systems
                 {
                     var position = Compatible[i].GetComponent<Positionable>();
 					var move = Compatible[i].GetComponent<Movable>();
+					var draw = Compatible[i].GetComponent<Drawable>();
 					bool Moving = false;
 
 					position.PreviousPosition = position.CurrentPosition;
@@ -35,12 +36,14 @@ namespace EfD2.Systems
                     if (Keyboard.GetState().IsKeyDown(Keys.D)) 
 					{
 						move.CurrentDirection = MoveDirection.Right;
+						draw.FlipOnXAxis = false;
 						Moving = true;
 					}
 
                     if (Keyboard.GetState().IsKeyDown(Keys.A)) 
 					{ 
 						move.CurrentDirection = MoveDirection.Left;
+						draw.FlipOnXAxis = true;
 						Moving = true;
 					}
 

@@ -34,8 +34,6 @@ namespace EfD2.Samples
 		DrawingSystem drawingSystem;
 
         Entity playerEntity;
-		Entity wall1Entity;
-		Entity wall2Entity;
 
         public Game()
         {
@@ -44,10 +42,10 @@ namespace EfD2.Samples
             Content.RootDirectory = "Content";
 
 			Resolution.SetVirtualResolution(256, 224);
-			Resolution.SetResolution(1280, 800, false);
+			Resolution.SetResolution(256*3, 224*3, false);
 
             IsMouseVisible = true;
-            graphics.SynchronizeWithVerticalRetrace = false;
+            graphics.SynchronizeWithVerticalRetrace = true;
             IsFixedTimeStep = false;
         }
 
@@ -63,81 +61,140 @@ namespace EfD2.Samples
 			drawingSystem = new DrawingSystem(entityPool);
 
 			playerEntity = entityPool.CreateEntity("Player");
-			wall1Entity = entityPool.CreateEntity("Wall1");
-			wall2Entity = entityPool.CreateEntity("Wall2");
-
 
 			// One way of adding components.
-			playerEntity += new Positionable() { CurrentPosition = new Vector2(10, 10) };
-			//playerEntity += new Drawable() { Texture = Content.Load<Texture2D>("player0") };
+			playerEntity += new Positionable() { CurrentPosition = new Vector2(50, 50), ZOrder = 1.0f };
 			playerEntity += new Movable() { MoveSpeed = 75 };
 			playerEntity += new Collidable() { Type = EntityType.Player };
 
+			playerEntity += new Drawable(new Animation(AnimationType.Idle, 
+			                                           Content.Load<Texture2D>("player0")),
+										 new Animation(AnimationType.Running, 
+			                                           Content.Load<Texture2D>("player0"),
+			                                           Content.Load<Texture2D>("player1"),
+			                                           Content.Load<Texture2D>("player0"),
+			                                           Content.Load<Texture2D>("player2")));
 
-			List<Texture2D> tl = new List<Texture2D>();
-			tl.Add(Content.Load<Texture2D>("player0"));
-
-			Animation anim1 = new Animation();
-			anim1.Type = AnimationType.Idle;
-			anim1.FrameList = tl;
-
-			tl = new List<Texture2D>();
-			tl.Add(Content.Load<Texture2D>("player0"));
-			tl.Add(Content.Load<Texture2D>("player1"));
-			tl.Add(Content.Load<Texture2D>("player0"));
-			tl.Add(Content.Load<Texture2D>("player2"));
-
-			Animation anim2 = new Animation();
-			anim2.Type = AnimationType.Running;
-			anim2.FrameList = tl;
-
-			playerEntity += new Drawable();
-			var pAnim = playerEntity.GetComponent<Drawable>();
-			pAnim.AddAnimation(anim1);
-			pAnim.AddAnimation(anim2);
-
-
-			tl = new List<Texture2D>();
-			tl.Add(Content.Load<Texture2D>("wall1_1"));
-
-			anim1 = new Animation();
-			anim1.Type = AnimationType.None;
-			anim1.FrameList = tl;
-
-			wall1Entity += new Positionable() { CurrentPosition = new Vector2(60, 60) };
-			wall1Entity += new Drawable();
-			wall1Entity += new Collidable() { Type = EntityType.Wall };
-
-			var wAnim = wall1Entity.GetComponent<Drawable>();
-			wAnim.AddAnimation(anim1);
-
-			wall2Entity += new Positionable() { CurrentPosition = new Vector2(100, 60) };
-			wall2Entity += new Drawable();
-			wall2Entity += new Collidable() { Type = EntityType.Wall };
-
-			wAnim = wall2Entity.GetComponent<Drawable>();
-			wAnim.AddAnimation(anim1);
-
-			/*
-			// Alternate way.
-			hostileEntity.AddComponents
-			(
-				new GraphicsComponent() { Texture = Content.Load<Texture2D>("Sprite2") },
-				new TransformComponent() { Position = new Vector2(350, 200) }
-			);
-			*/
-
-			/*
-			var newEntity = entityPool.CreateEntity("NewEntity");
-			newEntity.AddComponents(new TransformComponent(), new GraphicsComponent());
-
-			newEntity.GetComponent<TransformComponent>().Position = new Vector2(50, 50);
-			newEntity.GetComponent<GraphicsComponent>().Texture = Content.Load<Texture2D>("player0");
-			*/
-
-
+			CreateRoom();
 
 			base.Initialize();
+		}
+
+		private void CreateRoom()
+		{
+			var wallAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
+			var floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_2"));
+
+			for(int i = 0; i < 10; i++)
+			{
+				Entity wall0 = entityPool.CreateEntity("Wall0" + i);
+				Entity wall1 = entityPool.CreateEntity("Wall1" + i);
+				Entity wall2 = entityPool.CreateEntity("Wall2" + i);
+				Entity wall3 = entityPool.CreateEntity("Wall3" + i);
+				Entity wall4 = entityPool.CreateEntity("Wall4" + i);
+				Entity wall5 = entityPool.CreateEntity("Wall5" + i);
+				Entity wall6 = entityPool.CreateEntity("Wall6" + i);
+				Entity wall7 = entityPool.CreateEntity("Wall7" + i);
+				Entity wall8 = entityPool.CreateEntity("Wall8" + i);
+				Entity wall9 = entityPool.CreateEntity("Wall9" + i);
+
+				Entity floor0 = entityPool.CreateEntity("Floor0" + i);
+				Entity floor1 = entityPool.CreateEntity("Floor1" + i);
+				Entity floor2 = entityPool.CreateEntity("Floor2" + i);
+				Entity floor3 = entityPool.CreateEntity("Floor3" + i);
+				Entity floor4 = entityPool.CreateEntity("Floor4" + i);
+				Entity floor5 = entityPool.CreateEntity("Floor5" + i);
+				Entity floor6 = entityPool.CreateEntity("Floor6" + i);
+				Entity floor7 = entityPool.CreateEntity("Floor7" + i);
+
+
+				switch(i)
+				{
+					case 0:
+					case 9:
+						wall0 += new Positionable() { CurrentPosition = new Vector2(20+0, 20+(i*8)) };
+						wall0 += new Drawable(wallAnim);
+						wall0 += new Collidable() { Type = EntityType.Wall };
+
+						wall1 += new Positionable() { CurrentPosition = new Vector2(20+8, 20+(i*8)) };
+						wall1 += new Drawable(wallAnim);
+						wall1 += new Collidable() { Type = EntityType.Wall };
+
+						wall2 += new Positionable() { CurrentPosition = new Vector2(20+16, 20+(i*8)) };
+						wall2 += new Drawable(wallAnim);
+						wall2 += new Collidable() { Type = EntityType.Wall };
+
+						wall3 += new Positionable() { CurrentPosition = new Vector2(20+24, 20+(i*8)) };
+						wall3 += new Drawable(wallAnim);
+						wall3 += new Collidable() { Type = EntityType.Wall };
+
+						wall4 += new Positionable() { CurrentPosition = new Vector2(20+32, 20+(i*8)) };
+						wall4 += new Drawable(wallAnim);
+						wall4 += new Collidable() { Type = EntityType.Wall };
+
+						wall5 += new Positionable() { CurrentPosition = new Vector2(20+40, 20+(i*8)) };
+						wall5 += new Drawable(wallAnim);
+						wall5 += new Collidable() { Type = EntityType.Wall };
+
+						wall6 += new Positionable() { CurrentPosition = new Vector2(20+48, 20+(i*8)) };
+						wall6 += new Drawable(wallAnim);
+						wall6 += new Collidable() { Type = EntityType.Wall };
+
+						wall7 += new Positionable() { CurrentPosition = new Vector2(20+56, 20+(i*8)) };
+						wall7 += new Drawable(wallAnim);
+						wall7 += new Collidable() { Type = EntityType.Wall };
+
+						wall8 += new Positionable() { CurrentPosition = new Vector2(20+64, 20+(i*8)) };
+						wall8 += new Drawable(wallAnim);
+						wall8 += new Collidable() { Type = EntityType.Wall };
+
+						wall9 += new Positionable() { CurrentPosition = new Vector2(20+72, 20+(i*8)) };
+						wall9 += new Drawable(wallAnim);
+						wall9 += new Collidable() { Type = EntityType.Wall };
+						break;
+
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+					case 8:
+						wall0 += new Positionable() { CurrentPosition = new Vector2(20+0, 20+(i*8)) };
+						wall0 += new Drawable(wallAnim);
+						wall0 += new Collidable() { Type = EntityType.Wall };
+
+						floor0 += new Positionable() { CurrentPosition = new Vector2(20+8, 20+(i*8)) };
+						floor0 += new Drawable(floorAnim);
+
+						floor1 += new Positionable() { CurrentPosition = new Vector2(20+16, 20+(i*8)) };
+						floor1 += new Drawable(floorAnim);
+
+						floor2 += new Positionable() { CurrentPosition = new Vector2(20+24, 20+(i*8)) };
+						floor2 += new Drawable(floorAnim);
+					
+						floor3 += new Positionable() { CurrentPosition = new Vector2(20+32, 20+(i*8)) };
+						floor3 += new Drawable(floorAnim);
+
+						floor4 += new Positionable() { CurrentPosition = new Vector2(20+40, 20+(i*8)) };
+						floor4 += new Drawable(floorAnim);
+
+						floor5 += new Positionable() { CurrentPosition = new Vector2(20+48, 20+(i*8)) };
+						floor5 += new Drawable(floorAnim);
+
+						floor6 += new Positionable() { CurrentPosition = new Vector2(20+56, 20+(i*8)) };
+						floor6 += new Drawable(floorAnim);
+
+						floor7 += new Positionable() { CurrentPosition = new Vector2(20+64, 20+(i*8)) };
+						floor7 += new Drawable(floorAnim);
+
+						wall1 += new Positionable() { CurrentPosition = new Vector2(20+72, 20+(i*8)) };
+						wall1 += new Drawable(wallAnim);
+						wall1 += new Collidable() { Type = EntityType.Wall };
+						break;
+				}
+			}
 		}
 
         protected override void LoadContent()
@@ -202,7 +259,7 @@ namespace EfD2.Samples
 
             graphics.GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
 				drawingSystem?.Animate(spriteBatch, gameTime);
             spriteBatch.End();
 

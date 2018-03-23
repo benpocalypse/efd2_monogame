@@ -30,6 +30,8 @@ namespace EfD2.Components
 			set { _previouisPosition = value; }
 		}
 
+		public float ZOrder = 0.0f;
+
         public RectangleF Rect { get; set; }
 
         public void SetX(float newX) =>_currentPosition.X = newX;

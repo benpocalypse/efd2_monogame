@@ -16,10 +16,22 @@ namespace EfD2.Components
 	{
 		public List<Animation> AnimationList;
 		public AnimationType Type = AnimationType.None;
+		public bool FlipOnXAxis = false;
+		public bool FlipOnYAxis = false;
 
 		public Drawable()
 		{
 			AnimationList = new List<Animation>();
+		}
+
+		public Drawable(params Animation[] aList)
+		{
+			AnimationList = new List<Animation>();
+
+			foreach(Animation a in aList)
+			{
+				AnimationList.Add(a);
+			}
 		}
 
 		public void AddAnimation(Animation a)

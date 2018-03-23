@@ -39,9 +39,19 @@ namespace EfD2
 		public int CurrentFrame { get; set; } = 0;
 		public float FrameSpeed { get; set; } = 0.1f; // In frames per second?
 
-		public Animation()
+		public Animation(params Texture2D[] textureNames)
 		{
 			FrameList = new List<Texture2D>();
+
+			foreach(Texture2D t in textureNames)
+			{
+				FrameList.Add(t);
+			}
+		}
+
+		public Animation(AnimationType aType, params Texture2D[] textureNames) : this(textureNames)
+		{
+			Type = aType;
 		}
 
 		public int CompareTo(Animation other)
