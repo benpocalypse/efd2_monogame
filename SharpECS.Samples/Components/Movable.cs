@@ -8,8 +8,8 @@ namespace EfD2.Components
 		public Entity Owner { get; set; }
 
 		public float MoveSpeed { get; set; } = 700;
-		public MoveDirection CurrentDirection { get; set; } = MoveDirection.None;
-		public MoveDirection PreviousDirection { get; set; } = MoveDirection.None;
+		public Direction CurrentDirection { get; set; } = Direction.None;
+		public Direction PreviousDirection { get; set; } = Direction.None;
 		public float Acceleration { get; set; } = 0;
 		public float MaxAcceleration { get; } = 1;
 

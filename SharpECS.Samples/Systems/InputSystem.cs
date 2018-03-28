@@ -35,27 +35,27 @@ namespace EfD2.Systems
 
                     if (Keyboard.GetState().IsKeyDown(Keys.D)) 
 					{
-						move.CurrentDirection = MoveDirection.Right;
+						move.CurrentDirection = Direction.Right;
 						draw.FlipOnXAxis = false;
 						Moving = true;
 					}
 
                     if (Keyboard.GetState().IsKeyDown(Keys.A)) 
 					{ 
-						move.CurrentDirection = MoveDirection.Left;
+						move.CurrentDirection = Direction.Left;
 						draw.FlipOnXAxis = true;
 						Moving = true;
 					}
 
                     if (Keyboard.GetState().IsKeyDown(Keys.W)) 
 					{ 
-						move.CurrentDirection = MoveDirection.Up;
+						move.CurrentDirection = Direction.Up;
 						Moving = true;
 					}
 
                     if (Keyboard.GetState().IsKeyDown(Keys.S)) 
 					{ 
-						move.CurrentDirection = MoveDirection.Down;
+						move.CurrentDirection = Direction.Down;
 						Moving = true;
 					}
 
@@ -74,19 +74,19 @@ namespace EfD2.Systems
 
 						switch (move.CurrentDirection)
 						{
-							case MoveDirection.Right:
+							case Direction.Right:
 								position.SetX(position.CurrentPosition.X + ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Left:
+							case Direction.Left:
 								position.SetX(position.CurrentPosition.X - ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Up:
+							case Direction.Up:
 								position.SetY(position.CurrentPosition.Y - ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Down:
+							case Direction.Down:
 								position.SetY(position.CurrentPosition.Y + ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 						}
@@ -99,24 +99,24 @@ namespace EfD2.Systems
 						if (move.Acceleration <= 0.0f)
 						{
 							move.Acceleration = 0.0f;
-							move.CurrentDirection = MoveDirection.None;
+							move.CurrentDirection = Direction.None;
 						}
 
 						switch (move.PreviousDirection)
 						{
-							case MoveDirection.Right:
+							case Direction.Right:
 								position.SetX(position.CurrentPosition.X + ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Left:
+							case Direction.Left:
 								position.SetX(position.CurrentPosition.X - ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Up:
+							case Direction.Up:
 								position.SetY(position.CurrentPosition.Y - ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 
-							case MoveDirection.Down:
+							case Direction.Down:
 								position.SetY(position.CurrentPosition.Y + ((move.MoveSpeed * move.Acceleration) * delta));
 								break;
 						}
@@ -125,7 +125,7 @@ namespace EfD2.Systems
 					var anim = Compatible[i].GetComponent<Drawable>();
 					if(anim != null)
 					{
-						if(move.CurrentDirection != MoveDirection.None)
+						if(move.CurrentDirection != Direction.None)
 						{
 							anim.Type = AnimationType.Running;
 						}

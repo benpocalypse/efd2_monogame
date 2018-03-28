@@ -1,16 +1,16 @@
 ﻿<Properties StartupConfiguration="{12C1AF6D-3B23-4F8F-8228-7852EE90E7EA}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="SharpECS.Samples/Game.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="SharpECS/Source/EntityPool.cs">
     <Files>
-      <File FileName="SharpECS.Samples/Game.cs" Line="74" Column="73" />
-      <File FileName="SharpECS.Samples/Systems/DrawingSystem.cs" Line="55" Column="8" />
-      <File FileName="SharpECS.Samples/Components/Drawable.cs" Line="33" Column="26" />
-      <File FileName="SharpECS.Samples/Globals.cs" Line="88" Column="34" />
-      <File FileName="SharpECS.Samples/Systems/InputSystem.cs" Line="64" Column="7" />
-      <File FileName="SharpECS.Samples/Components/Positionable.cs" Line="33" Column="22" />
-      <File FileName="SharpECS.Samples/Resolution.cs" Line="1" Column="1" />
+      <File FileName="SharpECS.Samples/Game.cs" Line="114" Column="4" />
+      <File FileName="SharpECS.Samples/Systems/MapSystem.cs" Line="458" Column="29" />
+      <File FileName="SharpECS/Source/Entity.cs" Line="329" Column="10" />
+      <File FileName="SharpECS/Source/EntityPool.cs" Line="90" Column="48" />
+      <File FileName="../efd2/src/map.c" Line="274" Column="21" NotebookId="1" />
+      <File FileName="../efd2/src/globals.h" Line="36" Column="21" NotebookId="1" />
+      <File FileName="../efd2/src/map.h" Line="29" Column="7" NotebookId="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

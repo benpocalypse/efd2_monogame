@@ -40,8 +40,8 @@ namespace EfD2.Systems
 										var col1 = e.GetComponent<Collidable>();
 
 										pos1.CurrentPosition = pos1.PreviousPosition;
-										mov1.CurrentDirection = MoveDirection.None;
-										mov1.PreviousDirection = MoveDirection.None;
+										mov1.CurrentDirection = Direction.None;
+										mov1.PreviousDirection = Direction.None;
 										mov1.Acceleration = 0;
 										col1.Colliding = false;
 									}

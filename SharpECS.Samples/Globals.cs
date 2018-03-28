@@ -15,7 +15,7 @@ namespace EfD2
 		Item
 	};
 
-	public enum MoveDirection
+	public enum Direction
 	{
 		None,
 		Up,
