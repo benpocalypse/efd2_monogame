@@ -25,15 +25,18 @@ namespace EfD2.Systems
 		private const int MT_FLOOR = 1;
 		private const int MT_WALL_TOP = 2;
 		private const int MT_WALL_MID = 3;
+		private const int MT_WALL_TOP_LEFT_CORNER = 4;
+		private const int MT_WALL_TOP_RIGHT_CORNER = 5;
+		private const int MT_WALL_BOTTOM_LEFT_CORNER = 6;
+		private const int MT_WALL_BOTTOM_RIGHT_CORNER = 7;
+
+		private const int MT_EXIT = 98;
+		private const int MT_ENTRANCE = 99;
 
 		private const int MAP_X_OFFSET = 3;
 		private const int MAP_Y_OFFSET = 7;
 
 		private int[,] MapArray = new int[24, 18];
-
-		// Defines for our door
-//#define MT_EXIT     0U
-//#define MT_ENTRANCE 1U
 
 		private ContentManager	Content;
 		private EntityPool entityPool;
@@ -57,6 +60,8 @@ namespace EfD2.Systems
 		{
 			Random r = new Random();
 
+			ClearMap();
+
 			for (int x = 0; x < MAPWIDTH; x++)
 			{
 				for (int y = 0; y < MAPHEIGHT; y++)
@@ -65,7 +70,7 @@ namespace EfD2.Systems
 				}
 			}
 
-			switch(r.Next(0, 0))
+			switch(r.Next(0, 3))
 			{
 				case 0:
 					int ucWidth = 0;
@@ -73,16 +78,15 @@ namespace EfD2.Systems
 			        int ucHeight = 0;
 			        int ucHeight2 = 0;
 			        
-			        int ucRoomOnePosition = r.Next(0,1);
-			        int ucRoomTwoPosition = r.Next(0,1);
+			        int ucRoomOnePosition = r.Next(0,2);
+			        int ucRoomTwoPosition = r.Next(0,2);
 
 			        // First, decide the room width/height.
-			        ucWidth = r.Next(9, 14);
-			        ucHeight = r.Next(10, 15);
+			        ucWidth = r.Next(9, 15);
+			        ucHeight = r.Next(10, 16);
 			        
-			        // Draw room 1 first.
-        // Draw the left, right, top, and then bottom walls.
-        DrawLine(0, (ucRoomOnePosition * (MAPHEIGHT - ucHeight)),
+			        // Draw room 1 first. Draw the left, right, top, and then bottom walls.
+			        DrawLine(0, (ucRoomOnePosition * (MAPHEIGHT - ucHeight)),
 							 0, ucHeight + (ucRoomOnePosition * (MAPHEIGHT - ucHeight - 1)), MT_WALL_TOP);
 					DrawLine(ucWidth, (ucRoomOnePosition * (MAPHEIGHT - ucHeight)),
 							 ucWidth, ucHeight + (ucRoomOnePosition * (MAPHEIGHT - ucHeight - 1)), MT_WALL_TOP);
@@ -95,10 +99,9 @@ namespace EfD2.Systems
 					FloodFill(ucWidth / 2, (ucRoomOnePosition * (MAPHEIGHT - (ucHeight / 2))) + 1, MT_FLOOR);
 
 
-					// Now draw room 2.     
-					// First, decide the room width/height.
-					ucWidth2 = r.Next(6, 21 - ucWidth);
-					ucHeight2 = r.Next(9, 16);
+					// Now draw room 2. First, decide the room width/height.
+					ucWidth2 = r.Next(6, 22 - ucWidth);
+					ucHeight2 = r.Next(9, 17);
 
 					// Draw the left, right, top, and then bottom walls.
 					DrawLine(MAPWIDTH - ucWidth2, (ucRoomTwoPosition * (MAPHEIGHT - ucHeight2)),
@@ -171,14 +174,84 @@ namespace EfD2.Systems
 					break;
 
 				case 1:
+					ucWidth = r.Next(18, MAPWIDTH);
+					ucHeight = r.Next(14, MAPHEIGHT);
+					int ucDoor = r.Next(0, 4);//(UP, RIGHT);
+
+					// Draw the walls.
+					DrawLine((MAPWIDTH / 2) - (ucWidth / 2), (MAPHEIGHT / 2) - (ucHeight / 2),
+							 (MAPWIDTH / 2) - (ucWidth / 2), (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_TOP);
+					DrawLine((MAPWIDTH / 2) + (ucWidth / 2), (MAPHEIGHT / 2) - (ucHeight / 2),
+							 (MAPWIDTH / 2) + (ucWidth / 2), (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_TOP);
+					DrawLine((MAPWIDTH / 2) - (ucWidth / 2), (MAPHEIGHT / 2) + (ucHeight / 2),
+							 (MAPWIDTH / 2) + (ucWidth / 2), (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_MID);
+					DrawLine((MAPWIDTH / 2) - (ucWidth / 2) + 1, (MAPHEIGHT / 2) - (ucHeight / 2),
+							 (MAPWIDTH / 2) + (ucWidth / 2) - 1, (MAPHEIGHT / 2) - (ucHeight / 2), MT_WALL_MID);
+
+					// Fill the floor.
+					FloodFill(MAPWIDTH / 2, MAPHEIGHT / 2, MT_FLOOR);
+
+					// And add the doors.
+					int ucDoor2 = r.Next(0, 4);
+
+					while (ucDoor == ucDoor2)
+					{
+						ucDoor2 = r.Next(0, 4);
+					}
+
+					//AddDoor(ucDoor, true);
+					//AddDoor(ucDoor2, false);
 				break;
 
 				case 2:
+					if (r.Next(0, 2) == 0)
+					{
+						ucHeight = r.Next(8, 12);
+
+						// Draw the walls.
+						DrawLine(0, (MAPHEIGHT / 2) - (ucHeight / 2),
+								 0, (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_TOP);
+						DrawLine(MAPWIDTH - 1, (MAPHEIGHT / 2) - (ucHeight / 2),
+								 MAPWIDTH - 1, (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_TOP);
+						DrawLine(0, (MAPHEIGHT / 2) + (ucHeight / 2),
+								 MAPWIDTH - 1, (MAPHEIGHT / 2) + (ucHeight / 2), MT_WALL_MID);
+						DrawLine(1, (MAPHEIGHT / 2) - (ucHeight / 2),
+								 MAPWIDTH - 2, (MAPHEIGHT / 2) - (ucHeight / 2), MT_WALL_MID);
+
+						// Fill the floor.
+						FloodFill(MAPWIDTH / 2, MAPHEIGHT / 2, MT_FLOOR);
+
+						// And add the doors.
+						//AddDoor(LEFT, true);
+						//AddDoor(RIGHT, false);
+					}
+					else
+					{
+						ucWidth = r.Next(8, 13);
+
+						// Draw the walls.
+						DrawLine((MAPWIDTH / 2) - (ucWidth / 2), 0,
+								 (MAPWIDTH / 2) - (ucWidth / 2), MAPHEIGHT - 2, MT_WALL_TOP);
+						DrawLine((MAPWIDTH / 2) + (ucWidth / 2), 0,
+								 (MAPWIDTH / 2) + (ucWidth / 2), MAPHEIGHT - 2, MT_WALL_TOP);
+						DrawLine((MAPWIDTH / 2) - (ucWidth / 2) + 1, 0,
+								 (MAPWIDTH / 2) + (ucWidth / 2) - 1, 0, MT_WALL_MID);
+						DrawLine((MAPWIDTH / 2) - (ucWidth / 2), MAPHEIGHT - 1,
+								 (MAPWIDTH / 2) + (ucWidth / 2), MAPHEIGHT - 1, MT_WALL_MID);
+
+						// Fill the floor.
+						FloodFill(MAPWIDTH / 2, MAPHEIGHT / 2, MT_FLOOR);
+
+						// And add the doors.
+						//AddDoor(UP, true);
+						//AddDoor(DOWN, false);
+					}
 				break;
 				default:
 					break;
 			}
 
+			DecorateMapTiles();
 			DrawMap();
 		}
 
@@ -319,6 +392,108 @@ namespace EfD2.Systems
 		    }
 		}
 
+		private void DecorateMapTiles()
+		{
+			/*
+			 * Top Left Corner:
+			 *  - Nothing to the left or we're at the leftmost tile
+			 *  - Nothing above
+			 * 
+			 * Top Right Corner:
+			 *  - Nothing to the right or we're at the rightmost tile
+			 *  - Nothing above
+			 * 
+			 * Bottom Left Corner:
+			 *  - Nothing to the left or we're at the leftmost tile
+			 *  - Nothing below
+			 * 
+			 * Bottom Right Corner:
+			 *  - Nothing to the right or we're at the rightmost tile
+			 *  - Nothing below
+			*/
+
+			for (int i = 0; i < MAPWIDTH; i++)
+			{
+				for (int j = 0; j < MAPHEIGHT; j++)
+				{
+					if (MapArray[i, j] >= MT_WALL_TOP)
+					{
+						// Top Left Corner cases
+						if ((i > 0) && (j > 0) &&
+						   (MapArray[i - 1, j] < 2) &&
+						   (MapArray[i, j - 1] < 2))
+							MapArray[i, j] = MT_WALL_TOP_LEFT_CORNER;
+
+						if((i == 0) && (j > 0) &&
+						   (MapArray[i, j - 1] < 2))
+							MapArray[i, j] = MT_WALL_TOP_LEFT_CORNER;
+
+						if ((i > 0) && (j == 0) &&
+						    (MapArray[i - 1, j] < 2))
+							MapArray[i, j] = MT_WALL_TOP_LEFT_CORNER;
+
+						if ((i == 0) && (j == 0) &&
+						   (MapArray[i, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_TOP_LEFT_CORNER;
+
+						// Top Right Corner cases
+						if ((i <= (MAPWIDTH-2)) && (j > 0) &&
+						   (MapArray[i + 1, j] < 2) &&
+						   (MapArray[i, j - 1] < 2))
+							MapArray[i, j] = MT_WALL_TOP_RIGHT_CORNER;
+
+						if ((i == (MAPWIDTH-1)) && (j > 0) &&
+						   (MapArray[i, j - 1] < 2))
+							MapArray[i, j] = MT_WALL_TOP_RIGHT_CORNER;
+
+						if ((i <= (MAPWIDTH - 2)) && (j == 0) &&
+							(MapArray[i + 1, j] < 2))
+							MapArray[i, j] = MT_WALL_TOP_RIGHT_CORNER;
+
+						if ((i == (MAPWIDTH-1)) && (j == 0) &&
+						   (MapArray[i, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_TOP_RIGHT_CORNER;
+
+						// Bottom Left Corner cases
+						if ((i > 0) && (j <= (MAPHEIGHT-2)) &&
+						   (MapArray[i - 1, j] < 2) &&
+						   (MapArray[i, j + 1] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_LEFT_CORNER;
+
+						if ((i == 0) && (j <= (MAPHEIGHT-2)) &&
+						   (MapArray[i, j + 1] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_LEFT_CORNER;
+
+						if ((i > 0) && (j == (MAPHEIGHT-1)) &&
+							(MapArray[i - 1, j] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_LEFT_CORNER;
+
+						if ((i == 0) && (j == (MAPHEIGHT-1)) &&
+						   (MapArray[i, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_BOTTOM_LEFT_CORNER;
+
+						// Bottom Right Corner cases
+						if ((i <= (MAPWIDTH - 2)) && (j <= (MAPHEIGHT-2)) &&
+						   (MapArray[i + 1, j] < 2) &&
+						   (MapArray[i, j + 1] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_RIGHT_CORNER;
+
+						if ((i == (MAPWIDTH - 1)) && (j <= (MAPHEIGHT-2)) &&
+						   (MapArray[i, j + 1] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_RIGHT_CORNER;
+
+						if ((i <= (MAPWIDTH - 2)) && (j == (MAPHEIGHT-1)) &&
+							(MapArray[i + 1, j] < 2))
+							MapArray[i, j] = MT_WALL_BOTTOM_RIGHT_CORNER;
+
+						if ((i == (MAPWIDTH - 1)) && (j == (MAPHEIGHT-1)) &&
+						   (MapArray[i, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_BOTTOM_RIGHT_CORNER;
+					}
+				}
+			}
+		}
+
 
 		///****************************************************************************
 		/// This function adds doors to our map based on the type of map we've 
@@ -446,6 +621,25 @@ namespace EfD2.Systems
 		}
 		*/
 
+		private void ClearMap()
+		{
+			for (int x = 0; x < MAPWIDTH; x++)
+			{
+				for (int y = 0; y < MAPHEIGHT; y++)
+				{
+					if (MapArray[x, y] != MT_EMPTY)
+					{
+						if (entityPool.DoesEntityExist("Map" + x + ", " + y))
+						{
+							var e = entityPool.GetEntity("Map" + x + ", " + y);
+							//e.RemoveAllComponents();
+							entityPool.DestroyEntity(ref e);
+						}
+					}
+				}
+			}
+		}
+
 		///****************************************************************************
 		/// Draws the current map structure in the center of the screen to allow room
 		/// for the HUD to be drawn as well.
@@ -455,33 +649,34 @@ namespace EfD2.Systems
 			// Each time we draw a map, randomly pick one of the 3 types of floors
 			// to add a little variety to our maps.
 			Random r = new Random();
-			int ucFloor = r.Next(1, 3);
+			int ucFloor = r.Next(0, 3);
 
 			Entity[,] MapLayout = new Entity[MAPWIDTH, MAPHEIGHT];
 
 			Animation floorAnim;
 			Animation wallTop = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_2"));
+			Animation wallTopLeftCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_5"));
+			Animation wallTopRightCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_6"));
+			Animation wallBottomLeftCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_4"));
+			Animation wallBottomRightCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_3"));
 			Animation wallMiddle = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
 
 			Console.WriteLine("Floor = " + ucFloor);
 
-			if(ucFloor == 1)
+			if (ucFloor == 1)
 				floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_2"));
+			else if (ucFloor == 2)
+				floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_3"));
 			else
 				floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_1"));
 
+			// Create all the entities we'll need
 			for (int x = 0; x < MAPWIDTH; x++)
 			{
 				for (int y = 0; y < MAPHEIGHT; y++)
 				{
-					if (entityPool.DoesEntityExist("Map" + x + ", " + y))
-					{
-						var e = entityPool.GetEntity("Map" + x + ", " + y);
-						//e.RemoveAllComponents();
-						entityPool.DestroyEntity(ref e);
-					}
-
-					MapLayout[x,y] = entityPool.CreateEntity("Map" + x + ", " + y);
+					if (MapArray[x, y] != MT_EMPTY)
+						MapLayout[x, y] = entityPool.CreateEntity("Map" + x + ", " + y);
 				}
 			}
 
@@ -508,6 +703,31 @@ namespace EfD2.Systems
 							MapLayout[i, j] += new Drawable(wallMiddle);
 							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
 							break;
+
+						case MT_WALL_TOP_LEFT_CORNER:
+							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
+							MapLayout[i, j] += new Drawable(wallTopLeftCorner);
+							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							break;
+
+						case MT_WALL_TOP_RIGHT_CORNER:
+							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
+							MapLayout[i, j] += new Drawable(wallTopRightCorner);
+							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							break;
+
+						case MT_WALL_BOTTOM_LEFT_CORNER:
+							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
+							MapLayout[i, j] += new Drawable(wallBottomLeftCorner);
+							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							break;
+
+						case MT_WALL_BOTTOM_RIGHT_CORNER:
+							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
+							MapLayout[i, j] += new Drawable(wallBottomRightCorner);
+							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							break;
+							
 						default:
 							break;
 

@@ -32,12 +32,20 @@ namespace EfD2
 		Attacking
 	};
 
+	public enum CollectibleType
+	{
+		None,
+		Gold,
+		Health
+	};
+
 	public class Animation : IComparable<Animation>
 	{
 		public AnimationType Type { get; set; } = AnimationType.None;
 		public List<Texture2D> FrameList { get; set; }
 		public int CurrentFrame { get; set; } = 0;
 		public float FrameSpeed { get; set; } = 0.1f; // In frames per second?
+		public float FrameCounter { get; set; } = 0.0f;
 
 		public Animation(params Texture2D[] textureNames)
 		{

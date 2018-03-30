@@ -12,11 +12,14 @@ namespace EfD2.Components
 
 		public EntityType Type;
 
+		public RectangleF BoundingBox { get; set; }
+
 		public List<Entity> CollidingEntities;
 
 		public Collidable()
 		{
 			CollidingEntities = new List<Entity>();
+			BoundingBox = new RectangleF(0, 0, 8, 8);
 			Type = EntityType.None;
 		}
 	}

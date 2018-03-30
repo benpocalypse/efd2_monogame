@@ -55,6 +55,7 @@
     <Compile Include="Components\Drawable.cs" />
     <Compile Include="Systems\DrawingSystem.cs" />
     <Compile Include="Systems\MapSystem.cs" />
+    <Compile Include="Components\Collectible.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

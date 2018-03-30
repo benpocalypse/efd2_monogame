@@ -14,12 +14,19 @@ namespace EfD2.Systems
 	internal class PhysicsSystem
 		: EntitySystem
 	{
+		private EntityPool entityPool;
+
 		public PhysicsSystem(EntityPool pool)
 			: base(pool, typeof(Positionable), typeof(Collidable))
-		{ }
+		{
+			entityPool = pool;
+		}
 
+		// FIXME - update and optimize this with more/better LINQ
 		public void Update(GameTime gameTime)
 		{
+			List<Entity> entitiesToRemove = new List<Entity>();
+
 			foreach (Entity e in Compatible)
 			{
 				foreach (IComponent ic in e.Components.Where(_ => _.GetType() == typeof(Collidable) && ((Collidable)_).Colliding == true))
@@ -33,17 +40,30 @@ namespace EfD2.Systems
 							{
 								foreach (IComponent oic in oe.Components.Where(_ => _.GetType() == typeof(Collidable)))
 								{
-									if (((Collidable)oic).Type == EntityType.Wall)
+									switch (((Collidable)oic).Type)
 									{
-										var pos1 = e.GetComponent<Positionable>();
-										var mov1 = e.GetComponent<Movable>();
-										var col1 = e.GetComponent<Collidable>();
+										case EntityType.Wall:
+											{
+												var pos1 = e.GetComponent<Positionable>();
+												var mov1 = e.GetComponent<Movable>();
+												var col1 = e.GetComponent<Collidable>();
 
-										pos1.CurrentPosition = pos1.PreviousPosition;
-										mov1.CurrentDirection = Direction.None;
-										mov1.PreviousDirection = Direction.None;
-										mov1.Acceleration = 0;
-										col1.Colliding = false;
+												pos1.CurrentPosition = pos1.PreviousPosition;
+												mov1.CurrentDirection = Direction.None;
+												mov1.PreviousDirection = Direction.None;
+												mov1.Acceleration = 0;
+
+												col1.Colliding = false;
+												col.Colliding = false;
+											}
+											break;
+
+										case EntityType.Item:
+											{
+												entitiesToRemove.Add(oe);
+												col.Colliding = false;
+											}
+											break;
 									}
 								}
 							}
@@ -53,6 +73,12 @@ namespace EfD2.Systems
 							break;
 					}
 				}
+			}
+
+			foreach (Entity e in entitiesToRemove)
+			{
+				var entity = e;
+				entityPool.DestroyEntity(ref entity);
 			}
 		}
 	}

@@ -38,6 +38,7 @@ namespace EfD2.Samples
 		MapSystem mapSystem;
 
         Entity playerEntity;
+		Entity pileOfGold;
 
         public Game()
         {
@@ -69,11 +70,12 @@ namespace EfD2.Samples
 			mapSystem = new MapSystem(entityPool, ref gameContent);
 
 			playerEntity = entityPool.CreateEntity("Player");
+			pileOfGold = entityPool.CreateEntity("gold");
 
 			// One way of adding components.
 			playerEntity += new Positionable() { CurrentPosition = new Vector2(50, 80), ZOrder = 1.0f };
 			playerEntity += new Movable() { MoveSpeed = 75 };
-			playerEntity += new Collidable() { Type = EntityType.Player };
+			playerEntity += new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0,0,6,7) };
 
 			playerEntity += new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -83,7 +85,12 @@ namespace EfD2.Samples
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player2")));
 
-			//CreateRoom();
+			pileOfGold += new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 1.0f };
+			pileOfGold += new Collidable { Type = EntityType.Item };
+			pileOfGold += new Collectible { Type = CollectibleType.Gold };
+			pileOfGold += new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
+													 Content.Load<Texture2D>("chest_gold0"),
+			                                         Content.Load<Texture2D>("chest_gold1")));
 
 			mapSystem.GenerateMap();
 

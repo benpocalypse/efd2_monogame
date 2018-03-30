@@ -18,13 +18,10 @@ namespace EfD2.Systems
 			: base(pool, typeof(Positionable), typeof(Drawable))
 		{ }
 
-		private float frameCounter = 0;
-
 		public void Animate(SpriteBatch spriteBatch, GameTime gameTime)
         {
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			frameCounter += delta;
 
 			for (int i = 0; i < Compatible.Count; i++)
             {
@@ -35,9 +32,11 @@ namespace EfD2.Systems
 				{
 					if (a.Type == animatable.Type)
 					{
-						if (frameCounter >= a.FrameSpeed)
+						a.FrameCounter += delta;
+
+						if (a.FrameCounter >= a.FrameSpeed)
 						{
-							frameCounter = 0;
+							a.FrameCounter = 0;
 							a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
 						}
 
@@ -46,6 +45,7 @@ namespace EfD2.Systems
 						if (Compatible[i].State == EntityState.Active)
 						{
 							var texture = a.FrameList[a.CurrentFrame];
+							
 							var pos = position.CurrentPosition;
 
 							if(animatable.FlipOnXAxis == false)
