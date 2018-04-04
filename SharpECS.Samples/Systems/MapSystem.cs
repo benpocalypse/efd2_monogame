@@ -134,8 +134,10 @@ namespace EfD2.Systems
 								 MAPWIDTH - ucWidth2 - 1, (ucRoomOnePosition * (MAPHEIGHT - ucHeight)) + (ucHeight / 2) + 1, MT_WALL_MID);
 
 						// FIXME - add these back in
-						//AddDoor(UP, true);
-						//AddDoor(DOWN, false);
+						AddDoor(Direction.Up, true);
+						AddDoor(Direction.Down, false);
+
+						DebugThing();
 					}
 					else
 					{//...we need to make a connecting hallway with a bend.
@@ -152,8 +154,10 @@ namespace EfD2.Systems
 							DrawLine((ucWidth / 2) + 1, MAPHEIGHT - 3, MAPWIDTH - ucWidth2, MAPHEIGHT - 3, MT_WALL_MID);
 
 							// FIXME - add these back in
-							//AddDoor(UP, true);
-							//AddDoor(RIGHT, false);
+							AddDoor(Direction.Up, true);
+							AddDoor(Direction.Right, false);
+
+							DebugThing();
 						}
 						else
 						{//...finally, room 2 must be on top.
@@ -167,8 +171,10 @@ namespace EfD2.Systems
 							DrawLine((ucWidth / 2) + 2, 2, MAPWIDTH - ucWidth2 - 1, 2, MT_WALL_MID);
 
 							// FIXME - add these back in
-							//AddDoor(RIGHT, true);
-							//AddDoor(LEFT, false);
+							AddDoor(Direction.Right, true);
+							AddDoor(Direction.Left, false);
+
+							DebugThing();
 						}
 					}
 					break;
@@ -199,8 +205,11 @@ namespace EfD2.Systems
 						ucDoor2 = r.Next(0, 4);
 					}
 
-					//AddDoor(ucDoor, true);
-					//AddDoor(ucDoor2, false);
+					// FIXME - these need to be random
+					AddDoor(Direction.Up, true);
+					AddDoor(Direction.Down, false);
+
+					DebugThing();
 				break;
 
 				case 2:
@@ -222,8 +231,10 @@ namespace EfD2.Systems
 						FloodFill(MAPWIDTH / 2, MAPHEIGHT / 2, MT_FLOOR);
 
 						// And add the doors.
-						//AddDoor(LEFT, true);
-						//AddDoor(RIGHT, false);
+						AddDoor(Direction.Left, true);
+						AddDoor(Direction.Right, false);
+
+						DebugThing();
 					}
 					else
 					{
@@ -243,8 +254,10 @@ namespace EfD2.Systems
 						FloodFill(MAPWIDTH / 2, MAPHEIGHT / 2, MT_FLOOR);
 
 						// And add the doors.
-						//AddDoor(UP, true);
-						//AddDoor(DOWN, false);
+						AddDoor(Direction.Up, true);
+						AddDoor(Direction.Down, false);
+
+						DebugThing();
 					}
 				break;
 				default:
@@ -253,6 +266,49 @@ namespace EfD2.Systems
 
 			DecorateMapTiles();
 			DrawMap();
+			 
+			DebugThing();
+		}
+
+		public Vector2 GetOpenSpaceNearEntrance()
+		{
+			var pos = entityPool.GetEntity("Entrance").GetComponent<Positionable>();
+
+			int x = Convert.ToInt32((pos.CurrentPosition.X / 8) - MAP_X_OFFSET);
+			int y = Convert.ToInt32((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET);
+
+			if (x < (MAPWIDTH-1) && MapArray[x + 1, y] == MT_FLOOR)
+				return new Vector2(pos.CurrentPosition.X + 8, pos.CurrentPosition.Y);
+			
+			if (x > 0  && MapArray[x - 1, y] == MT_FLOOR)
+				return new Vector2(pos.CurrentPosition.X - 8, pos.CurrentPosition.Y);
+
+			if (y < (MAPHEIGHT- 1) && MapArray[x, y + 1] == MT_FLOOR)
+				return new Vector2(pos.CurrentPosition.X, pos.CurrentPosition.Y + 8);
+
+			if (y > 0 && MapArray[x, y - 1] == MT_FLOOR)
+				return new Vector2(pos.CurrentPosition.X, pos.CurrentPosition.Y - 8);
+
+			return new Vector2();
+		}
+
+		private void DebugThing()
+		{
+			if (entityPool.DoesEntityExist("Entrance"))
+			{
+				var comp = entityPool.GetEntity("Entrance");
+				var pos = comp.GetComponent<Positionable>();
+
+				Console.WriteLine("x = " + ((pos.CurrentPosition.X / 8) - MAP_X_OFFSET) + ", y = " + ((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET));
+			}
+
+			if (entityPool.DoesEntityExist("Exit"))
+			{
+				var comp = entityPool.GetEntity("Exit");
+				var pos = comp.GetComponent<Positionable>();
+
+				Console.WriteLine("x = " + ((pos.CurrentPosition.X / 8) - MAP_X_OFFSET) + ", y = " + ((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET));
+			}
 		}
 
 		///****************************************************************************
@@ -500,9 +556,12 @@ namespace EfD2.Systems
 		/// generated. Essentially, we want the entrance and exit to a room to be
 		/// fairly far apart to force the player to navigate our maze.
 		///****************************************************************************
-		/*
 		void AddDoor(Direction direction, bool bEntrance)
 		{
+			Animation entrance = new Animation(AnimationType.None, Content.Load<Texture2D>("door1_1"));
+			Animation exit = new Animation(AnimationType.None, Content.Load<Texture2D>("door1_2"));
+			Random r = new Random();
+
 		    // If our entry door is to be on the top, scan left to right, top to bottom for a spot
 		    // to add it.
 		    if(direction == Direction.Up)
@@ -511,19 +570,31 @@ namespace EfD2.Systems
 		        {
 		            for(int i = 0; i < MAPWIDTH; i++)
 		            {
-		                if((MAP_TileIs(i, j) == MT_WALL_TOP) || (MAP_TileIs(i, j) == MT_WALL_MID))
+		                if((MapArray[i, j] == MT_WALL_TOP) || (MapArray[i, j] == MT_WALL_MID))
 		                {
 		                    if(bEntrance == true)
 		                    {
-		                        objEntrance.ucX = i+GLB_RandomNum(3, 7);
-		                        objEntrance.ucY = j;
-		                        objEntrance.ucType = DOOR;
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) + (r.Next(3, 8)*8), (MAP_Y_OFFSET * 8) + (j * 8)), ZOrder = 1.0f },
+									new Drawable(entrance),
+									new Collidable() { Type = EntityType.Entrance }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Entrance");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    else
 		                    {
-		                        objExit.ucX = i+GLB_RandomNum(3,7);
-		                        objExit.ucY = j;
-		                        objExit.ucType = DOOR;
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) + (r.Next(3, 8)*8), (MAP_Y_OFFSET * 8) + (j * 8)) , ZOrder = 1.0f},
+									new Drawable(exit),
+									new Collidable() { Type = EntityType.Exit }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Exit");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    
 		                    return;
@@ -540,19 +611,31 @@ namespace EfD2.Systems
 		        {
 		            for(int i = (MAPWIDTH-1); i > 0; i--)
 		            {
-		                if((MAP_TileIs(i, j) == MT_WALL_TOP) || (MAP_TileIs(i, j) == MT_WALL_MID))
+		                if((MapArray[i, j] == MT_WALL_TOP) || (MapArray[i, j] == MT_WALL_MID))
 		                {
 		                    if(bEntrance == true)
 		                    {
-		                        objEntrance.ucX = i-GLB_RandomNum(1,4);
-		                        objEntrance.ucY = j;
-		                        objEntrance.ucType = DOOR;
+		                        IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) - (r.Next(1, 5)*8), (MAP_Y_OFFSET * 8) + (j * 8)), ZOrder = 1.0f },
+									new Drawable(entrance),
+									new Collidable() { Type = EntityType.Entrance }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Entrance");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    else
 		                    {
-		                        objExit.ucX = i-GLB_RandomNum(1,4);
-		                        objExit.ucY = j;
-		                        objExit.ucType = DOOR;
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) - (r.Next(1, 5)*8), (MAP_Y_OFFSET * 8) + (j * 8)), ZOrder = 1.0f },
+									new Drawable(exit),
+									new Collidable() { Type = EntityType.Exit }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Exit");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 
 		                    return;
@@ -569,19 +652,31 @@ namespace EfD2.Systems
 		        {
 		            for(int j = (MAPHEIGHT-1); j > 0; j--)
 		            {
-		                if((MAP_TileIs(i, j) == MT_WALL_TOP) || (MAP_TileIs(i, j) == MT_WALL_MID))
+		                if((MapArray[i, j] == MT_WALL_TOP) || (MapArray[i, j] == MT_WALL_MID))
 		                {
 		                    if(bEntrance == true)
 		                    {
-		                        objEntrance.ucX = i;
-		                        objEntrance.ucY = j-GLB_RandomNum(3,6);
-		                        objEntrance.ucType = DOOR;
+		                        IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + ((j*8) - (r.Next(3, 7) * 8))), ZOrder = 1.0f },
+									new Drawable(entrance),
+									new Collidable() { Type = EntityType.Entrance }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Entrance");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    else
 		                    {
-		                        objExit.ucX = i;
-		                        objExit.ucY = j-GLB_RandomNum(3,6);
-		                        objExit.ucType = DOOR;
+		                        IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + ((j*8) - (r.Next(3, 7) * 8))), ZOrder = 1.0f },
+									new Drawable(exit),
+									new Collidable() { Type = EntityType.Exit }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Exit");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    
 		                    return;
@@ -598,19 +693,31 @@ namespace EfD2.Systems
 		        {
 		            for(int j = (MAPHEIGHT-1); j > 0; j--)
 		            {
-		                if((MAP_TileIs(i, j) == WALL_TOP) || (MAP_TileIs(i, j) == MT_WALL_MID))
+		                if ((MapArray[i, j] == MT_WALL_TOP) || (MapArray[i, j] == MT_WALL_MID))
 		                {
 		                    if(bEntrance == true)
 		                    {
-		                        objEntrance.ucX = i;
-		                        objEntrance.ucY = j-GLB_RandomNum(2,4);
-		                        objEntrance.ucType = DOOR;
+		                        IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + ((j*8) - (r.Next(2, 5) * 8))), ZOrder = 1.0f },
+									new Drawable(entrance),
+									new Collidable() { Type = EntityType.Entrance }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Entrance");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                    else
 		                    {
-		                        objExit.ucX = i;
-		                        objExit.ucY = j-GLB_RandomNum(2,4);
-		                        objExit.ucType = DOOR;
+		                        IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + ((j*8) - (r.Next(2, 5) * 8))), ZOrder = 1.0f },
+									new Drawable(exit),
+									new Collidable() { Type = EntityType.Exit }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Exit");
+								tempEntity.AddComponents(componentCollection);
 		                    }
 		                
 		                    return;
@@ -619,10 +726,23 @@ namespace EfD2.Systems
 		        }
 		    }
 		}
-		*/
 
 		private void ClearMap()
 		{
+			Entity ent;
+
+			if(entityPool.DoesEntityExist("Entrance"))
+			{
+				ent = entityPool.GetEntity("Entrance");
+				entityPool.DestroyEntity(ref ent);
+			}
+
+			if (entityPool.DoesEntityExist("Exit"))
+			{
+				ent = entityPool.GetEntity("Exit");
+				entityPool.DestroyEntity(ref ent);
+			}
+
 			for (int x = 0; x < MAPWIDTH; x++)
 			{
 				for (int y = 0; y < MAPHEIGHT; y++)
@@ -651,8 +771,6 @@ namespace EfD2.Systems
 			Random r = new Random();
 			int ucFloor = r.Next(0, 3);
 
-			Entity[,] MapLayout = new Entity[MAPWIDTH, MAPHEIGHT];
-
 			Animation floorAnim;
 			Animation wallTop = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_2"));
 			Animation wallTopLeftCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_5"));
@@ -670,16 +788,6 @@ namespace EfD2.Systems
 			else
 				floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_1"));
 
-			// Create all the entities we'll need
-			for (int x = 0; x < MAPWIDTH; x++)
-			{
-				for (int y = 0; y < MAPHEIGHT; y++)
-				{
-					if (MapArray[x, y] != MT_EMPTY)
-						MapLayout[x, y] = entityPool.CreateEntity("Map" + x + ", " + y);
-				}
-			}
-
 			for (int i = 0; i < MAPWIDTH; i++)
 			{
 				for (int j = 0; j < MAPHEIGHT; j++)
@@ -689,48 +797,103 @@ namespace EfD2.Systems
 					switch (ucTile)
 					{
 						case MT_FLOOR:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(floorAnim);
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+								new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+								new Drawable(floorAnim)
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 							
 						case MT_WALL_TOP:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallTop);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallTop),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 						case MT_WALL_MID:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallMiddle);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallMiddle),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 
 						case MT_WALL_TOP_LEFT_CORNER:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallTopLeftCorner);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallTopLeftCorner),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 
 						case MT_WALL_TOP_RIGHT_CORNER:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallTopRightCorner);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallTopRightCorner),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 
 						case MT_WALL_BOTTOM_LEFT_CORNER:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallBottomLeftCorner);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallBottomLeftCorner),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 
 						case MT_WALL_BOTTOM_RIGHT_CORNER:
-							MapLayout[i, j] += new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET * 8) + (i * 8), (MAP_Y_OFFSET * 8) + (j * 8)) };
-							MapLayout[i, j] += new Drawable(wallBottomRightCorner);
-							MapLayout[i, j] += new Collidable() { Type = EntityType.Wall };
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallBottomRightCorner),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = entityPool.CreateEntity("Map" + i + ", " + j);
+								tempEntity.AddComponents(componentCollection);
+							}
 							break;
 							
 						default:
 							break;
-
 					}
 				}
 			}

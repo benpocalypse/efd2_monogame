@@ -12,6 +12,7 @@ using System.Collections.Generic;
 
 using IndependentResolutionRendering;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace EfD2.Samples
 {
@@ -72,10 +73,20 @@ namespace EfD2.Samples
 			playerEntity = entityPool.CreateEntity("Player");
 			pileOfGold = entityPool.CreateEntity("gold");
 
-			// One way of adding components.
-			playerEntity += new Positionable() { CurrentPosition = new Vector2(50, 80), ZOrder = 1.0f };
+			pileOfGold += new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 1.0f };
+			pileOfGold += new Collidable { Type = EntityType.Item };
+			pileOfGold += new Collectible { Type = CollectibleType.Gold };
+			pileOfGold += new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
+													 Content.Load<Texture2D>("chest_gold0"),
+			                                         Content.Load<Texture2D>("chest_gold1")));
+
+			mapSystem.GenerateMap();
+			var pos = entityPool.GetEntity("Entrance").GetComponent<Positionable>();
+			var col = entityPool.GetEntity("Entrance").GetComponent<Collidable>();
+
+			playerEntity += new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 1.0f };
 			playerEntity += new Movable() { MoveSpeed = 75 };
-			playerEntity += new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0,0,6,7) };
+			playerEntity += new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) };
 
 			playerEntity += new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -85,14 +96,11 @@ namespace EfD2.Samples
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player2")));
 
-			pileOfGold += new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 1.0f };
-			pileOfGold += new Collidable { Type = EntityType.Item };
-			pileOfGold += new Collectible { Type = CollectibleType.Gold };
-			pileOfGold += new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
-													 Content.Load<Texture2D>("chest_gold0"),
-			                                         Content.Load<Texture2D>("chest_gold1")));
 
-			mapSystem.GenerateMap();
+
+			Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
+			MediaPlayer.Play(song);
+			MediaPlayer.Volume = 0.2f;
 
 			base.Initialize();
 		}
@@ -117,7 +125,10 @@ namespace EfD2.Samples
 				Exit();
 
 			if (keyboard.IsKeyDown(Keys.Space) && previousKeyboard.IsKeyUp(Keys.Space))
+			{
 				mapSystem.GenerateMap();
+				playerEntity.GetComponent<Positionable>().CurrentPosition = mapSystem.GetOpenSpaceNearEntrance();
+			}
 			
 			/*
             if (mouse.LeftButton == ButtonState.Pressed && previousMouse.LeftButton == ButtonState.Released

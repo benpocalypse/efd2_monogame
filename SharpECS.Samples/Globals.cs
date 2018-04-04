@@ -12,7 +12,9 @@ namespace EfD2
 		Wall,
 		Floor,
 		Player,
-		Item
+		Item,
+		Entrance,
+		Exit
 	};
 
 	public enum Direction
