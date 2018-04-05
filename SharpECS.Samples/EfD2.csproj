@@ -56,6 +56,9 @@
     <Compile Include="Systems\DrawingSystem.cs" />
     <Compile Include="Systems\MapSystem.cs" />
     <Compile Include="Components\Collectible.cs" />
+    <Compile Include="Systems\GameSystem.cs" />
+    <Compile Include="Systems\LogicSystem.cs" />
+    <Compile Include="Components\Statable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />

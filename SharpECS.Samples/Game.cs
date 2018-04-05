@@ -78,7 +78,7 @@ namespace EfD2.Samples
 			pileOfGold += new Collectible { Type = CollectibleType.Gold };
 			pileOfGold += new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 													 Content.Load<Texture2D>("chest_gold0"),
-			                                         Content.Load<Texture2D>("chest_gold1")));
+													 Content.Load<Texture2D>("chest_gold1")));
 
 			mapSystem.GenerateMap();
 			var pos = entityPool.GetEntity("Entrance").GetComponent<Positionable>();
@@ -87,6 +87,7 @@ namespace EfD2.Samples
 			playerEntity += new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 1.0f };
 			playerEntity += new Movable() { MoveSpeed = 75 };
 			playerEntity += new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) };
+			playerEntity += new Statable() { PlayerState = PlayerStateType.None };
 
 			playerEntity += new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -99,6 +100,7 @@ namespace EfD2.Samples
 
 
 			Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
+			//Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
 			MediaPlayer.Play(song);
 			MediaPlayer.Volume = 0.2f;
 
@@ -160,6 +162,7 @@ namespace EfD2.Samples
 			inputSystem?.Update(gameTime);
 			collisionSystem?.Update(gameTime);
 			physicsSystem?.Update(gameTime);
+			mapSystem?.Update();
 
             previousMouse = mouse;
             previousKeyboard = keyboard;

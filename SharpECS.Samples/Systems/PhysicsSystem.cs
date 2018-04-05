@@ -58,6 +58,13 @@ namespace EfD2.Systems
 											}
 											break;
 
+										case EntityType.Exit:
+											{
+												var player = entityPool.GetEntity("Player");
+												player.GetComponent<Statable>().PlayerState = PlayerStateType.HitExit;
+											}
+											break;
+
 										case EntityType.Item:
 											{
 												entitiesToRemove.Add(oe);

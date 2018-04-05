@@ -56,6 +56,21 @@ namespace EfD2.Systems
 			}
 		}
 
+		public void Update()
+		{
+			//var state = entityPool.Entities.Select(_ => _.GetComponent<Statable>());
+
+			var player = entityPool.GetEntity("Player");
+			var state = player.GetComponent<Statable>();
+
+			if(state.PlayerState == PlayerStateType.HitExit)
+			{
+				state.PlayerState = PlayerStateType.None;
+				GenerateMap();
+				player.GetComponent<Positionable>().CurrentPosition = GetOpenSpaceNearEntrance();
+			}
+		}
+
 		public void GenerateMap()
 		{
 			Random r = new Random();
@@ -315,7 +330,7 @@ namespace EfD2.Systems
 		/// Fills the specified x,y empty space with the destination tile until a 
 		/// non-empty tile is encountered.
 		///****************************************************************************
-		void FloodFill(int x, int y, int type)
+		private void FloodFill(int x, int y, int type)
 		{
 		   int ucLeft;
 		   int ucRight;
@@ -556,7 +571,7 @@ namespace EfD2.Systems
 		/// generated. Essentially, we want the entrance and exit to a room to be
 		/// fairly far apart to force the player to navigate our maze.
 		///****************************************************************************
-		void AddDoor(Direction direction, bool bEntrance)
+		private void AddDoor(Direction direction, bool bEntrance)
 		{
 			Animation entrance = new Animation(AnimationType.None, Content.Load<Texture2D>("door1_1"));
 			Animation exit = new Animation(AnimationType.None, Content.Load<Texture2D>("door1_2"));

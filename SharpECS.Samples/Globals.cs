@@ -41,6 +41,25 @@ namespace EfD2
 		Health
 	};
 
+
+
+
+	// Theoretical state types
+	public enum PlayerStateType
+	{
+		None,
+		Alive,
+		Dead,
+		HitExit
+	}
+
+	public enum GameStateType
+	{
+		Intro,
+		TitleScreen,
+		Playing
+	}
+
 	public class Animation : IComparable<Animation>
 	{
 		public AnimationType Type { get; set; } = AnimationType.None;
