@@ -1,0 +1,21 @@
+﻿<Properties StartupConfiguration="{92EC1C09-B726-482E-B90C-F6C91556755C}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/EfD2_Game.cs">
+    <Files>
+      <File FileName="EfD2/EfD2_Game.cs" Line="158" Column="55" />
+      <File FileName="EfD2/Systems/CollisionSystem.cs" Line="14" Column="8" />
+      <File FileName="EfD2/Systems/DrawingSystem.cs" Line="34" Column="66" />
+      <File FileName="EfD2/Systems/MapSystem.cs" Line="329" Column="1" />
+      <File FileName="ECS/EntityMatcher.cs" Line="54" Column="50" />
+      <File FileName="EfD2/Systems/PhysicsSystem.cs" Line="97" Column="5" />
+      <File FileName="ECS/Entity.cs" Line="50" Column="88" />
+      <File FileName="ECS/SystemObserver.cs" Line="1" Column="14" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.EfD2 PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
