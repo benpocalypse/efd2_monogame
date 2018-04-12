@@ -247,3 +247,9 @@
 /processorParam:TextureFormat=Color
 /build:door1_2.png
 
+#begin 13 H-Pizzle - Ghosts of a Fallen Empire.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:13 H-Pizzle - Ghosts of a Fallen Empire.ogg
+

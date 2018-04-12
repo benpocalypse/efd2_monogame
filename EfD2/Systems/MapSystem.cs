@@ -304,10 +304,10 @@ namespace EfD2.Systems
 			int y = Convert.ToInt32((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET);
 
 			if (x >= MAPWIDTH)
-				x--;
+				x = 23;
 
 			if (y >= MAPHEIGHT)
-				y--;
+				y = 17;
 
 			if (x < (MAPWIDTH-1) && MapArray[x + 1, y] == MT_FLOOR)
 				return new Vector2(pos.CurrentPosition.X + 8, pos.CurrentPosition.Y);

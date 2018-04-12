@@ -80,7 +80,7 @@ namespace EfD2
 			mapSystem.GenerateMap();
 
 			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 1.0f });
-			playerEntity.AddComponent(new Movable() { MoveSpeed = 75 });
+			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
 			playerEntity.AddComponent(new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) });
 			playerEntity.AddComponent(new Statable() { PlayerState = PlayerStateType.None });
 
@@ -92,8 +92,8 @@ namespace EfD2
 													   Content.Load<Texture2D>("player0"),
 			                                           Content.Load<Texture2D>("player2"))));
 
-			Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
-			//Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
+			//Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
+			Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
 			MediaPlayer.Play(song);
 			MediaPlayer.Volume = 0.2f;
 	
@@ -160,7 +160,7 @@ namespace EfD2
 			graphics.GraphicsDevice.Clear(Color.Black);
 
 			spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
-			drawingSystem?.Animate(spriteBatch, gameTime);
+				drawingSystem?.Animate(spriteBatch, gameTime);
 			spriteBatch.End();
 
 			base.Draw(gameTime);
