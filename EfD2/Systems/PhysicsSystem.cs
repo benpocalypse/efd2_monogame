@@ -27,8 +27,6 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-		private List<Entity> entityPool;
-
 		public PhysicsSystem()
 		{
 		}
@@ -72,7 +70,7 @@ namespace EfD2.Systems
 										case EntityType.Exit:
 											{
 												var player = EntityMatcher.GetEntity("Player");
-												player.GetComponent<Statable>().PlayerState = PlayerStateType.HitExit;
+												player.GetComponent<PlayerStatable>().PlayerState = PlayerStateType.HitExit;
 											}
 											break;
 

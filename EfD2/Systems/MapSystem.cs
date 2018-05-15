@@ -10,7 +10,7 @@ using ECS;
 using EfD2.Components;
 using EfD2;
 using Microsoft.Xna.Framework.Content;
-
+using System.Diagnostics;
 
 namespace EfD2.Systems
 {
@@ -23,7 +23,7 @@ namespace EfD2.Systems
 		private const int MAPWIDTH =		24;
 		private const int MAPHEIGHT =		18;
 
-		// Defined storage for our 4 tiles
+		// Defined storage for our tiles
 		private const int MT_EMPTY = 0;
 		private const int MT_FLOOR = 1;
 		private const int MT_WALL_TOP = 2;
@@ -32,6 +32,8 @@ namespace EfD2.Systems
 		private const int MT_WALL_TOP_RIGHT_CORNER = 5;
 		private const int MT_WALL_BOTTOM_LEFT_CORNER = 6;
 		private const int MT_WALL_BOTTOM_RIGHT_CORNER = 7;
+		private const int MT_WALL_LEFT_END = 8;
+		private const int MT_WALL_RIGHT_END = 9;
 
 		private const int MT_EXIT = 98;
 		private const int MT_ENTRANCE = 99;
@@ -71,7 +73,7 @@ namespace EfD2.Systems
 			//var state = entityPool.Entities.Select(_ => _.GetComponent<Statable>());
 
 			var player = EntityMatcher.GetEntity("Player");
-			var state = player.GetComponent<Statable>();
+			var state = player.GetComponent<PlayerStatable>();
 
 			if(state.PlayerState == PlayerStateType.HitExit)
 			{
@@ -500,6 +502,12 @@ namespace EfD2.Systems
 			 * Bottom Right Corner:
 			 *  - Nothing to the right or we're at the rightmost tile
 			 *  - Nothing below
+			 * 
+			 * Middle Left End:
+			 *  - Nothing to the top
+			 *  - Nothign to the left
+			 *  - Nothing to the bottom
+			 *  - Something to the right
 			*/
 
 			for (int i = 0; i < MAPWIDTH; i++)
@@ -579,6 +587,22 @@ namespace EfD2.Systems
 						if ((i == (MAPWIDTH - 1)) && (j == (MAPHEIGHT-1)) &&
 						   (MapArray[i, j] != MT_EMPTY))
 							MapArray[i, j] = MT_WALL_BOTTOM_RIGHT_CORNER;
+
+						// Left End cases
+						if ((i > 0) && (i < MAPWIDTH - 1) && (j > 0) && (j < MAPHEIGHT - 1) &&
+							(MapArray[i - 1, j] == MT_FLOOR) &&
+							(MapArray[i, j - 1] == MT_FLOOR) &&
+							(MapArray[i, j + 1] == MT_FLOOR) &&
+							(MapArray[i + 1, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_LEFT_END;
+
+						// Right End cases
+						if ((i > 0) && (i < MAPWIDTH - 2) && (j > 0) && (j < MAPHEIGHT - 1) &&
+							(MapArray[i + 1, j] == MT_FLOOR) &&
+							(MapArray[i, j - 1] == MT_FLOOR) &&
+							(MapArray[i, j + 1] == MT_FLOOR) &&
+							(MapArray[i - 1, j] != MT_EMPTY))
+							MapArray[i, j] = MT_WALL_RIGHT_END;
 					}
 				}
 			}
@@ -813,6 +837,8 @@ namespace EfD2.Systems
 			Animation wallBottomLeftCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_4"));
 			Animation wallBottomRightCorner = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_3"));
 			Animation wallMiddle = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
+			Animation wallLeftEnd = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_7"));
+			Animation wallRightEnd = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_8"));
 
 			Console.WriteLine("Floor = " + ucFloor);
 
@@ -926,7 +952,34 @@ namespace EfD2.Systems
 								tempEntity.AddComponents(true, componentCollection);
 							}
 							break;
-							
+
+						case MT_WALL_LEFT_END:
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallLeftEnd),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = new Entity("Map" + i + ", " + j);
+								tempEntity.AddComponents(true, componentCollection);
+							}
+							break;
+			
+						case MT_WALL_RIGHT_END:
+							{
+								IComponent[] componentCollection = new IComponent[]
+								{
+									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8), (MAP_Y_OFFSET * 8) + (j * 8)) },
+									new Drawable(wallRightEnd),
+									new Collidable() { Type = EntityType.Wall }
+								};
+
+								var tempEntity = new Entity("Map" + i + ", " + j);
+								tempEntity.AddComponents(true, componentCollection);
+							}
+							break;
 						default:
 							break;
 					}

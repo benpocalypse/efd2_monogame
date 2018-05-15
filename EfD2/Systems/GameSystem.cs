@@ -21,7 +21,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
+			get { return new Filter().AllOf(typeof(GameStatable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -34,12 +34,12 @@ namespace EfD2.Systems
 			
 		}
 
-		/*
-		public GameSystem(EntityPool pool)
-			: base(pool, typeof(Positionable), typeof(Collidable))
+		public void Update(GameTime gameTime)
 		{
-			entityPool = pool;
+			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+			{
+				var state = e.GetComponent<GameStatable>();
+			}
 		}
-		*/
 	}
 }

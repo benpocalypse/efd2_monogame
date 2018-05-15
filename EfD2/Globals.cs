@@ -41,9 +41,6 @@ namespace EfD2
 		Health
 	};
 
-
-
-
 	// Theoretical state types
 	public enum PlayerStateType
 	{

@@ -13,6 +13,1289 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin font/!.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/!.png
+
+#begin font/0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/0.png
+
+#begin font/1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/1.png
+
+#begin font/2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/2.png
+
+#begin font/3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/3.png
+
+#begin font/4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/4.png
+
+#begin font/5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/5.png
+
+#begin font/6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/6.png
+
+#begin font/7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/7.png
+
+#begin font/8.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/8.png
+
+#begin font/9.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/9.png
+
+#begin font/a.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/a.png
+
+#begin font/aa.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/aa.png
+
+#begin font/b.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/b.png
+
+#begin font/bb.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/bb.png
+
+#begin font/c.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/c.png
+
+#begin font/cc.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/cc.png
+
+#begin font/colon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/colon.png
+
+#begin font/comma.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/comma.png
+
+#begin font/copyright.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/copyright.png
+
+#begin font/d.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/d.png
+
+#begin font/dash.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/dash.png
+
+#begin font/dd.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/dd.png
+
+#begin font/e.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/e.png
+
+#begin font/ee.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ee.png
+
+#begin font/f.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/f.png
+
+#begin font/ff.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ff.png
+
+#begin font/g.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/g.png
+
+#begin font/gg.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/gg.png
+
+#begin font/h.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/h.png
+
+#begin font/hh.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/hh.png
+
+#begin font/i.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/i.png
+
+#begin font/ii.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ii.png
+
+#begin font/j.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/j.png
+
+#begin font/jj.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/jj.png
+
+#begin font/k.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/k.png
+
+#begin font/kk.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/kk.png
+
+#begin font/l.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/l.png
+
+#begin font/ll.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ll.png
+
+#begin font/m.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/m.png
+
+#begin font/mm.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/mm.png
+
+#begin font/n.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/n.png
+
+#begin font/nn.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/nn.png
+
+#begin font/o.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/o.png
+
+#begin font/oo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/oo.png
+
+#begin font/p.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/p.png
+
+#begin font/period.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/period.png
+
+#begin font/pp.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/pp.png
+
+#begin font/q.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/q.png
+
+#begin font/qq.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/qq.png
+
+#begin font/r.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/r.png
+
+#begin font/rr.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/rr.png
+
+#begin font/s.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/s.png
+
+#begin font/ss.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ss.png
+
+#begin font/t.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/t.png
+
+#begin font/tt.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/tt.png
+
+#begin font/u.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/u.png
+
+#begin font/uu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/uu.png
+
+#begin font/v.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/v.png
+
+#begin font/vv.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/vv.png
+
+#begin font/w.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/w.png
+
+#begin font/ww.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/ww.png
+
+#begin font/x.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/x.png
+
+#begin font/xx.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/xx.png
+
+#begin font/y.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/y.png
+
+#begin font/yy.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/yy.png
+
+#begin font/z.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/z.png
+
+#begin font/zz.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:font/zz.png
+
+#begin obj/Windows/font/!.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/!.mgcontent
+
+#begin obj/Windows/font/0.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/0.mgcontent
+
+#begin obj/Windows/font/1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/1.mgcontent
+
+#begin obj/Windows/font/2.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/2.mgcontent
+
+#begin obj/Windows/font/3.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/3.mgcontent
+
+#begin obj/Windows/font/4.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/4.mgcontent
+
+#begin obj/Windows/font/5.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/5.mgcontent
+
+#begin obj/Windows/font/6.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/6.mgcontent
+
+#begin obj/Windows/font/7.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/7.mgcontent
+
+#begin obj/Windows/font/8.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/8.mgcontent
+
+#begin obj/Windows/font/9.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/9.mgcontent
+
+#begin obj/Windows/font/a.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/a.mgcontent
+
+#begin obj/Windows/font/b.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/b.mgcontent
+
+#begin obj/Windows/font/c.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/c.mgcontent
+
+#begin obj/Windows/font/cc.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/cc.mgcontent
+
+#begin obj/Windows/font/colon.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/colon.mgcontent
+
+#begin obj/Windows/font/comma.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/comma.mgcontent
+
+#begin obj/Windows/font/copyright.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/copyright.mgcontent
+
+#begin obj/Windows/font/d.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/d.mgcontent
+
+#begin obj/Windows/font/dash.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/dash.mgcontent
+
+#begin obj/Windows/font/dd.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/dd.mgcontent
+
+#begin obj/Windows/font/e.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/e.mgcontent
+
+#begin obj/Windows/font/ee.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ee.mgcontent
+
+#begin obj/Windows/font/f.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/f.mgcontent
+
+#begin obj/Windows/font/ff.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ff.mgcontent
+
+#begin obj/Windows/font/g.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/g.mgcontent
+
+#begin obj/Windows/font/gg.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/gg.mgcontent
+
+#begin obj/Windows/font/h.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/h.mgcontent
+
+#begin obj/Windows/font/hh.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/hh.mgcontent
+
+#begin obj/Windows/font/i.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/i.mgcontent
+
+#begin obj/Windows/font/ii.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ii.mgcontent
+
+#begin obj/Windows/font/j.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/j.mgcontent
+
+#begin obj/Windows/font/jj.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/jj.mgcontent
+
+#begin obj/Windows/font/k.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/k.mgcontent
+
+#begin obj/Windows/font/kk.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/kk.mgcontent
+
+#begin obj/Windows/font/l.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/l.mgcontent
+
+#begin obj/Windows/font/ll.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ll.mgcontent
+
+#begin obj/Windows/font/m.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/m.mgcontent
+
+#begin obj/Windows/font/mm.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/mm.mgcontent
+
+#begin obj/Windows/font/n.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/n.mgcontent
+
+#begin obj/Windows/font/nn.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/nn.mgcontent
+
+#begin obj/Windows/font/o.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/o.mgcontent
+
+#begin obj/Windows/font/oo.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/oo.mgcontent
+
+#begin obj/Windows/font/p.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/p.mgcontent
+
+#begin obj/Windows/font/period.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/period.mgcontent
+
+#begin obj/Windows/font/pp.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/pp.mgcontent
+
+#begin obj/Windows/font/q.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/q.mgcontent
+
+#begin obj/Windows/font/qq.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/qq.mgcontent
+
+#begin obj/Windows/font/r.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/r.mgcontent
+
+#begin obj/Windows/font/rr.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/rr.mgcontent
+
+#begin obj/Windows/font/s.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/s.mgcontent
+
+#begin obj/Windows/font/ss.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ss.mgcontent
+
+#begin obj/Windows/font/t.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/t.mgcontent
+
+#begin obj/Windows/font/tt.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/tt.mgcontent
+
+#begin obj/Windows/font/u.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/u.mgcontent
+
+#begin obj/Windows/font/uu.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/uu.mgcontent
+
+#begin obj/Windows/font/v.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/v.mgcontent
+
+#begin obj/Windows/font/vv.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/vv.mgcontent
+
+#begin obj/Windows/font/w.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/w.mgcontent
+
+#begin obj/Windows/font/ww.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/ww.mgcontent
+
+#begin obj/Windows/font/x.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/x.mgcontent
+
+#begin obj/Windows/font/xx.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/xx.mgcontent
+
+#begin obj/Windows/font/y.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/y.mgcontent
+
+#begin obj/Windows/font/yy.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/yy.mgcontent
+
+#begin obj/Windows/font/z.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/z.mgcontent
+
+#begin obj/Windows/font/zz.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/font/zz.mgcontent
+
+#begin obj/Windows/.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/.mgcontent
+
+#begin obj/Windows/01 The Guillotine Factory - Assembly Line.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/01 The Guillotine Factory - Assembly Line.mgcontent
+
+#begin obj/Windows/13 H-Pizzle - Ghosts of a Fallen Empire.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/13 H-Pizzle - Ghosts of a Fallen Empire.mgcontent
+
+#begin obj/Windows/black.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/black.mgcontent
+
+#begin obj/Windows/bookshelf.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/bookshelf.mgcontent
+
+#begin obj/Windows/chest_gold0.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/chest_gold0.mgcontent
+
+#begin obj/Windows/chest_gold1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/chest_gold1.mgcontent
+
+#begin obj/Windows/door1_1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/door1_1.mgcontent
+
+#begin obj/Windows/door1_2.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/door1_2.mgcontent
+
+#begin obj/Windows/floor1_1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/floor1_1.mgcontent
+
+#begin obj/Windows/floor1_2.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/floor1_2.mgcontent
+
+#begin obj/Windows/floor1_3.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/floor1_3.mgcontent
+
+#begin obj/Windows/heart1_1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/heart1_1.mgcontent
+
+#begin obj/Windows/player0.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/player0.mgcontent
+
+#begin obj/Windows/player1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/player1.mgcontent
+
+#begin obj/Windows/player2.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/player2.mgcontent
+
+#begin obj/Windows/wall1_1.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_1.mgcontent
+
+#begin obj/Windows/wall1_2.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_2.mgcontent
+
+#begin obj/Windows/wall1_3.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_3.mgcontent
+
+#begin obj/Windows/wall1_4.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_4.mgcontent
+
+#begin obj/Windows/wall1_5.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_5.mgcontent
+
+#begin obj/Windows/wall1_6.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_6.mgcontent
+
+#begin obj/Windows/wall1_7.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_7.mgcontent
+
+#begin obj/Windows/wall1_8.mgcontent
+/importer:
+/processor:
+/build:obj/Windows/wall1_8.mgcontent
+
+#begin 01 The Guillotine Factory - Assembly Line.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:01 The Guillotine Factory - Assembly Line.ogg
+
+#begin 13 H-Pizzle - Ghosts of a Fallen Empire.ogg
+/importer:OggImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:13 H-Pizzle - Ghosts of a Fallen Empire.ogg
+
+#begin Content.mgcb
+/importer:
+/processor:
+/build:Content.mgcb
+
 #begin black.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -37,6 +1320,71 @@
 /processorParam:TextureFormat=Color
 /build:bookshelf.png
 
+#begin chest_gold0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:chest_gold0.png
+
+#begin chest_gold1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:chest_gold1.png
+
+#begin color_table.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:color_table.png
+
+#begin cutscene.xcf
+/importer:
+/processor:
+/build:cutscene.xcf
+
+#begin door1_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:door1_1.png
+
+#begin door1_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:door1_2.png
+
 #begin floor1_1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -49,6 +1397,42 @@
 /processorParam:TextureFormat=Color
 /build:floor1_1.png
 
+#begin floor1_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:floor1_2.png
+
+#begin floor1_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:floor1_3.png
+
+#begin heart1_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:heart1_1.png
+
 #begin player0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -60,18 +1444,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:player0.png
-
-#begin wall1_1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:wall1_1.png
 
 #begin player1.png
 /importer:TextureImporter
@@ -97,7 +1469,7 @@
 /processorParam:TextureFormat=Color
 /build:player2.png
 
-#begin floor1_2.png
+#begin screenshot.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -107,7 +1479,61 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:floor1_2.png
+/build:screenshot.png
+
+#begin screenshot.xcf
+/importer:
+/processor:
+/build:screenshot.xcf
+
+#begin skeleton.xcf
+/importer:
+/processor:
+/build:skeleton.xcf
+
+#begin sprites.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sprites.png
+
+#begin sprites.xcf
+/importer:
+/processor:
+/build:sprites.xcf
+
+#begin tileset.xcf
+/importer:
+/processor:
+/build:tileset.xcf
+
+#begin titlescreen.mmpz
+/importer:
+/processor:
+/build:titlescreen.mmpz
+
+#begin titlescreen.mmpz.bak
+/importer:
+/processor:
+/build:titlescreen.mmpz.bak
+
+#begin wall1_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:wall1_1.png
 
 #begin wall1_2.png
 /importer:TextureImporter
@@ -169,7 +1595,7 @@
 /processorParam:TextureFormat=Color
 /build:wall1_6.png
 
-#begin door1_1.png
+#begin wall1_7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -179,9 +1605,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:door1_1.png
+/build:wall1_7.png
 
-#begin heart1_1.png
+#begin wall1_8.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -191,65 +1617,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:heart1_1.png
-
-#begin chest_gold0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:chest_gold0.png
-
-#begin chest_gold1.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:chest_gold1.png
-
-#begin floor1_3.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:floor1_3.png
-
-#begin 01 The Guillotine Factory - Assembly Line.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:01 The Guillotine Factory - Assembly Line.ogg
-
-#begin door1_2.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:door1_2.png
-
-#begin 13 H-Pizzle - Ghosts of a Fallen Empire.ogg
-/importer:OggImporter
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:13 H-Pizzle - Ghosts of a Fallen Empire.ogg
+/build:wall1_8.png
 

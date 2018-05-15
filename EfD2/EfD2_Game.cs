@@ -30,6 +30,7 @@ namespace EfD2
 		PhysicsSystem physicsSystem;
 		DrawingSystem drawingSystem;
 		MapSystem mapSystem;
+		GameSystem gameSystem;
 
 		Entity playerEntity;
 		Entity pileOfGold;
@@ -61,7 +62,7 @@ namespace EfD2
 		{
 			// Systems will refresh when new Entities have compatible components added to them.
 			collisionSystem = new CollisionSystem();
-			drawingSystem = new DrawingSystem();
+			drawingSystem = new DrawingSystem(ref gameContent);
 			inputSystem = new InputSystem();
 
 			physicsSystem = new PhysicsSystem();
@@ -70,7 +71,7 @@ namespace EfD2
 			playerEntity = new Entity("Player");
 			pileOfGold = new Entity("gold");
 
-			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 1.0f });
+			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 0.9f });
 			pileOfGold.AddComponent(new Collidable { Type = EntityType.Item });
 			pileOfGold.AddComponent(new Collectible { Type = CollectibleType.Gold });
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
@@ -79,10 +80,10 @@ namespace EfD2
 
 			mapSystem.GenerateMap();
 
-			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 1.0f });
+			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 0.9f });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
 			playerEntity.AddComponent(new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) });
-			playerEntity.AddComponent(new Statable() { PlayerState = PlayerStateType.None });
+			playerEntity.AddComponent(new PlayerStatable() { PlayerState = PlayerStateType.None });
 
 			playerEntity.AddComponent(new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -161,6 +162,12 @@ namespace EfD2
 
 			spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
 				drawingSystem?.Animate(spriteBatch, gameTime);
+
+				drawingSystem?.DrawText(
+@"The quick, Sly, Fox jumped
+over the lazy Brown dog!
+!@#$%^&*()", spriteBatch, 2, 2);
+			
 			spriteBatch.End();
 
 			base.Draw(gameTime);
