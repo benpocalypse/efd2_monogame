@@ -58,6 +58,10 @@
     <Compile Include="Globals.cs" />
     <Compile Include="Resolution.cs" />
     <Compile Include="Components\GameStatable.cs" />
+    <Compile Include="Components\Ephemeral.cs" />
+    <Compile Include="Systems\TextSystem.cs" />
+    <Compile Include="Components\HasText.cs" />
+    <Compile Include="Components\Sizable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

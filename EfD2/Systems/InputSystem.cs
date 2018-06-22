@@ -44,6 +44,7 @@ namespace EfD2.Systems
 				position.PreviousPosition = position.CurrentPosition;
 				move.PreviousDirection = move.CurrentDirection;
 
+				//if (GamePad.GetState(PlayerIndex.One).GamePadDPad//.Buttons.Up == ButtonState.Pressed)
                 if (Keyboard.GetState().IsKeyDown(Keys.D)) 
 				{
 					move.CurrentDirection = Direction.Right;

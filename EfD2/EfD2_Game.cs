@@ -25,6 +25,7 @@ namespace EfD2
 		MouseState mouse;
 		MouseState previousMouse;
 
+		TextSystem textSystem;
 		InputSystem inputSystem;
 		CollisionSystem collisionSystem;
 		PhysicsSystem physicsSystem;
@@ -34,6 +35,8 @@ namespace EfD2
 
 		Entity playerEntity;
 		Entity pileOfGold;
+
+		Entity someTestText;
 
 		public EfD2_Game()
 		{
@@ -62,7 +65,12 @@ namespace EfD2
 		{
 			// Systems will refresh when new Entities have compatible components added to them.
 			collisionSystem = new CollisionSystem();
-			drawingSystem = new DrawingSystem(ref gameContent);
+
+			// Create a new SpriteBatch, which can be used to draw textures.
+			spriteBatch = new SpriteBatch(GraphicsDevice);
+
+			drawingSystem = new DrawingSystem(ref gameContent, ref spriteBatch);
+			textSystem = new TextSystem(ref gameContent, ref spriteBatch);
 			inputSystem = new InputSystem();
 
 			physicsSystem = new PhysicsSystem();
@@ -70,6 +78,13 @@ namespace EfD2
 
 			playerEntity = new Entity("Player");
 			pileOfGold = new Entity("gold");
+			someTestText = new Entity("text");
+
+			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(5, 5), ZOrder = 1.0f });
+			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0 });
+			HasText t = new HasText();
+			t.Text.Add("Is this thing on?");
+			someTestText.AddComponent(t);
 
 			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 0.9f });
 			pileOfGold.AddComponent(new Collidable { Type = EntityType.Item });
@@ -107,8 +122,7 @@ namespace EfD2
 		/// </summary>
 		protected override void LoadContent()
 		{
-			// Create a new SpriteBatch, which can be used to draw textures.
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+
 		}
 
 		protected override void UnloadContent()
@@ -161,13 +175,8 @@ namespace EfD2
 			graphics.GraphicsDevice.Clear(Color.Black);
 
 			spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
-				drawingSystem?.Animate(spriteBatch, gameTime);
-
-				drawingSystem?.DrawText(
-@"The quick, Sly, Fox jumped
-over the lazy Brown dog!
-!@#$%^&*()", spriteBatch, 2, 2);
-			
+				drawingSystem?.Animate(gameTime);
+				textSystem.Update(gameTime);
 			spriteBatch.End();
 
 			base.Draw(gameTime);

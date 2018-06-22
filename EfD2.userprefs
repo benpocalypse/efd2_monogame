@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{92EC1C09-B726-482E-B90C-F6C91556755C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/Systems/DrawingSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/EfD2_Game.cs">
     <Files>
-      <File FileName="EfD2/EfD2_Game.cs" Line="168" Column="11" />
-      <File FileName="EfD2/Systems/DrawingSystem.cs" Line="164" Column="1" />
-      <File FileName="EfD2/Systems/MapSystem.cs" Line="46" Column="3" />
-      <File FileName="EfD2/Systems/PhysicsSystem.cs" Line="39" Column="4" />
-      <File FileName="EfD2/Systems/GameSystem.cs" Line="41" Column="48" />
+      <File FileName="EfD2/Systems/TextSystem.cs" Line="127" Column="6" />
+      <File FileName="EfD2/Systems/DrawingSystem.cs" Line="80" Column="14" />
       <File FileName="EfD2/Globals.cs" Line="42" Column="4" />
-      <File FileName="EfD2/Components/GraphicsComponent.cs" Line="1" Column="1" />
+      <File FileName="EfD2/Components/GraphicsComponent.cs" Line="15" Column="9" />
       <File FileName="EfD2/Components/GameStatable.cs" Line="11" Column="65" />
+      <File FileName="EfD2/Components/Ephemeral.cs" Line="8" Column="36" />
+      <File FileName="EfD2/Components/HasText.cs" Line="16" Column="30" />
+      <File FileName="EfD2/Systems/InputSystem.cs" Line="47" Column="7" />
+      <File FileName="EfD2/EfD2_Game.cs" Line="87" Column="33" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
