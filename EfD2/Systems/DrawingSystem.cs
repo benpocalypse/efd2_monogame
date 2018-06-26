@@ -72,9 +72,9 @@ namespace EfD2.Systems
 						var pos = position.CurrentPosition;
 
 						if(animatable.FlipOnXAxis == false)
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, position.ZOrder);
+							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER );
 						else
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.FlipHorizontally, position.ZOrder);
+							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
 					}
 				}
             }

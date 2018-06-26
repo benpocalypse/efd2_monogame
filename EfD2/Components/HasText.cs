@@ -10,6 +10,7 @@ namespace EfD2
 		public bool TakesFocus = false;
 		public bool Border = false;
 		public bool RequiresAcknowledgment = false;
+		public DisplayLayer ZOrder = DisplayLayer.Text;
 
 		public HasText()
 		{

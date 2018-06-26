@@ -20,6 +20,7 @@ namespace EfD2
 		private ContentManager contentManager;
 		private SpriteBatch spriteBatch;
 		private Dictionary<string, Texture2D> fontDictionary = new Dictionary<string, Texture2D>(68);
+		private Texture2D[] borderArray;
 
 		public TextSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
 		{
@@ -39,6 +40,7 @@ namespace EfD2
 			fontDictionary.Add("-", contentManager.Load<Texture2D>("font/dash"));
 			fontDictionary.Add(".", contentManager.Load<Texture2D>("font/period"));
 			fontDictionary.Add("!", contentManager.Load<Texture2D>("font/!"));
+			fontDictionary.Add("?", contentManager.Load<Texture2D>("font/question"));
 			fontDictionary.Add(" ", contentManager.Load<Texture2D>("black"));
 
 			fontDictionary.Add("A", contentManager.Load<Texture2D>("font/aa"));
@@ -94,6 +96,19 @@ namespace EfD2
 			fontDictionary.Add("x", contentManager.Load<Texture2D>("font/x"));
 			fontDictionary.Add("y", contentManager.Load<Texture2D>("font/y"));
 			fontDictionary.Add("z", contentManager.Load<Texture2D>("font/z"));
+
+			borderArray = new Texture2D[8];
+			// and finally add the borders.
+			borderArray[0] = contentManager.Load<Texture2D>("font/border_top_left");
+			borderArray[1] = contentManager.Load<Texture2D>("font/border_top_middle");
+			borderArray[2] = contentManager.Load<Texture2D>("font/border_top_right");
+
+			borderArray[3] = contentManager.Load<Texture2D>("font/border_left_middle");
+			borderArray[4] = contentManager.Load<Texture2D>("font/border_right_middle");
+
+			borderArray[5] = contentManager.Load<Texture2D>("font/border_bottom_left");
+			borderArray[6] = contentManager.Load<Texture2D>("font/border_bottom_middle");
+			borderArray[7] = contentManager.Load<Texture2D>("font/border_bottom_right");
 		}
 
 		public Filter filterMatch
@@ -120,40 +135,112 @@ namespace EfD2
 
 				if (ephemeral.PersistTime >= 0.0)
 				{
-					foreach (string s in text.Text)
-					{
-						DrawText(s, pos);
-					}
+
+					DrawText(text, pos);
+
+					if (text.Border == true)
+						DrawBorder(pos, text);
 				}
 			}
 		}
 
-		private void DrawText(string textToDraw, Positionable pos)
+		private void DrawText(HasText textToDraw, Positionable pos)
 		{
 			Vector2 v = new Vector2(pos.CurrentPosition.X * 8, pos.CurrentPosition.Y * 8);
 
-			foreach (char c in textToDraw)
+			foreach (string s in textToDraw.Text)
 			{
-				if (c == '\n')
+				foreach (char c in s)
 				{
-					v.Y += 8;
-					v.X = pos.CurrentPosition.X * 8;
-				}
-				else
-				{
-					var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
-
-					if (tex.Value != null)
+					if (c == '\n')
 					{
-						spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(tex.Value.Width / 2, tex.Value.Height / 2), Vector2.One, SpriteEffects.None, 1.0f);
-						v.X += 8;
+						v.Y += 8;
+						v.X = pos.CurrentPosition.X * 8;
+					}
+					else
+					{
+						var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
+
+						if (tex.Value != null)
+						{
+							spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(tex.Value.Width / 2, tex.Value.Height / 2), Vector2.One, SpriteEffects.None, (float)textToDraw.ZOrder / (float)DisplayLayer.MAX_LAYER);
+							v.X += 8;
+						}
 					}
 				}
 			}
 		}
 
-		private void DrawBorder(Positionable pos, Sizable size)
+		private void DrawBorder(Positionable pos, HasText text)
 		{
+			Vector2 v1 = new Vector2((pos.CurrentPosition.X-1) * 8, (pos.CurrentPosition.Y-1) * 8);
+
+			int height = 0;
+			int width = 0;
+
+			foreach (string s in text.Text)
+			{
+				var sub = s.Split('\n');
+				foreach (string subS in sub)
+				{
+					if (subS.Length > width)
+						width = subS.Length;
+
+					height++;
+				}
+			}
+
+			for (int y = 0; y <= height; y++)
+			{
+				if (y == 0)
+				{
+					Vector2 v2 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y - 1) * 8);
+					spriteBatch.Draw(borderArray[0], v1, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					spriteBatch.Draw(borderArray[2], v2, null, Color.White, 0f, new Vector2(borderArray[2].Width / 2, borderArray[2].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+				}
+
+
+				if (y == height-1)
+				{
+					Vector2 v3 = new Vector2((pos.CurrentPosition.X - 1) * 8, (pos.CurrentPosition.Y + height) * 8);
+					Vector2 v4 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y + height) * 8);
+					spriteBatch.Draw(borderArray[5], v3, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					spriteBatch.Draw(borderArray[7], v4, null, Color.White, 0f, new Vector2(borderArray[2].Width / 2, borderArray[2].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+				}
+				
+				for (int x = 1; x <= width; x++)
+				{
+					if ((x == 1) && (y > 0) && (y <= height))
+					{
+						Vector2 v6 = v1;
+
+						spriteBatch.Draw(borderArray[3], v6, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					}
+
+					if ((x == width) && (y > 0) && (y <= height))
+					{
+						Vector2 v6 = v1;
+						v6.X += 16;
+
+						spriteBatch.Draw(borderArray[4], v6, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					}
+
+					v1.X += 8;
+
+					if(y == 0)
+						spriteBatch.Draw(borderArray[1], v1, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+
+					if (y == height)
+					{
+						Vector2 v5 = v1;
+						v5.Y = v1.Y + 8;
+						spriteBatch.Draw(borderArray[6], v5, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					}
+				}
+
+				v1.X = (pos.CurrentPosition.X - 1) * 8;
+				v1.Y += 8;
+			}
 		}
 	}
 }

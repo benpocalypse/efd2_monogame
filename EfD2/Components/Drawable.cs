@@ -18,6 +18,7 @@ namespace EfD2.Components
 
 		public List<Animation> AnimationList;
 		public AnimationType Type { get; set; }
+		public DisplayLayer ZOrder = DisplayLayer.Background;
 		public bool FlipOnXAxis = false;
 		public bool FlipOnYAxis = false;
 

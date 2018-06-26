@@ -83,7 +83,8 @@ namespace EfD2
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(5, 5), ZOrder = 1.0f });
 			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0 });
 			HasText t = new HasText();
-			t.Text.Add("Is this thing on?");
+			t.Text.Add("Is this thing on?\nI really do sure hope so!");
+			t.Border = true;
 			someTestText.AddComponent(t);
 
 			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 0.9f });
