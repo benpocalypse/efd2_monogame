@@ -7,9 +7,9 @@ namespace EfD2
 	{
 		Entity IComponent.entity { get; set; }
 		public List<string> Text;
-		public bool TakesFocus = false;
 		public bool Border = false;
 		public bool RequiresAcknowledgment = false;
+		public int CurrentText = 0;
 		public DisplayLayer ZOrder = DisplayLayer.Text;
 
 		public HasText()

@@ -75,7 +75,6 @@ namespace EfD2
 		public int CurrentFrame { get; set; } = 0;
 		public float FrameSpeed { get; set; } = 0.1f; // In frames per second?
 		public float FrameCounter { get; set; } = 0.0f;
-		public DisplayLayer ZOrder = DisplayLayer.Foreground;
 
 		public Animation(params Texture2D[] textureNames)
 		{

@@ -133,61 +133,63 @@ namespace EfD2
 
 				ephemeral.PersistTime -= delta;
 
-				if (ephemeral.PersistTime >= 0.0)
+				if ((ephemeral.PersistTime >= 0.0) && (text.CurrentText < text.Text.Count))
 				{
-
-					DrawText(text, pos);
+					var current = text.Text[text.CurrentText];
+					DrawText(current, text, pos);
 
 					if (text.Border == true)
-						DrawBorder(pos, text);
+						DrawBorder(current, text, pos);
+				}
+				else
+				{
+					if (text.CurrentText < text.Text.Count)
+					{
+						text.CurrentText++;
+						ephemeral.PersistTime = ephemeral.TotalTime;
+					}
 				}
 			}
 		}
 
-		private void DrawText(HasText textToDraw, Positionable pos)
+		private void DrawText(string currentText, HasText text, Positionable pos)
 		{
 			Vector2 v = new Vector2(pos.CurrentPosition.X * 8, pos.CurrentPosition.Y * 8);
 
-			foreach (string s in textToDraw.Text)
+			foreach (char c in currentText)
 			{
-				foreach (char c in s)
+				if (c == '\n')
 				{
-					if (c == '\n')
-					{
-						v.Y += 8;
-						v.X = pos.CurrentPosition.X * 8;
-					}
-					else
-					{
-						var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
+					v.Y += 8;
+					v.X = pos.CurrentPosition.X * 8;
+				}
+				else
+				{
+					var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
 
-						if (tex.Value != null)
-						{
-							spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(tex.Value.Width / 2, tex.Value.Height / 2), Vector2.One, SpriteEffects.None, (float)textToDraw.ZOrder / (float)DisplayLayer.MAX_LAYER);
-							v.X += 8;
-						}
+					if (tex.Value != null)
+					{
+						spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(tex.Value.Width / 2, tex.Value.Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+						v.X += 8;
 					}
 				}
 			}
 		}
 
-		private void DrawBorder(Positionable pos, HasText text)
+		private void DrawBorder(string current, HasText text, Positionable pos)
 		{
 			Vector2 v1 = new Vector2((pos.CurrentPosition.X-1) * 8, (pos.CurrentPosition.Y-1) * 8);
 
 			int height = 0;
 			int width = 0;
 
-			foreach (string s in text.Text)
+			var sub = current.Split('\n');
+			foreach (string subS in sub)
 			{
-				var sub = s.Split('\n');
-				foreach (string subS in sub)
-				{
-					if (subS.Length > width)
-						width = subS.Length;
+				if (subS.Length > width)
+					width = subS.Length;
 
-					height++;
-				}
+				height++;
 			}
 
 			for (int y = 0; y <= height; y++)

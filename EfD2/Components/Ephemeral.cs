@@ -6,6 +6,7 @@ namespace EfD2
 	{
 		Entity IComponent.entity { get; set; }
 		public double PersistTime = 0.0f;
+		public double TotalTime = 0.0f;
 
 		public Ephemeral()
 		{

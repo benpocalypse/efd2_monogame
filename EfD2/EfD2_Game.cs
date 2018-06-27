@@ -81,9 +81,10 @@ namespace EfD2
 			someTestText = new Entity("text");
 
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(5, 5), ZOrder = 1.0f });
-			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0 });
+			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
 			HasText t = new HasText();
 			t.Text.Add("Is this thing on?\nI really do sure hope so!");
+			t.Text.Add("If it works, this can be a\ncool feature to use.");
 			t.Border = true;
 			someTestText.AddComponent(t);
 
@@ -101,13 +102,15 @@ namespace EfD2
 			playerEntity.AddComponent(new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) });
 			playerEntity.AddComponent(new PlayerStatable() { PlayerState = PlayerStateType.None });
 
-			playerEntity.AddComponent(new Drawable(new Animation(AnimationType.Idle,
+			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
-										 new Animation(AnimationType.Running,
+								 new Animation(AnimationType.Running,
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player1"),
 													   Content.Load<Texture2D>("player0"),
-			                                           Content.Load<Texture2D>("player2"))));
+					 								   Content.Load<Texture2D>("player2")));
+			d.ZOrder = DisplayLayer.Player;
+			playerEntity.AddComponent(d);
 
 			//Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
 			Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");

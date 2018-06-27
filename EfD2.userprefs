@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{92EC1C09-B726-482E-B90C-F6C91556755C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/Components/HasText.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/Systems/TextSystem.cs">
     <Files>
-      <File FileName="EfD2/Systems/TextSystem.cs" Line="189" Column="6" />
-      <File FileName="EfD2/Globals.cs" Line="78" Column="56" />
-      <File FileName="EfD2/Components/HasText.cs" Line="13" Column="49" />
-      <File FileName="EfD2/EfD2_Game.cs" Line="97" Column="7" />
+      <File FileName="EfD2/Systems/TextSystem.cs" Line="141" Column="38" />
+      <File FileName="EfD2/Globals.cs" Line="77" Column="50" />
+      <File FileName="EfD2/Components/HasText.cs" Line="9" Column="28" />
+      <File FileName="EfD2/EfD2_Game.cs" Line="112" Column="35" />
       <File FileName="EfD2/Systems/DrawingSystem.cs" Line="77" Column="1" />
       <File FileName="EfD2/Systems/MapSystem.cs" Line="850" Column="88" />
+      <File FileName="EfD2/Components/Ephemeral.cs" Line="9" Column="34" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
