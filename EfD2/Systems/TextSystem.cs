@@ -145,6 +145,12 @@ namespace EfD2
 				{
 					if (text.CurrentText < text.Text.Count)
 					{
+						var current = text.Text[text.CurrentText];
+						DrawText(current, text, pos);
+
+						if (text.Border == true)
+							DrawBorder(current, text, pos);
+						
 						text.CurrentText++;
 						ephemeral.PersistTime = ephemeral.TotalTime;
 					}
@@ -183,13 +189,40 @@ namespace EfD2
 			int height = 0;
 			int width = 0;
 
-			var sub = current.Split('\n');
-			foreach (string subS in sub)
+			if (text.Homgeneous == true)
 			{
-				if (subS.Length > width)
-					width = subS.Length;
+				foreach (string s in text.Text)
+				{
+					int maxHeight = 0;
+					int maxWidth = 0;
+					var sub = s.Split('\n');
 
-				height++;
+					foreach (string subS in sub)
+					{
+						if (subS.Length > maxWidth)
+							maxWidth = subS.Length;
+
+						maxHeight++;
+					}
+
+					if (maxHeight > height)
+						height = maxHeight;
+
+					if (maxWidth > width)
+						width = maxWidth;
+				}
+			}
+			else
+			{
+				var sub = current.Split('\n');
+				foreach (string subS in sub)
+				{
+					if (subS.Length > width)
+						width = subS.Length;
+
+					height++;
+				}
+
 			}
 
 			for (int y = 0; y <= height; y++)
@@ -212,8 +245,11 @@ namespace EfD2
 				
 				for (int x = 1; x <= width; x++)
 				{
+					bool drawn = false;
+
 					if ((x == 1) && (y > 0) && (y <= height))
 					{
+						drawn = true;
 						Vector2 v6 = v1;
 
 						spriteBatch.Draw(borderArray[3], v6, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
@@ -221,6 +257,7 @@ namespace EfD2
 
 					if ((x == width) && (y > 0) && (y <= height))
 					{
+						//drawn = true;
 						Vector2 v6 = v1;
 						v6.X += 16;
 
@@ -229,14 +266,28 @@ namespace EfD2
 
 					v1.X += 8;
 
-					if(y == 0)
+					if (y == 0)
+					{
+						drawn = true;
 						spriteBatch.Draw(borderArray[1], v1, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					}
 
 					if (y == height)
 					{
+						drawn = true;
 						Vector2 v5 = v1;
 						v5.Y = v1.Y + 8;
 						spriteBatch.Draw(borderArray[6], v5, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
+					}
+
+					//if (drawn == false)
+					{
+						var tex = fontDictionary.FirstOrDefault(_ => _.Key == " ");
+
+						if (tex.Value != null)
+						{
+							spriteBatch.Draw(tex.Value, v1, null, Color.White, 0f, new Vector2(tex.Value.Width / 2, tex.Value.Height / 2), Vector2.One, SpriteEffects.None, (float)DisplayLayer.TextBackground / (float)DisplayLayer.MAX_LAYER);
+						}
 					}
 				}
 

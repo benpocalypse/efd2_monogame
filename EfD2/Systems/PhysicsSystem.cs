@@ -78,6 +78,20 @@ namespace EfD2.Systems
 											{
 												entitiesToRemove.Add(oe);
 												col.Colliding = false;
+
+												if (!EntityMatcher.DoesEntityExist("message!"))
+												{
+													var goldPos = EntityMatcher.GetEntity("gold").GetComponent<Positionable>();
+													Entity collectionText = new Entity("message!");
+
+													collectionText.AddComponent(new Positionable { CurrentPosition = (goldPos.CurrentPosition/8), ZOrder = 1.0f });
+													collectionText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
+													HasText t = new HasText();
+													t.Text.Add("+100!");
+													t.Homgeneous = false;
+													t.Border = false;
+													collectionText.AddComponent(t);
+												}
 											}
 											break;
 									}

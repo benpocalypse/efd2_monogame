@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -8,17 +9,21 @@ using Microsoft.Xna.Framework.Graphics;
 using ECS;
 using EfD2.Components;
 
-namespace EfD2.Systems
+namespace EfD2
 {
-	public class InputSystem 
+	public class MovementSystem
 		: IReactiveSystem
 	{
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
+		public MovementSystem()
+		{
+		}
+
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(HasInput)); }
+			get { return new Filter().AllOf(typeof(Positionable), typeof(Movable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -26,99 +31,53 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-		public InputSystem()
-        { 
-		}
-
-        public void Update(GameTime gameTime)
-        {
-            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+		public void Update(GameTime gameTime)
+		{
+			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				var input = e.GetComponent<HasInput>();
-				input.CurrentInput.Clear();
-
-				if (Keyboard.GetState().IsKeyDown(Keys.D))
-				{
-					input.CurrentInput.Add(Input.Right);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.A))
-				{
-					input.CurrentInput.Add(Input.Left);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.W))
-				{
-					input.CurrentInput.Add(Input.Up);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.S))
-				{
-					input.CurrentInput.Add(Input.Down);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.J))
-				{
-					input.CurrentInput.Add(Input.A);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.K))
-				{
-					input.CurrentInput.Add(Input.B);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.Space))
-				{
-					input.CurrentInput.Add(Input.Start);
-				}
-
-				if (Keyboard.GetState().IsKeyDown(Keys.Enter))
-				{
-					input.CurrentInput.Add(Input.Select);
-				}
-			}
-			/*
-
-            foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
-            {
-                var position = e.GetComponent<Positionable>();
+				var position = e.GetComponent<Positionable>();
 				var move = e.GetComponent<Movable>();
+				var input = e.GetComponent<HasInput>();
 				var draw = e.GetComponent<Drawable>();
-				bool Moving = false;
+
+				bool moving = false;
 
 				position.PreviousPosition = position.CurrentPosition;
 				move.PreviousDirection = move.CurrentDirection;
 
-				//if (GamePad.GetState(PlayerIndex.One).GamePadDPad//.Buttons.Up == ButtonState.Pressed)
-                if (Keyboard.GetState().IsKeyDown(Keys.D)) 
+				if (input != null)
 				{
-					move.CurrentDirection = Direction.Right;
-					draw.FlipOnXAxis = false;
-					Moving = true;
+					//if (GamePad.GetState(PlayerIndex.One).GamePadDPad//.Buttons.Up == ButtonState.Pressed)
+					if (input.CurrentInput.Contains(Input.Right))
+					{
+						move.CurrentDirection = Direction.Right;
+						draw.FlipOnXAxis = false;
+						moving = true;
+					}
+
+					if (input.CurrentInput.Contains(Input.Left))
+					{
+						move.CurrentDirection = Direction.Left;
+						draw.FlipOnXAxis = true;
+						moving = true;
+					}
+
+					if (input.CurrentInput.Contains(Input.Up))
+					{
+						move.CurrentDirection = Direction.Up;
+						moving = true;
+					}
+
+					if (input.CurrentInput.Contains(Input.Down))
+					{
+						move.CurrentDirection = Direction.Down;
+						moving = true;
+					}
 				}
 
-                if (Keyboard.GetState().IsKeyDown(Keys.A)) 
-				{ 
-					move.CurrentDirection = Direction.Left;
-					draw.FlipOnXAxis = true;
-					Moving = true;
-				}
-
-                if (Keyboard.GetState().IsKeyDown(Keys.W)) 
-				{ 
-					move.CurrentDirection = Direction.Up;
-					Moving = true;
-				}
-
-                if (Keyboard.GetState().IsKeyDown(Keys.S)) 
-				{ 
-					move.CurrentDirection = Direction.Down;
-					Moving = true;
-				}
-
-				if (Moving == true)
+				if (moving == true)
 				{
 					// Update our acceleration based on direction
 					if (move.CurrentDirection == move.PreviousDirection)
@@ -182,9 +141,9 @@ namespace EfD2.Systems
 				}
 
 				var anim = e.GetComponent<Drawable>();
-				if(anim != null)
+				if (anim != null)
 				{
-					if(move.CurrentDirection != Direction.None)
+					if (move.CurrentDirection != Direction.None)
 					{
 						anim.Type = AnimationType.Running;
 					}
@@ -193,8 +152,8 @@ namespace EfD2.Systems
 						anim.Type = AnimationType.Idle;
 					}
 				}
-            }
-            */
-        }
+			}
+
+		}
 	}
 }

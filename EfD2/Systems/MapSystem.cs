@@ -635,7 +635,7 @@ namespace EfD2.Systems
 								IComponent[] componentCollection = new IComponent[]
 								{
 									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) + (r.Next(3, 8)*8), (MAP_Y_OFFSET * 8) + (j * 8)), ZOrder = 1.0f },
-									new Drawable(entrance),
+									new Drawable(entrance) { ZOrder = DisplayLayer.Floating },
 									new Collidable() { Type = EntityType.Entrance }
 								};
 
@@ -648,7 +648,7 @@ namespace EfD2.Systems
 								IComponent[] componentCollection = new IComponent[]
 								{
 									new Positionable() { CurrentPosition = new Vector2((MAP_X_OFFSET*8) + (i*8) + (r.Next(3, 8)*8), (MAP_Y_OFFSET * 8) + (j * 8)) , ZOrder = 1.0f},
-									new Drawable(exit),
+									new Drawable(exit) { ZOrder = DisplayLayer.Floating },
 									new Collidable() { Type = EntityType.Exit }
 								};
 
@@ -839,8 +839,6 @@ namespace EfD2.Systems
 			Animation wallMiddle = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"));
 			Animation wallLeftEnd = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_7"));
 			Animation wallRightEnd = new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_8"));
-
-			Console.WriteLine("Floor = " + ucFloor);
 
 			if (ucFloor == 1)
 				floorAnim = new Animation(AnimationType.None, Content.Load<Texture2D>("floor1_2"));

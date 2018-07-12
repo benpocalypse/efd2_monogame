@@ -62,6 +62,8 @@
     <Compile Include="Systems\TextSystem.cs" />
     <Compile Include="Components\HasText.cs" />
     <Compile Include="Components\Sizable.cs" />
+    <Compile Include="Components\HasInput.cs" />
+    <Compile Include="Systems\MovementSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

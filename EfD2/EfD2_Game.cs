@@ -27,16 +27,12 @@ namespace EfD2
 
 		TextSystem textSystem;
 		InputSystem inputSystem;
+		MovementSystem movementSystem;
 		CollisionSystem collisionSystem;
 		PhysicsSystem physicsSystem;
 		DrawingSystem drawingSystem;
 		MapSystem mapSystem;
 		GameSystem gameSystem;
-
-		Entity playerEntity;
-		Entity pileOfGold;
-
-		Entity someTestText;
 
 		public EfD2_Game()
 		{
@@ -72,19 +68,38 @@ namespace EfD2
 			drawingSystem = new DrawingSystem(ref gameContent, ref spriteBatch);
 			textSystem = new TextSystem(ref gameContent, ref spriteBatch);
 			inputSystem = new InputSystem();
-
+			movementSystem = new MovementSystem();
 			physicsSystem = new PhysicsSystem();
 			mapSystem = new MapSystem(ref gameContent);
+	
+			base.Initialize();
+		}
+
+		/// <summary>
+		/// LoadContent will be called once per game and is the place to load
+		/// all of your content.
+		/// </summary>
+		protected override void LoadContent()
+		{
+			Entity playerEntity;
+			Entity swordHorizontal;
+			Entity swordVertical;
+			Entity pileOfGold;
+			Entity someTestText;
 
 			playerEntity = new Entity("Player");
+			swordHorizontal = new Entity("Sword Horizontal");
+			swordVertical = new Entity("Sword Vertical");
 			pileOfGold = new Entity("gold");
 			someTestText = new Entity("text");
 
-			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(5, 5), ZOrder = 1.0f });
+			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = 1.0f });
 			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
 			HasText t = new HasText();
-			t.Text.Add("Is this thing on?\nI really do sure hope so!");
-			t.Text.Add("If it works, this can be a\ncool feature to use.");
+			t.Text.Add("Is this thing on?");
+			t.Text.Add("I hope it works, because a \nseries of short term\narchitectural decisions were\nmade to make it work.");
+			t.Text.Add("Oh well...\nShip it!");
+			t.Homgeneous = false;
 			t.Border = true;
 			someTestText.AddComponent(t);
 
@@ -93,9 +108,11 @@ namespace EfD2
 			pileOfGold.AddComponent(new Collectible { Type = CollectibleType.Gold });
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
-                                                 Content.Load<Texture2D>("chest_gold1"))));
+                                                 Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
 
 			mapSystem.GenerateMap();
+
+			//swordHorizontal.AddComponent
 
 			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 0.9f });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
@@ -108,25 +125,15 @@ namespace EfD2
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player1"),
 													   Content.Load<Texture2D>("player0"),
-					 								   Content.Load<Texture2D>("player2")));
+					 								   Content.Load<Texture2D>("player2"))) { ZOrder = DisplayLayer.Player };
 			d.ZOrder = DisplayLayer.Player;
 			playerEntity.AddComponent(d);
+			playerEntity.AddComponent(new HasInput());
 
 			//Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
 			Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
-			MediaPlayer.Play(song);
+			//MediaPlayer.Play(song);
 			MediaPlayer.Volume = 0.2f;
-	
-			base.Initialize();
-		}
-
-		/// <summary>
-		/// LoadContent will be called once per game and is the place to load
-		/// all of your content.
-		/// </summary>
-		protected override void LoadContent()
-		{
-
 		}
 
 		protected override void UnloadContent()
@@ -154,10 +161,11 @@ namespace EfD2
 			if (keyboard.IsKeyDown(Keys.Space) && previousKeyboard.IsKeyUp(Keys.Space))
 			{
 				mapSystem.GenerateMap();
-				playerEntity.GetComponent<Positionable>().CurrentPosition = mapSystem.GetOpenSpaceNearEntrance();
+				//playerEntity.GetComponent<Positionable>().CurrentPosition = mapSystem.GetOpenSpaceNearEntrance();
 			}
 
 			inputSystem?.Update(gameTime);
+			movementSystem?.Update(gameTime);
 			collisionSystem?.Update(gameTime);
 			physicsSystem?.Update(gameTime);
 			mapSystem?.Update();

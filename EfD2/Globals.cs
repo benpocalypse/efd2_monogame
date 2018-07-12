@@ -57,15 +57,36 @@ namespace EfD2
 		Playing
 	}
 
+	public enum Visibility
+	{
+		Visible,
+		Hidden
+	}
+
 	public enum DisplayLayer
 	{
 		Background,
 		Player,
 		Foreground,
+		Floating,
 		Particles,
+		TextBackground,
 		Text,
 		Menu,
 		MAX_LAYER
+	}
+
+	public enum Input
+	{
+		None,
+		Up,
+		Down,
+		Left,
+		Right,
+		A,
+		B,
+		Select,
+		Start
 	}
 
 	public class Animation : IComparable<Animation>

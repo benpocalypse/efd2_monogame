@@ -8,7 +8,7 @@ namespace EfD2
 		Entity IComponent.entity { get; set; }
 		public List<string> Text;
 		public bool Border = false;
-		public bool RequiresAcknowledgment = false;
+		public bool Homgeneous = true;
 		public int CurrentText = 0;
 		public DisplayLayer ZOrder = DisplayLayer.Text;
 
