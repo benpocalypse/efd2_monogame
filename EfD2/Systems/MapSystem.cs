@@ -70,14 +70,12 @@ namespace EfD2.Systems
 
 		public void Update()
 		{
-			//var state = entityPool.Entities.Select(_ => _.GetComponent<Statable>());
-
 			var player = EntityMatcher.GetEntity("Player");
-			var state = player.GetComponent<PlayerStatable>();
+			var state = player.GetComponent<HasActorState>();
 
-			if(state.PlayerState == PlayerStateType.HitExit)
+			if(state.ActorState == ActorStateType.HitExit)
 			{
-				state.PlayerState = PlayerStateType.None;
+				state.ActorState = ActorStateType.None;
 				GenerateMap();
 				player.GetComponent<Positionable>().CurrentPosition = GetOpenSpaceNearEntrance();
 			}

@@ -4,13 +4,13 @@ using ECS;
 
 namespace EfD2.Components
 {
-	public class PlayerStatable : IComponent
+	public class Damage : IComponent
 	{
 		Entity IComponent.entity { get; set; }
 
-		public PlayerStateType PlayerState { get; set;} = PlayerStateType.None;
+		public int Value = 0;
 
-		public PlayerStatable()
+		public Damage()
 		{
 		}
 	}

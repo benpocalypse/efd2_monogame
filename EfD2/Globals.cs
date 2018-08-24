@@ -13,8 +13,22 @@ namespace EfD2
 		Floor,
 		Player,
 		Item,
+		Weapon,
+		Gold,
+		Health,
 		Entrance,
 		Exit
+	};
+
+	public enum ActorStateType
+	{
+		None,
+		Immune,
+		Hurt,
+		Alive,
+		Dead,
+		Attacking,
+		HitExit
 	};
 
 	public enum Direction
@@ -34,34 +48,18 @@ namespace EfD2
 		Attacking
 	};
 
-	public enum CollectibleType
-	{
-		None,
-		Gold,
-		Health
-	};
-
-	// Theoretical state types
-	public enum PlayerStateType
-	{
-		None,
-		Alive,
-		Dead,
-		HitExit
-	}
-
 	public enum GameStateType
 	{
 		Intro,
 		TitleScreen,
 		Playing
-	}
+	};
 
 	public enum Visibility
 	{
 		Visible,
 		Hidden
-	}
+	};
 
 	public enum DisplayLayer
 	{
@@ -74,7 +72,7 @@ namespace EfD2
 		Text,
 		Menu,
 		MAX_LAYER
-	}
+	};
 
 	public enum Input
 	{
@@ -87,14 +85,20 @@ namespace EfD2
 		B,
 		Select,
 		Start
-	}
+	};
+
+	public enum InputType
+	{
+		Direct, // Moves 1:1 with the input given
+		Menu
+	};
 
 	public class Animation : IComparable<Animation>
 	{
 		public AnimationType Type { get; set; } = AnimationType.None;
 		public List<Texture2D> FrameList { get; set; }
 		public int CurrentFrame { get; set; } = 0;
-		public float FrameSpeed { get; set; } = 0.1f; // In frames per second?
+		public float FrameSpeed { get; set; } = 0.1f; // In seconds per frame
 		public float FrameCounter { get; set; } = 0.0f;
 
 		public Animation(params Texture2D[] textureNames)

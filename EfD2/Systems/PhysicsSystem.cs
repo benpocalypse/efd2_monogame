@@ -19,7 +19,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
+			get { return new Filter().AllOf(typeof(Positionable), typeof(Movable), typeof(Collidable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -45,58 +45,7 @@ namespace EfD2.Systems
 					switch (col.Type)
 					{
 						case EntityType.Player:
-							foreach (Entity oe in col.CollidingEntities)
-							{
-								foreach (IComponent oic in oe.components.Where(_ => _.GetType() == typeof(Collidable)))
-								{
-									switch (((Collidable)oic).Type)
-									{
-										case EntityType.Wall:
-											{
-												var pos1 = e.GetComponent<Positionable>();
-												var mov1 = e.GetComponent<Movable>();
-												var col1 = e.GetComponent<Collidable>();
-
-												pos1.CurrentPosition = pos1.PreviousPosition;
-												mov1.CurrentDirection = Direction.None;
-												mov1.PreviousDirection = Direction.None;
-												mov1.Acceleration = 0;
-
-												col1.Colliding = false;
-												col.Colliding = false;
-											}
-											break;
-
-										case EntityType.Exit:
-											{
-												var player = EntityMatcher.GetEntity("Player");
-												player.GetComponent<PlayerStatable>().PlayerState = PlayerStateType.HitExit;
-											}
-											break;
-
-										case EntityType.Item:
-											{
-												entitiesToRemove.Add(oe);
-												col.Colliding = false;
-
-												if (!EntityMatcher.DoesEntityExist("message!"))
-												{
-													var goldPos = EntityMatcher.GetEntity("gold").GetComponent<Positionable>();
-													Entity collectionText = new Entity("message!");
-
-													collectionText.AddComponent(new Positionable { CurrentPosition = (goldPos.CurrentPosition/8), ZOrder = 1.0f });
-													collectionText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
-													HasText t = new HasText();
-													t.Text.Add("+100!");
-													t.Homgeneous = false;
-													t.Border = false;
-													collectionText.AddComponent(t);
-												}
-											}
-											break;
-									}
-								}
-							}
+							HandlePlayerCollisions(ref col, e);
 							break;
 
 						case EntityType.Wall:
@@ -109,6 +58,72 @@ namespace EfD2.Systems
 			{
 				EntityMatcher.Remove(e);
 			}
+		}
+
+		private void HandlePlayerCollisions(ref Collidable collidable, Entity player)
+		{
+			foreach (Entity oe in collidable.CollidingEntities)
+			{
+				foreach (IComponent oic in oe.components.Where(_ => _.GetType() == typeof(Collidable)))
+				{
+					switch (((Collidable)oic).Type)
+					{
+						case EntityType.Wall:
+							{
+								var pos1 = player.GetComponent<Positionable>();
+								var mov1 = player.GetComponent<Movable>();
+								var col1 = player.GetComponent<Collidable>();
+
+								pos1.CurrentPosition = pos1.PreviousPosition;
+								mov1.CurrentDirection = Direction.None;
+								mov1.PreviousDirection = Direction.None;
+								mov1.Acceleration = 0;
+
+								col1.Colliding = false;
+								collidable.Colliding = false;
+							}
+							break;
+
+						case EntityType.Exit:
+							{
+								// FIXME - Gah...how to do this without relying on the Name?
+								//var player = EntityMatcher.GetEntity("Player");
+								player.GetComponent<HasActorState>().ActorState = ActorStateType.HitExit;
+							}
+							break;
+
+						case EntityType.Weapon:
+							{
+								
+							}
+							break;
+							
+						case EntityType.Item:
+							{
+								//entitiesToRemove.Add(oe);
+								collidable.Colliding = false;
+
+								// FIXME - this is a hack. We need to make this generic by using the Collectible Component.
+								if (!EntityMatcher.DoesEntityExist("message!"))
+								{
+									var goldPos = EntityMatcher.GetEntity("gold").GetComponent<Positionable>();
+									Entity collectionText = new Entity("message!");
+
+									collectionText.AddComponent(new Positionable { CurrentPosition = (goldPos.CurrentPosition / 8), ZOrder = (float)DisplayLayer.Text });
+									collectionText.AddComponent(new Ephemeral { PersistTime = 2.0, TotalTime = 2.0f });
+
+									HasText t = new HasText();
+									t.Text.Add("100!");
+									t.Homgeneous = false;
+									t.Border = true;
+									collectionText.AddComponent(t);
+								}
+							}
+							break;
+					}
+				}
+			}
+			//break;
 		}
 	}
 }

@@ -245,11 +245,8 @@ namespace EfD2
 				
 				for (int x = 1; x <= width; x++)
 				{
-					bool drawn = false;
-
 					if ((x == 1) && (y > 0) && (y <= height))
 					{
-						drawn = true;
 						Vector2 v6 = v1;
 
 						spriteBatch.Draw(borderArray[3], v6, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
@@ -257,7 +254,6 @@ namespace EfD2
 
 					if ((x == width) && (y > 0) && (y <= height))
 					{
-						//drawn = true;
 						Vector2 v6 = v1;
 						v6.X += 16;
 
@@ -268,13 +264,11 @@ namespace EfD2
 
 					if (y == 0)
 					{
-						drawn = true;
 						spriteBatch.Draw(borderArray[1], v1, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
 					}
 
 					if (y == height)
 					{
-						drawn = true;
 						Vector2 v5 = v1;
 						v5.Y = v1.Y + 8;
 						spriteBatch.Draw(borderArray[6], v5, null, Color.White, 0f, new Vector2(borderArray[1].Width / 2, borderArray[1].Height / 2), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);

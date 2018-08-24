@@ -44,10 +44,8 @@
     <Compile Include="Components\Collectible.cs" />
     <Compile Include="Components\Collidable.cs" />
     <Compile Include="Components\Drawable.cs" />
-    <Compile Include="Components\GraphicsComponent.cs" />
     <Compile Include="Components\Movable.cs" />
     <Compile Include="Components\Positionable.cs" />
-    <Compile Include="Components\PlayerStatable.cs" />
     <Compile Include="Systems\CollisionSystem.cs" />
     <Compile Include="Systems\DrawingSystem.cs" />
     <Compile Include="Systems\GameSystem.cs" />
@@ -57,13 +55,16 @@
     <Compile Include="Systems\PhysicsSystem.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Resolution.cs" />
-    <Compile Include="Components\GameStatable.cs" />
+    <Compile Include="Components\HasGameState.cs" />
     <Compile Include="Components\Ephemeral.cs" />
     <Compile Include="Systems\TextSystem.cs" />
     <Compile Include="Components\HasText.cs" />
-    <Compile Include="Components\Sizable.cs" />
     <Compile Include="Components\HasInput.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
+    <Compile Include="Components\HasActorState.cs" />
+    <Compile Include="Systems\ActorSystem.cs" />
+    <Compile Include="Components\Health.cs" />
+    <Compile Include="Components\Damage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

@@ -37,6 +37,8 @@ namespace EfD2.Systems
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
 				var input = e.GetComponent<HasInput>();
+
+				// FIXME - Might not want to clear this every time
 				input.CurrentInput.Clear();
 
 				if (Keyboard.GetState().IsKeyDown(Keys.D))

@@ -85,12 +85,14 @@ namespace EfD2
 			Entity swordHorizontal;
 			Entity swordVertical;
 			Entity pileOfGold;
+			Entity weapon;
 			Entity someTestText;
 
 			playerEntity = new Entity("Player");
 			swordHorizontal = new Entity("Sword Horizontal");
 			swordVertical = new Entity("Sword Vertical");
 			pileOfGold = new Entity("gold");
+			weapon = new Entity("weapon");
 			someTestText = new Entity("text");
 
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = 1.0f });
@@ -105,10 +107,14 @@ namespace EfD2
 
 			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 0.9f });
 			pileOfGold.AddComponent(new Collidable { Type = EntityType.Item });
-			pileOfGold.AddComponent(new Collectible { Type = CollectibleType.Gold });
+			pileOfGold.AddComponent(new Collectible());
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
+
+			weapon.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
+			weapon.AddComponent(new Collidable { Type = EntityType.Weapon });
+			weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
 
 			mapSystem.GenerateMap();
 
@@ -117,7 +123,8 @@ namespace EfD2
 			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 0.9f });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
 			playerEntity.AddComponent(new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) });
-			playerEntity.AddComponent(new PlayerStatable() { PlayerState = PlayerStateType.None });
+			playerEntity.AddComponent(new HasActorState() { ActorState = ActorStateType.None });
+			playerEntity.AddComponent(new Health() { Value = 10 });
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),

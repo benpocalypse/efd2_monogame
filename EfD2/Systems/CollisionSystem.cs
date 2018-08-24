@@ -55,7 +55,7 @@ namespace EfD2.Systems
 					foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => !_.Equals(e)))
 					{
 						var pos2 = o.GetComponent<Positionable>();
-						var col2 = o.GetComponent<Collidable>();
+						//var col2 = o.GetComponent<Collidable>();
 
 						if (pos1.Rect.Intersects(pos2.Rect))
 						{

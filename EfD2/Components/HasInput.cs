@@ -8,6 +8,7 @@ namespace EfD2
 	{
 		Entity IComponent.entity { get; set; }
 
+		public InputType Type = InputType.Direct;
 		public List<Input> CurrentInput;
 
 		public HasInput()

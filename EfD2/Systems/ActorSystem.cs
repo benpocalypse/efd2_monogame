@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -11,17 +10,15 @@ using EfD2.Components;
 
 namespace EfD2.Systems
 {
-	internal class GameSystem 
+	public class ActorSystem
 		: IReactiveSystem
 	{
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
-		//private EntityPool entityPool;
-
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(HasGameState)); }
+			get { return new Filter().AllOf(typeof(HasActorState)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -29,16 +26,17 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-		public GameSystem()
+		public ActorSystem()
 		{
-			
 		}
 
 		public void Update(GameTime gameTime)
 		{
+			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				var state = e.GetComponent<HasGameState>();
+				
 			}
 		}
 	}

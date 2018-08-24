@@ -42,42 +42,42 @@ namespace EfD2
 				var input = e.GetComponent<HasInput>();
 				var draw = e.GetComponent<Drawable>();
 
-				bool moving = false;
+				bool accelerating = false;
 
 				position.PreviousPosition = position.CurrentPosition;
 				move.PreviousDirection = move.CurrentDirection;
 
+				// If the component reacts to input, process it here
 				if (input != null)
 				{
-					//if (GamePad.GetState(PlayerIndex.One).GamePadDPad//.Buttons.Up == ButtonState.Pressed)
 					if (input.CurrentInput.Contains(Input.Right))
 					{
 						move.CurrentDirection = Direction.Right;
 						draw.FlipOnXAxis = false;
-						moving = true;
+						accelerating = true;
 					}
 
 					if (input.CurrentInput.Contains(Input.Left))
 					{
 						move.CurrentDirection = Direction.Left;
 						draw.FlipOnXAxis = true;
-						moving = true;
+						accelerating = true;
 					}
 
 					if (input.CurrentInput.Contains(Input.Up))
 					{
 						move.CurrentDirection = Direction.Up;
-						moving = true;
+						accelerating = true;
 					}
 
 					if (input.CurrentInput.Contains(Input.Down))
 					{
 						move.CurrentDirection = Direction.Down;
-						moving = true;
+						accelerating = true;
 					}
 				}
 
-				if (moving == true)
+				if (accelerating == true)
 				{
 					// Update our acceleration based on direction
 					if (move.CurrentDirection == move.PreviousDirection)
@@ -140,6 +140,7 @@ namespace EfD2
 					}
 				}
 
+				// FIXME - this will need to be handled properly elsewhere...for now, it stays here.
 				var anim = e.GetComponent<Drawable>();
 				if (anim != null)
 				{
@@ -153,7 +154,6 @@ namespace EfD2
 					}
 				}
 			}
-
 		}
 	}
 }
