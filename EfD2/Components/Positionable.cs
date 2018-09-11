@@ -32,14 +32,11 @@ namespace EfD2.Components
 
 		public float ZOrder = 0.0f;
 
-        public RectangleF Rect { get; set; }
-
         public void SetX(float newX) =>_currentPosition.X = newX;
         public void SetY(float newY) => _currentPosition.Y = newY;
 
         public Positionable()
         {
-            Rect = new RectangleF();
         }
 	}
 }

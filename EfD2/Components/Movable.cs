@@ -12,6 +12,7 @@ namespace EfD2.Components
 		public Direction PreviousDirection { get; set; } = Direction.None;
 		public float Acceleration { get; set; } = 0;
 		public float MaxAcceleration { get; } = 1;
+		public float Mass { get; set; } = 1;
 
 		public Movable()
 		{

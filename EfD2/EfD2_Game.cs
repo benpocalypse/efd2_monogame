@@ -28,6 +28,7 @@ namespace EfD2
 		TextSystem textSystem;
 		InputSystem inputSystem;
 		MovementSystem movementSystem;
+		EventSystem eventSystem;
 		CollisionSystem collisionSystem;
 		PhysicsSystem physicsSystem;
 		DrawingSystem drawingSystem;
@@ -71,6 +72,7 @@ namespace EfD2
 			movementSystem = new MovementSystem();
 			physicsSystem = new PhysicsSystem();
 			mapSystem = new MapSystem(ref gameContent);
+			eventSystem = new EventSystem(ref mapSystem);
 	
 			base.Initialize();
 		}
@@ -95,7 +97,7 @@ namespace EfD2
 			weapon = new Entity("weapon");
 			someTestText = new Entity("text");
 
-			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = 1.0f });
+			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = (float)DisplayLayer.Text });
 			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
 			HasText t = new HasText();
 			t.Text.Add("Is this thing on?");
@@ -105,26 +107,27 @@ namespace EfD2
 			t.Border = true;
 			someTestText.AddComponent(t);
 
-			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = 0.9f });
-			pileOfGold.AddComponent(new Collidable { Type = EntityType.Item });
+			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = (float)DisplayLayer.Floating });
+			pileOfGold.AddComponent(new Collidable());
 			pileOfGold.AddComponent(new Collectible());
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
 
 			weapon.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
-			weapon.AddComponent(new Collidable { Type = EntityType.Weapon });
+			weapon.AddComponent(new Collidable());
 			weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
 
 			mapSystem.GenerateMap();
 
 			//swordHorizontal.AddComponent
 
-			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = 0.9f });
+			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = (float)DisplayLayer.Player });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
-			playerEntity.AddComponent(new Collidable() { Type = EntityType.Player, BoundingBox = new RectangleF(0, 0, 6, 7) });
-			playerEntity.AddComponent(new HasActorState() { ActorState = ActorStateType.None });
+			playerEntity.AddComponent(new Collidable() { BoundingBox = new RectangleF(0, 0, 6, 7) });
+			//playerEntity.AddComponent(new HasActorState() { ActorStateList =  new List<ActorStateType>().Add(ActorStateType.None) });
 			playerEntity.AddComponent(new Health() { Value = 10 });
+			playerEntity.AddComponent(new Attacking() { AttactState = AttackStateType.NotAttacking });
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -133,7 +136,6 @@ namespace EfD2
 													   Content.Load<Texture2D>("player1"),
 													   Content.Load<Texture2D>("player0"),
 					 								   Content.Load<Texture2D>("player2"))) { ZOrder = DisplayLayer.Player };
-			d.ZOrder = DisplayLayer.Player;
 			playerEntity.AddComponent(d);
 			playerEntity.AddComponent(new HasInput());
 
@@ -174,8 +176,9 @@ namespace EfD2
 			inputSystem?.Update(gameTime);
 			movementSystem?.Update(gameTime);
 			collisionSystem?.Update(gameTime);
-			physicsSystem?.Update(gameTime);
 			mapSystem?.Update();
+			eventSystem?.Update(gameTime);
+			physicsSystem?.Update(gameTime);
 
 			previousMouse = mouse;
 			previousKeyboard = keyboard;

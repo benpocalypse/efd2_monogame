@@ -23,7 +23,9 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Drawable)); }
+			// FIXME - Do we really need Drawable here? The original intent was to use it as the collision box,
+			//         but I think there were problems with this, IIRC.
+			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -34,47 +36,47 @@ namespace EfD2.Systems
 
 		public void Update(GameTime gameTime)
 		{
-			
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
 				var pos1 = e.GetComponent<Positionable>();
 				var col1 = e.GetComponent<Collidable>();
-				var draw1 = e.GetComponent<Drawable>();
+				var rect1 = new RectangleF(pos1.CurrentPosition.X, pos1.CurrentPosition.Y, col1.BoundingBox.Width, col1.BoundingBox.Height);
 
-				//pos1.Rect = new RectangleF(pos1.CurrentPosition.X, pos1.CurrentPosition.Y, draw1.AnimationList[0].FrameList[0].Width, draw1.AnimationList[0].FrameList[0].Height);
-
-				if (col1.Type == EntityType.Player)
+				foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => !_.Equals(e))) // && _.GetComponent<Movable>() != null))
 				{
-					var deltaX = Math.Abs(pos1.Rect.Width - col1.BoundingBox.Width) / 2;
-					//col1.BoundingBox.X = pos1.Rect.X + delta;
-					var deltaY = Math.Abs(pos1.Rect.Height - col1.BoundingBox.Height) / 2;
-					//col1.BoundingBox.Y = pos1.Rect.Y + delta;
+					var pos2 = o.GetComponent<Positionable>();
+					var col2 = o.GetComponent<Collidable>();
+					var rect2 = new RectangleF(pos2.CurrentPosition.X, pos2.CurrentPosition.Y, col2.BoundingBox.Width, col2.BoundingBox.Height);
 
-					pos1.Rect = new RectangleF(pos1.CurrentPosition.X+deltaX, pos1.CurrentPosition.Y+deltaY, col1.BoundingBox.Width, col1.BoundingBox.Height);
-
-					foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => !_.Equals(e)))
+					if (rect1.Intersects(rect2))
 					{
-						var pos2 = o.GetComponent<Positionable>();
-						//var col2 = o.GetComponent<Collidable>();
+						if (!col1.CollidingEntities.Contains(o))
+							col1.CollidingEntities.Add(o);
 
-						if (pos1.Rect.Intersects(pos2.Rect))
+
+						var ev1 = e.GetComponent<Event>();
+						if (ev1 != null && ev1.Trigger == EventTrigger.Collision)
 						{
-							col1.Colliding = true;
-							//col2.Colliding = true;
-
-							if (!col1.CollidingEntities.Contains(o))
-								col1.CollidingEntities.Add(o);
-
-							//if (!col2.CollidingEntities.Contains(e))
-							//	col2.CollidingEntities.Add(e);
+							ev1.Triggered = true;
 						}
-						else
+
+						var ev2 = o.GetComponent<Event>();
+						if (ev2 != null && ev2.Trigger == EventTrigger.Collision)
 						{
-							col1.CollidingEntities.Remove(o);
-							//col2.CollidingEntities.Remove(e);
+							ev2.Triggered = true;
 						}
+
+
+						//if (!col2.CollidingEntities.Contains(e))
+						//	col2.CollidingEntities.Add(e);
+					}
+					else
+					{
+						col1.CollidingEntities.Remove(o);
+						//col2.CollidingEntities.Remove(e);
 					}
 				}
+
 			}
 		}
 	}

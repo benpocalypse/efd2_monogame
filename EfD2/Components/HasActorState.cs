@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ECS;
 
 namespace EfD2.Components

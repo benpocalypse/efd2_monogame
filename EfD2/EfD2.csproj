@@ -65,6 +65,9 @@
     <Compile Include="Systems\ActorSystem.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\Damage.cs" />
+    <Compile Include="Components\Attacking.cs" />
+    <Compile Include="Components\Event.cs" />
+    <Compile Include="Systems\EventSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

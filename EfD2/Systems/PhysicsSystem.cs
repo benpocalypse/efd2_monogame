@@ -19,7 +19,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Movable), typeof(Collidable)); }
+			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -34,67 +34,56 @@ namespace EfD2.Systems
 		// FIXME - update and optimize this with more/better LINQ
 		public void Update(GameTime gameTime)
 		{
-			List<Entity> entitiesToRemove = new List<Entity>();
-
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => _.GetComponent<Movable>() != null))
 			{
-				foreach (IComponent ic in e.components.Where(_ => _.GetType() == typeof(Collidable) && ((Collidable)_).Colliding == true))
+				if (e.GetComponent<Collidable>().CollidingEntities.Count > 0)
 				{
-					var col = ((Collidable)ic);
+					var entityPositionable = e.GetComponent<Positionable>();
+					var entityMovable = e.GetComponent<Movable>();
+					var entityCollidable = e.GetComponent<Collidable>();
 
-					switch (col.Type)
-					{
-						case EntityType.Player:
-							HandlePlayerCollisions(ref col, e);
-							break;
-
-						case EntityType.Wall:
-							break;
-					}
+					entityPositionable.CurrentPosition = entityPositionable.PreviousPosition;
+					entityMovable.CurrentDirection = Direction.None;
+					entityMovable.PreviousDirection = Direction.None;
+					entityMovable.Acceleration = 0f;
 				}
-			}
-
-			foreach (Entity e in entitiesToRemove)
-			{
-				EntityMatcher.Remove(e);
 			}
 		}
 
+         /*
 		private void HandlePlayerCollisions(ref Collidable collidable, Entity player)
 		{
 			foreach (Entity oe in collidable.CollidingEntities)
 			{
 				foreach (IComponent oic in oe.components.Where(_ => _.GetType() == typeof(Collidable)))
 				{
-					switch (((Collidable)oic).Type)
+					switch (((Collidable)oic).Physics)
 					{
 						case EntityType.Wall:
 							{
-								var pos1 = player.GetComponent<Positionable>();
-								var mov1 = player.GetComponent<Movable>();
-								var col1 = player.GetComponent<Collidable>();
+								var entityPositionable = player.GetComponent<Positionable>();
+								var entityMovable = player.GetComponent<Movable>();
+								var entityCollidable = player.GetComponent<Collidable>();
 
-								pos1.CurrentPosition = pos1.PreviousPosition;
-								mov1.CurrentDirection = Direction.None;
-								mov1.PreviousDirection = Direction.None;
-								mov1.Acceleration = 0;
+								entityPositionable.CurrentPosition = entityPositionable.PreviousPosition;
+								entityMovable.CurrentDirection = Direction.None;
+								entityMovable.PreviousDirection = Direction.None;
+								entityMovable.Acceleration = 0f;
 
-								col1.Colliding = false;
+								entityCollidable.Colliding = false;
 								collidable.Colliding = false;
 							}
 							break;
 
 						case EntityType.Exit:
 							{
-								// FIXME - Gah...how to do this without relying on the Name?
-								//var player = EntityMatcher.GetEntity("Player");
-								player.GetComponent<HasActorState>().ActorState = ActorStateType.HitExit;
+								player.GetComponent<HasActorState>().ActorStateList.Add(ActorStateType.HitExit);
 							}
 							break;
 
 						case EntityType.Weapon:
 							{
-								
+								player.GetComponent<HasActorState>().ActorStateList.Add(ActorStateType.Hurt);
 							}
 							break;
 							
@@ -124,6 +113,6 @@ namespace EfD2.Systems
 				}
 			}
 			//break;
-		}
+			*/
 	}
 }

@@ -4,14 +4,13 @@ using ECS;
 
 namespace EfD2.Components
 {
-	public class Collectible : IComponent
+	public class Attacking : IComponent
 	{
 		Entity IComponent.entity { get; set; }
 
-		public CollectibleType Type = CollectibleType.None;
-		public int Value = 0;
+		public AttackStateType AttactState = AttackStateType.NotAttacking;
 
-		public Collectible()
+		public Attacking()
 		{
 		}
 	}

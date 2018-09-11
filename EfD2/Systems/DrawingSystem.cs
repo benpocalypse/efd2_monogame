@@ -12,12 +12,19 @@ using Microsoft.Xna.Framework.Content;
 
 namespace EfD2.Systems
 {
-	public class DrawingSystem 
+	public class DrawingSystem
 		: IReactiveSystem
 	{
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
+		private const bool DEBUG = false;
+		private Texture2D dummyTexture;
+		private Color Colori;
+
+		// At the top of your class:
+		private Texture2D pixel;
+		private int Odd = 0;
 
 		private ContentManager contentManager;
 		private SpriteBatch spriteBatch;
@@ -26,6 +33,14 @@ namespace EfD2.Systems
 		{
 			contentManager = _content;
 			spriteBatch = _spriteBatch;
+
+			dummyTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+			dummyTexture.SetData(new Color[] { Color.White });
+
+			pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			pixel.SetData(new[] { Color.White });
+
+			Colori = Color.White;
 		}
 
 		public Filter filterMatch
@@ -66,18 +81,45 @@ namespace EfD2.Systems
 							a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
 						}
 
-						position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
+						//position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
+
+						if (DEBUG == true && e.GetComponent<Collidable>() != null)
+						{
+							var col = e.GetComponent<Collidable>();
+							var newRect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, col.BoundingBox.Width, col.BoundingBox.Height);
+							DrawBorder(newRect.ToRectangle());
+						}
 
 						var texture = a.FrameList[a.CurrentFrame];						
 						var pos = position.CurrentPosition;
 
-						if(animatable.FlipOnXAxis == false)
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER );
+						if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
+							spriteBatch.Draw(texture, pos, null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
 						else
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+							spriteBatch.Draw(texture, pos, null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
 					}
 				}
             }
+		}
+
+		private void DrawBorder(Rectangle rectangleToDraw)
+		{
+			// Draw top line
+			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, 1), Color.White);
+
+			// Draw left line
+			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, 1, rectangleToDraw.Height), Color.White);
+
+			// Draw right line
+			spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - 1),
+											rectangleToDraw.Y,
+											1,
+											rectangleToDraw.Height), Color.White);
+			// Draw bottom line
+			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
+											rectangleToDraw.Y + rectangleToDraw.Height - 1,
+											rectangleToDraw.Width,
+											1), Color.White);
 		}
 	}
 }

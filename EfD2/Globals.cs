@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace EfD2
 {
+	// FIXME - Remove this enum
 	public enum EntityType
 	{
 		None,
@@ -20,15 +21,46 @@ namespace EfD2
 		Exit
 	};
 
+	/* FIXME - Notes
+	 * I can't decide how to handle hitting the map exit, and what the PhysicsSystem should be responsible for?
+	 * My initial thoughts were to have the PhysicsSystem only move things that needed to be moved, and mark
+	 * them as not colliding. However, how do you handle the player running into the Map Exit? How about entities
+	 * that should have a reaction such as a player getting hit, or an Enemy being killed? Fuck.
+	 */ 
+
+	// Used to prompt a reaction from an event
+	public enum EventType
+	{
+		None,
+		Exit
+	};
+
+	public enum EventTrigger
+	{
+		None,
+		Collision
+	};
+
 	public enum ActorStateType
 	{
 		None,
 		Immune,
 		Hurt,
-		Alive,
 		Dead,
-		Attacking,
 		HitExit
+	};
+
+	public enum AttackStateType
+	{
+		Attacking,
+		NotAttacking
+	};
+
+	public enum CollectibleType
+	{
+		None,
+		Gold,
+		Health
 	};
 
 	public enum Direction
@@ -45,7 +77,8 @@ namespace EfD2
 		None,
 		Idle,
 		Running,
-		Attacking
+		Attacking,
+		Hurt
 	};
 
 	public enum GameStateType
@@ -65,9 +98,9 @@ namespace EfD2
 	{
 		Background,
 		Player,
+		Particles,
 		Foreground,
 		Floating,
-		Particles,
 		TextBackground,
 		Text,
 		Menu,
@@ -156,7 +189,7 @@ namespace EfD2
 
 		}
 
-		public Rectangle toRectangle()
+		public Rectangle ToRectangle()
 		{
 			Rectangle myReturn = new Rectangle((int)_x, (int)_y, (int)_width, (int)_height);
 			return myReturn;
@@ -290,8 +323,8 @@ namespace EfD2
 		{
 			bool myReturn = false;
 
-			if ((X + Width >= r2.X && Y + Height >= r2.Y && X <= r2.X + r2.Width && Y <= r2.Y + r2.Height))
-
+			//if ((X + Width >= r2.X && Y + Height >= r2.Y && X <= r2.X + r2.Width && Y <= r2.Y + r2.Height))
+			if ((X + Width > r2.X && Y + Height > r2.Y && X < r2.X + r2.Width && Y < r2.Y + r2.Height))
 			{
 				myReturn = true;
 			}
