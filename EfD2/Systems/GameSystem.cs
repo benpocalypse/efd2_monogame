@@ -17,11 +17,9 @@ namespace EfD2.Systems
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
-		//private EntityPool entityPool;
-
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(HasGameState)); }
+			get { return new Filter().AllOf(typeof(Event)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -36,9 +34,52 @@ namespace EfD2.Systems
 
 		public void Update(GameTime gameTime)
 		{
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+			bool stateChanged = false;
+
+			var gameStateEntity = EntityMatcher.GetEntity("The Game");
+			var gameState = gameStateEntity.GetComponent<GameState>();
+
+			// First, process any Event related changes to the GameState
+			switch (gameState.State)
 			{
-				var state = e.GetComponent<HasGameState>();
+				case GameStateType.Intro:
+					gameState.State = GameStateType.TitleScreen;
+					stateChanged = true;
+					break;
+
+				case GameStateType.TitleScreen:
+					gameState.State = GameStateType.EnterMap;
+					stateChanged = true;
+					break;
+					
+				case GameStateType.EnterMap:
+					gameState.State = GameStateType.Playing;
+					stateChanged = true;
+					break;
+					
+				case GameStateType.Playing:
+					break;
+					
+			}
+
+			// If we didn't change states as a result of of our normal State Machine, 
+			// then process changes based on Events generated elsewhere.
+			if (stateChanged == false)
+			{
+				foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+				{
+					var ev = e.GetComponent<Event>();
+
+					if (ev.Triggered == true)
+					{
+						switch (ev.Type)
+						{
+							case EventType.PlayerHitExit:
+								gameState.State = GameStateType.EnterMap;
+								break;
+						}
+					}
+				}
 			}
 		}
 	}

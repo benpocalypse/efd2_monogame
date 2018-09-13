@@ -4,13 +4,14 @@ using ECS;
 
 namespace EfD2.Components
 {
-	public class HasGameState: IComponent
+	public class Inventory : IComponent
 	{
 		Entity IComponent.entity { get; set; }
 
-		public GameStateType GameState { get; set; } = GameStateType.Intro;
+		public int Gold = 0;
+		public List<CollectibleType> Items = new List<CollectibleType>();
 
-		public HasGameState()
+		public Inventory()
 		{
 		}
 	}

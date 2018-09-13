@@ -6,48 +6,35 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace EfD2
 {
-	// FIXME - Remove this enum
-	public enum EntityType
+	public enum GameStateType
 	{
-		None,
-		Wall,
-		Floor,
-		Player,
-		Item,
-		Weapon,
-		Gold,
-		Health,
-		Entrance,
-		Exit
+		Intro,
+		TitleScreen,
+		EnterMap,
+		Playing
 	};
 
-	/* FIXME - Notes
-	 * I can't decide how to handle hitting the map exit, and what the PhysicsSystem should be responsible for?
-	 * My initial thoughts were to have the PhysicsSystem only move things that needed to be moved, and mark
-	 * them as not colliding. However, how do you handle the player running into the Map Exit? How about entities
-	 * that should have a reaction such as a player getting hit, or an Enemy being killed? Fuck.
-	 */ 
-
-	// Used to prompt a reaction from an event
 	public enum EventType
 	{
 		None,
-		Exit
+		PlayerHitExit,
+		EndOfLevel
 	};
 
 	public enum EventTrigger
 	{
 		None,
-		Collision
+		Collision,
+		Time
 	};
 
-	public enum ActorStateType
+	public enum ActorType
 	{
 		None,
-		Immune,
-		Hurt,
-		Dead,
-		HitExit
+		Player,
+		Monster,
+		Entrance,
+		Exit
 	};
 
 	public enum AttackStateType
@@ -79,13 +66,6 @@ namespace EfD2
 		Running,
 		Attacking,
 		Hurt
-	};
-
-	public enum GameStateType
-	{
-		Intro,
-		TitleScreen,
-		Playing
 	};
 
 	public enum Visibility

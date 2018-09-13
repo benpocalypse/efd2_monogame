@@ -18,7 +18,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(HasActorState)); }
+			get { return new Filter().AllOf(typeof(Actor)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -33,11 +33,36 @@ namespace EfD2.Systems
 		public void Update(GameTime gameTime)
 		{
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+			var gameEntity = EntityMatcher.GetEntity("The Game");
+			var gameState = gameEntity.GetComponent<GameState>();
 
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				
+				var act = e.GetComponent<Actor>();
+
+				switch (act.Type)
+				{
+					case ActorType.Player:
+						{
+							if (gameState.State == GameStateType.EnterMap)
+							{
+								Entity exit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+								e.GetComponent<Positionable>().CurrentPosition = exit.GetComponent<Positionable>().CurrentPosition;
+								e.GetComponent<Positionable>().PreviousPosition = exit.GetComponent<Positionable>().CurrentPosition;
+							}
+						}
+						break;
+
+					default:
+						break;
+				}
 			}
+		}
+
+
+		private void MovePlayerNextToEntrance(ref Positionable playerPosition)
+		{
+			
 		}
 	}
 }

@@ -47,7 +47,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Event)); }
+			get { return new Filter().AllOf(typeof(GameState)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -72,34 +72,20 @@ namespace EfD2.Systems
 		{
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				if (e.GetComponent<Event>().Triggered == true)
+				var state = e.GetComponent<GameState>().State;
+
+				switch (state)
 				{
-					var evt = e.GetComponent<Event>().Type;
+					case GameStateType.EnterMap:
+						GenerateMap();
+						UpdateOpenSpaceNearEntrance();
+						break;
 
-					switch (evt)
-					{
-						case EventType.Exit:
-							GenerateMap();
-							e.GetComponent<Event>().Triggered = false;
-							break;
-
-						default:
-							break;
-					}
+					default:
+						//ClearMap();
+						break;
 				}
 			}
-
-			/*
-			var player = EntityMatcher.GetEntity("Player");
-			var state = player.GetComponent<HasActorState>();
-
-			if(state.ActorState == ActorStateType.HitExit)
-			{
-				state.ActorState = ActorStateType.None;
-				GenerateMap();
-				player.GetComponent<Positionable>().CurrentPosition = GetOpenSpaceNearEntrance();
-			}
-			*/
 		}
 
 		public void GenerateMap()
@@ -314,13 +300,36 @@ namespace EfD2.Systems
 			DebugThing();
 		}
 
-		public Vector2 GetOpenSpaceNearEntrance()
+		private void UpdateOpenSpaceNearEntrance()
 		{
-			var ent = EntityMatcher.GetEntity("Entrance");
-			var pos = ent.GetComponent<Positionable>();
+			Entity localEntrance;
+			Entity openSpaceNextToEntrance;
 
-			int x = Convert.ToInt32((pos.CurrentPosition.X / 8) - MAP_X_OFFSET);
-			int y = Convert.ToInt32((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET);
+			// Using string matching feels hacky, even thoug I'm the one that added it to the ECS.
+			if (EntityMatcher.DoesEntityExist("Entrance") == false)
+			{
+				return;
+			}
+			else
+			{
+				localEntrance = EntityMatcher.GetEntity("Entrance");
+			}
+
+			if (EntityMatcher.DoesEntityExist("OpenSpaceNextToEntrance") == false)
+			{
+				openSpaceNextToEntrance = new Entity("OpenSpaceNextToEntrance");
+				openSpaceNextToEntrance.AddComponent(new Positionable());
+			}
+			else
+			{
+				openSpaceNextToEntrance = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+			}
+
+			var entrancePos = localEntrance.GetComponent<Positionable>();
+			var openPos = openSpaceNextToEntrance.GetComponent<Positionable>();
+
+			int x = Convert.ToInt32((entrancePos.CurrentPosition.X / 8) - MAP_X_OFFSET);
+			int y = Convert.ToInt32((entrancePos.CurrentPosition.Y / 8) - MAP_Y_OFFSET);
 
 			if (x >= MAPWIDTH)
 				x = 23;
@@ -328,19 +337,29 @@ namespace EfD2.Systems
 			if (y >= MAPHEIGHT)
 				y = 17;
 
-			if (x < (MAPWIDTH-1) && MapArray[x + 1, y] == MT_FLOOR)
-				return new Vector2(pos.CurrentPosition.X + 8, pos.CurrentPosition.Y);
-			
-			if (x > 0  && MapArray[x - 1, y] == MT_FLOOR)
-				return new Vector2(pos.CurrentPosition.X - 8, pos.CurrentPosition.Y);
+			if (x < (MAPWIDTH - 1) && MapArray[x + 1, y] == MT_FLOOR)
+			{
+				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X + 8, entrancePos.CurrentPosition.Y);
+				return;
+			}
 
-			if (y < (MAPHEIGHT- 1) && MapArray[x, y + 1] == MT_FLOOR)
-				return new Vector2(pos.CurrentPosition.X, pos.CurrentPosition.Y + 8);
+			if (x > 0 && MapArray[x - 1, y] == MT_FLOOR)
+			{
+				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X - 8, entrancePos.CurrentPosition.Y);
+				return;
+			}
+
+			if (y < (MAPHEIGHT - 1) && MapArray[x, y + 1] == MT_FLOOR)
+			{
+				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X, entrancePos.CurrentPosition.Y + 8);
+				return;
+			}
 
 			if (y > 0 && MapArray[x, y - 1] == MT_FLOOR)
-				return new Vector2(pos.CurrentPosition.X, pos.CurrentPosition.Y - 8);
-
-			return new Vector2();
+			{
+				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X, entrancePos.CurrentPosition.Y - 8);
+				return;
+			}
 		}
 
 		private void DebugThing()
@@ -829,7 +848,7 @@ namespace EfD2.Systems
 						case MT_EXIT:
 							{
 								var ev = new Event();
-								ev.Type = EventType.Exit;
+								ev.Type = EventType.PlayerHitExit;
 								ev.Trigger = EventTrigger.Collision;
 								IComponent[] componentCollection = new IComponent[]
 								{

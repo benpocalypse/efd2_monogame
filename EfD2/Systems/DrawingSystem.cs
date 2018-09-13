@@ -83,11 +83,16 @@ namespace EfD2.Systems
 
 						//position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
 
-						if (DEBUG == true && e.GetComponent<Collidable>() != null)
+						if (DEBUG == true)
 						{
-							var col = e.GetComponent<Collidable>();
-							var newRect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, col.BoundingBox.Width, col.BoundingBox.Height);
-							DrawBorder(newRect.ToRectangle());
+							var openSpot = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+							if (openSpot != null)
+							{
+								var openPos = openSpot.GetComponent<Positionable>();
+
+								var newRect = new RectangleF(openPos.CurrentPosition.X, openPos.CurrentPosition.Y, 8, 8);
+								DrawBorder(newRect.ToRectangle());
+							}
 						}
 
 						var texture = a.FrameList[a.CurrentFrame];						

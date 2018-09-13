@@ -36,7 +36,7 @@ namespace ECS
 
 		public static Entity GetEntity(string whichEntity)
 		{
-			return subscribedEntities.First(_ => _.Id == whichEntity);
+			return subscribedEntities.FirstOrDefault(_ => _.Id == whichEntity);
 		}
 
 		public static bool DoesEntityExist(string whichEntity)

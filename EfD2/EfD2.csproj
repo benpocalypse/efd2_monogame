@@ -55,19 +55,22 @@
     <Compile Include="Systems\PhysicsSystem.cs" />
     <Compile Include="Globals.cs" />
     <Compile Include="Resolution.cs" />
-    <Compile Include="Components\HasGameState.cs" />
+    <Compile Include="Components\GameState.cs" />
     <Compile Include="Components\Ephemeral.cs" />
     <Compile Include="Systems\TextSystem.cs" />
     <Compile Include="Components\HasText.cs" />
     <Compile Include="Components\HasInput.cs" />
     <Compile Include="Systems\MovementSystem.cs" />
-    <Compile Include="Components\HasActorState.cs" />
+    <Compile Include="Components\Actor.cs" />
     <Compile Include="Systems\ActorSystem.cs" />
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\Damage.cs" />
     <Compile Include="Components\Attacking.cs" />
     <Compile Include="Components\Event.cs" />
     <Compile Include="Systems\EventSystem.cs" />
+    <Compile Include="Systems\TimeSystem.cs" />
+    <Compile Include="Components\Inventory.cs" />
+    <Compile Include="Systems\CollectibleSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

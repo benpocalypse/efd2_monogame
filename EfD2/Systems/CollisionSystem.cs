@@ -23,8 +23,6 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			// FIXME - Do we really need Drawable here? The original intent was to use it as the collision box,
-			//         but I think there were problems with this, IIRC.
 			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
 		}
 
@@ -48,12 +46,14 @@ namespace EfD2.Systems
 					var col2 = o.GetComponent<Collidable>();
 					var rect2 = new RectangleF(pos2.CurrentPosition.X, pos2.CurrentPosition.Y, col2.BoundingBox.Width, col2.BoundingBox.Height);
 
+					// If there is a collision...
 					if (rect1.Intersects(rect2))
 					{
+						// add the collision to the colliding entity.
 						if (!col1.CollidingEntities.Contains(o))
 							col1.CollidingEntities.Add(o);
 
-
+						// Now, if there are events associated with the collision, flag them.
 						var ev1 = e.GetComponent<Event>();
 						if (ev1 != null && ev1.Trigger == EventTrigger.Collision)
 						{
@@ -65,15 +65,10 @@ namespace EfD2.Systems
 						{
 							ev2.Triggered = true;
 						}
-
-
-						//if (!col2.CollidingEntities.Contains(e))
-						//	col2.CollidingEntities.Add(e);
 					}
 					else
 					{
 						col1.CollidingEntities.Remove(o);
-						//col2.CollidingEntities.Remove(e);
 					}
 				}
 

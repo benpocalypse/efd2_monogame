@@ -10,15 +10,16 @@ using EfD2.Components;
 
 namespace EfD2.Systems
 {
-	public class EventSystem
+	public class CollectibleSystem 
 		: IReactiveSystem
+
 	{
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Event)); }
+			get { return new Filter().AllOf(typeof(Collectible)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -26,20 +27,11 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-		public EventSystem()
+		public CollectibleSystem()
 		{
-		}
-
-		public void Update(GameTime gameTime)
-		{
-			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				if (e.GetComponent<Event>().Triggered == true)
-				{
-					e.GetComponent<Event>().Triggered = false;
-				}
+				
 			}
 		}
 	}

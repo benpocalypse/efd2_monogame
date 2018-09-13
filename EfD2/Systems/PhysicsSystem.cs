@@ -19,7 +19,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
+			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Movable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -31,16 +31,16 @@ namespace EfD2.Systems
 		{
 		}
 
-		// FIXME - update and optimize this with more/better LINQ
+		// FIXME - Have this take direction, mass, etc into account in the future.
 		public void Update(GameTime gameTime)
 		{
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => _.GetComponent<Movable>() != null))
 			{
+				// If the entity is colliding, have it react to physics.
 				if (e.GetComponent<Collidable>().CollidingEntities.Count > 0)
 				{
 					var entityPositionable = e.GetComponent<Positionable>();
 					var entityMovable = e.GetComponent<Movable>();
-					var entityCollidable = e.GetComponent<Collidable>();
 
 					entityPositionable.CurrentPosition = entityPositionable.PreviousPosition;
 					entityMovable.CurrentDirection = Direction.None;
@@ -49,70 +49,5 @@ namespace EfD2.Systems
 				}
 			}
 		}
-
-         /*
-		private void HandlePlayerCollisions(ref Collidable collidable, Entity player)
-		{
-			foreach (Entity oe in collidable.CollidingEntities)
-			{
-				foreach (IComponent oic in oe.components.Where(_ => _.GetType() == typeof(Collidable)))
-				{
-					switch (((Collidable)oic).Physics)
-					{
-						case EntityType.Wall:
-							{
-								var entityPositionable = player.GetComponent<Positionable>();
-								var entityMovable = player.GetComponent<Movable>();
-								var entityCollidable = player.GetComponent<Collidable>();
-
-								entityPositionable.CurrentPosition = entityPositionable.PreviousPosition;
-								entityMovable.CurrentDirection = Direction.None;
-								entityMovable.PreviousDirection = Direction.None;
-								entityMovable.Acceleration = 0f;
-
-								entityCollidable.Colliding = false;
-								collidable.Colliding = false;
-							}
-							break;
-
-						case EntityType.Exit:
-							{
-								player.GetComponent<HasActorState>().ActorStateList.Add(ActorStateType.HitExit);
-							}
-							break;
-
-						case EntityType.Weapon:
-							{
-								player.GetComponent<HasActorState>().ActorStateList.Add(ActorStateType.Hurt);
-							}
-							break;
-							
-						case EntityType.Item:
-							{
-								//entitiesToRemove.Add(oe);
-								collidable.Colliding = false;
-
-								// FIXME - this is a hack. We need to make this generic by using the Collectible Component.
-								if (!EntityMatcher.DoesEntityExist("message!"))
-								{
-									var goldPos = EntityMatcher.GetEntity("gold").GetComponent<Positionable>();
-									Entity collectionText = new Entity("message!");
-
-									collectionText.AddComponent(new Positionable { CurrentPosition = (goldPos.CurrentPosition / 8), ZOrder = (float)DisplayLayer.Text });
-									collectionText.AddComponent(new Ephemeral { PersistTime = 2.0, TotalTime = 2.0f });
-
-									HasText t = new HasText();
-									t.Text.Add("100!");
-									t.Homgeneous = false;
-									t.Border = true;
-									collectionText.AddComponent(t);
-								}
-							}
-							break;
-					}
-				}
-			}
-			//break;
-			*/
 	}
 }

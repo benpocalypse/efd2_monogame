@@ -6,8 +6,6 @@ namespace EfD2.Components
 {
 	public class Collidable : IComponent
 	{
-		public Entity Owner { get; set; }
-
 		public RectangleF BoundingBox { get; set; }
 		public Entity entity { get; set; }
 		public List<Entity> CollidingEntities;

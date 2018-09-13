@@ -25,15 +25,18 @@ namespace EfD2
 		MouseState mouse;
 		MouseState previousMouse;
 
-		TextSystem textSystem;
-		InputSystem inputSystem;
-		MovementSystem movementSystem;
-		EventSystem eventSystem;
+		ActorSystem actorSystem;
 		CollisionSystem collisionSystem;
-		PhysicsSystem physicsSystem;
 		DrawingSystem drawingSystem;
-		MapSystem mapSystem;
+		EventSystem eventSystem;
 		GameSystem gameSystem;
+		InputSystem inputSystem;
+		//LogicSystem logicSystem;
+		MapSystem mapSystem;
+		MovementSystem movementSystem;
+		PhysicsSystem physicsSystem;
+		TextSystem textSystem;
+		TimeSystem timeSystem;
 
 		public EfD2_Game()
 		{
@@ -60,19 +63,21 @@ namespace EfD2
 		/// </summary>
 		protected override void Initialize()
 		{
-			// Systems will refresh when new Entities have compatible components added to them.
-			collisionSystem = new CollisionSystem();
-
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
+			// Systems will refresh when new Entities have compatible components added to them.
+			actorSystem = new ActorSystem();
+			collisionSystem = new CollisionSystem();
 			drawingSystem = new DrawingSystem(ref gameContent, ref spriteBatch);
-			textSystem = new TextSystem(ref gameContent, ref spriteBatch);
+			eventSystem = new EventSystem();
+			gameSystem = new GameSystem();
 			inputSystem = new InputSystem();
+			mapSystem = new MapSystem(ref gameContent);
 			movementSystem = new MovementSystem();
 			physicsSystem = new PhysicsSystem();
-			mapSystem = new MapSystem(ref gameContent);
-			eventSystem = new EventSystem(ref mapSystem);
+			textSystem = new TextSystem(ref gameContent, ref spriteBatch);
+			timeSystem = new TimeSystem();
 	
 			base.Initialize();
 		}
@@ -89,6 +94,7 @@ namespace EfD2
 			Entity pileOfGold;
 			Entity weapon;
 			Entity someTestText;
+			Entity theGame;
 
 			playerEntity = new Entity("Player");
 			swordHorizontal = new Entity("Sword Horizontal");
@@ -98,7 +104,7 @@ namespace EfD2
 			someTestText = new Entity("text");
 
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = (float)DisplayLayer.Text });
-			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, TotalTime = 5.0f });
+			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, Repetitions = 3 });
 			HasText t = new HasText();
 			t.Text.Add("Is this thing on?");
 			t.Text.Add("I hope it works, because a \nseries of short term\narchitectural decisions were\nmade to make it work.");
@@ -109,7 +115,7 @@ namespace EfD2
 
 			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = (float)DisplayLayer.Floating });
 			pileOfGold.AddComponent(new Collidable());
-			pileOfGold.AddComponent(new Collectible());
+			pileOfGold.AddComponent(new Collectible() { Value = 1 });
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
@@ -118,16 +124,17 @@ namespace EfD2
 			weapon.AddComponent(new Collidable());
 			weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
 
-			mapSystem.GenerateMap();
+			//mapSystem.GenerateMap();
 
 			//swordHorizontal.AddComponent
 
-			playerEntity.AddComponent(new Positionable() { CurrentPosition = mapSystem.GetOpenSpaceNearEntrance(), ZOrder = (float)DisplayLayer.Player });
+			playerEntity.AddComponent(new Positionable() { ZOrder = (float)DisplayLayer.Player });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
 			playerEntity.AddComponent(new Collidable() { BoundingBox = new RectangleF(0, 0, 6, 7) });
-			//playerEntity.AddComponent(new HasActorState() { ActorStateList =  new List<ActorStateType>().Add(ActorStateType.None) });
-			playerEntity.AddComponent(new Health() { Value = 10 });
+			playerEntity.AddComponent(new Actor() { Type = ActorType.Player });
+			playerEntity.AddComponent(new Health() { Value = 3 });
 			playerEntity.AddComponent(new Attacking() { AttactState = AttackStateType.NotAttacking });
+			playerEntity.AddComponent(new Inventory());
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -138,6 +145,9 @@ namespace EfD2
 					 								   Content.Load<Texture2D>("player2"))) { ZOrder = DisplayLayer.Player };
 			playerEntity.AddComponent(d);
 			playerEntity.AddComponent(new HasInput());
+
+			theGame = new Entity("The Game");
+			theGame.AddComponent(new GameState() { State = GameStateType.Intro } );
 
 			//Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
 			Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
@@ -173,10 +183,18 @@ namespace EfD2
 				//playerEntity.GetComponent<Positionable>().CurrentPosition = mapSystem.GetOpenSpaceNearEntrance();
 			}
 
+			// these systems generate signals used by other systems
 			inputSystem?.Update(gameTime);
 			movementSystem?.Update(gameTime);
 			collisionSystem?.Update(gameTime);
+			timeSystem?.Update(gameTime);
+			gameSystem?.Update(gameTime);
+
+			// these systems do intermediate processing
 			mapSystem?.Update();
+			actorSystem?.Update(gameTime);
+
+			// these systems cancel out signals generated by other systems
 			eventSystem?.Update(gameTime);
 			physicsSystem?.Update(gameTime);
 

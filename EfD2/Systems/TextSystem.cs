@@ -131,29 +131,13 @@ namespace EfD2
 				var text = e.GetComponent<HasText>();
 				var pos = e.GetComponent<Positionable>();
 
-				ephemeral.PersistTime -= delta;
-
-				if ((ephemeral.PersistTime >= 0.0) && (text.CurrentText < text.Text.Count))
+				if (ephemeral.RepetitionCount < text.Text.Count)
 				{
-					var current = text.Text[text.CurrentText];
+					var current = text.Text[ephemeral.RepetitionCount];
 					DrawText(current, text, pos);
 
 					if (text.Border == true)
 						DrawBorder(current, text, pos);
-				}
-				else
-				{
-					if (text.CurrentText < text.Text.Count)
-					{
-						var current = text.Text[text.CurrentText];
-						DrawText(current, text, pos);
-
-						if (text.Border == true)
-							DrawBorder(current, text, pos);
-						
-						text.CurrentText++;
-						ephemeral.PersistTime = ephemeral.TotalTime;
-					}
 				}
 			}
 		}
