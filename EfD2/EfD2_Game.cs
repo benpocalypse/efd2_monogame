@@ -26,10 +26,12 @@ namespace EfD2
 		MouseState previousMouse;
 
 		ActorSystem actorSystem;
+		CollectibleSystem collectibleSystem;
 		CollisionSystem collisionSystem;
 		DrawingSystem drawingSystem;
 		EventSystem eventSystem;
 		GameSystem gameSystem;
+		HUDSystem hudSystem;
 		InputSystem inputSystem;
 		//LogicSystem logicSystem;
 		MapSystem mapSystem;
@@ -68,10 +70,12 @@ namespace EfD2
 
 			// Systems will refresh when new Entities have compatible components added to them.
 			actorSystem = new ActorSystem();
+			collectibleSystem = new CollectibleSystem();
 			collisionSystem = new CollisionSystem();
 			drawingSystem = new DrawingSystem(ref gameContent, ref spriteBatch);
 			eventSystem = new EventSystem();
 			gameSystem = new GameSystem();
+			hudSystem = new HUDSystem(ref gameContent, ref spriteBatch);
 			inputSystem = new InputSystem();
 			mapSystem = new MapSystem(ref gameContent);
 			movementSystem = new MovementSystem();
@@ -103,7 +107,7 @@ namespace EfD2
 			weapon = new Entity("weapon");
 			someTestText = new Entity("text");
 
-			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 5), ZOrder = (float)DisplayLayer.Text });
+			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(4, 7), ZOrder = (float)DisplayLayer.Text });
 			someTestText.AddComponent(new Ephemeral { PersistTime = 5.0, Repetitions = 3 });
 			HasText t = new HasText();
 			t.Text.Add("Is this thing on?");
@@ -115,7 +119,7 @@ namespace EfD2
 
 			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = (float)DisplayLayer.Floating });
 			pileOfGold.AddComponent(new Collidable());
-			pileOfGold.AddComponent(new Collectible() { Value = 1 });
+			pileOfGold.AddComponent(new Collectible() { Type = CollectibleType.Gold, Value = 1 });
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
@@ -187,6 +191,7 @@ namespace EfD2
 			inputSystem?.Update(gameTime);
 			movementSystem?.Update(gameTime);
 			collisionSystem?.Update(gameTime);
+			collectibleSystem?.Update(gameTime);
 			timeSystem?.Update(gameTime);
 			gameSystem?.Update(gameTime);
 
@@ -215,8 +220,9 @@ namespace EfD2
 			graphics.GraphicsDevice.Clear(Color.Black);
 
 			spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend, SamplerState.PointClamp, null, null, null, Resolution.getTransformationMatrix());
-				drawingSystem?.Animate(gameTime);
-				textSystem.Update(gameTime);
+				drawingSystem?.Update(gameTime);
+				textSystem?.Update(gameTime);
+				hudSystem?.Update(gameTime);
 			spriteBatch.End();
 
 			base.Draw(gameTime);

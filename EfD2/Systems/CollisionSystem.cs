@@ -31,7 +31,6 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-
 		public void Update(GameTime gameTime)
 		{
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
@@ -68,7 +67,8 @@ namespace EfD2.Systems
 					}
 					else
 					{
-						col1.CollidingEntities.Remove(o);
+						if(col1.CollidingEntities.Contains(o))
+							col1.CollidingEntities.Remove(o);
 					}
 				}
 

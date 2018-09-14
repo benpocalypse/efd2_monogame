@@ -19,7 +19,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Collectible)); }
+			get { return new Filter().AllOf(typeof(Collectible), typeof(Collidable)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -29,9 +29,37 @@ namespace EfD2.Systems
 
 		public CollectibleSystem()
 		{
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+		}
+
+		public void Update(GameTime gameTime)
+		{
+			List<Entity> entitiesToRemove = new List<Entity>();
+
+			foreach (Entity collectibleEntity in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				
+				var collidable = collectibleEntity.GetComponent<Collidable>();
+				var collectible = collectibleEntity.GetComponent<Collectible>();
+
+				foreach (Entity collidingEntity in collidable.CollidingEntities)
+				{
+					if (collidingEntity.GetComponent<Inventory>() != null)
+					{
+						if (collectible.Type == CollectibleType.Gold)
+						{
+							collidingEntity.GetComponent<Inventory>().Gold += collectible.Value;
+
+							collidingEntity.GetComponent<Collidable>().CollidingEntities.Remove(collectibleEntity);
+
+							if (!entitiesToRemove.Contains(collectibleEntity))
+								entitiesToRemove.Add(collectibleEntity);
+						}
+					}
+				}
+			}
+
+			foreach (Entity e in entitiesToRemove)
+			{
+				EntityMatcher.Remove(e);
 			}
 		}
 	}

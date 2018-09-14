@@ -60,7 +60,7 @@ namespace EfD2.Systems
 			//spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, position.ZOrder);
 		}
 
-		public void Animate(GameTime gameTime)
+		public void Update(GameTime gameTime)
         {
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 

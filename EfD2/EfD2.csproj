@@ -71,6 +71,7 @@
     <Compile Include="Systems\TimeSystem.cs" />
     <Compile Include="Components\Inventory.cs" />
     <Compile Include="Systems\CollectibleSystem.cs" />
+    <Compile Include="Systems\HUDSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
