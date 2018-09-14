@@ -9,6 +9,7 @@ namespace EfD2.Components
 		Entity IComponent.entity { get; set; }
 
 		public int Value = 0;
+		public int Max = 3;
 
 		public Health()
 		{

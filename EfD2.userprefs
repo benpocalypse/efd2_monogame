@@ -1,12 +1,14 @@
 ﻿<Properties StartupConfiguration="{92EC1C09-B726-482E-B90C-F6C91556755C}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/Systems/HUDSystem.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="EfD2/Systems/CollisionSystem.cs">
     <Files>
-      <File FileName="EfD2/EfD2_Game.cs" Line="110" Column="83" />
+      <File FileName="EfD2/EfD2_Game.cs" Line="138" Column="71" />
       <File FileName="EfD2/Globals.cs" Line="35" Column="11" />
       <File FileName="EfD2/Components/Inventory.cs" Line="18" Column="2" />
       <File FileName="EfD2/Systems/DrawingSystem.cs" Line="35" Column="31" />
-      <File FileName="EfD2/Systems/HUDSystem.cs" Line="61" Column="29" />
+      <File FileName="EfD2/Systems/HUDSystem.cs" Line="82" Column="54" />
       <File FileName="EfD2/Systems/TextSystem.cs" Line="168" Column="6" />
+      <File FileName="EfD2/Components/Health.cs" Line="14" Column="18" />
+      <File FileName="EfD2/Systems/CollisionSystem.cs" Line="32" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />

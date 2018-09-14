@@ -136,9 +136,9 @@ namespace EfD2
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
 			playerEntity.AddComponent(new Collidable() { BoundingBox = new RectangleF(0, 0, 6, 7) });
 			playerEntity.AddComponent(new Actor() { Type = ActorType.Player });
-			playerEntity.AddComponent(new Health() { Value = 3 });
 			playerEntity.AddComponent(new Attacking() { AttactState = AttackStateType.NotAttacking });
 			playerEntity.AddComponent(new Inventory());
+			playerEntity.AddComponent(new Health() { Max = 3, Value = 2 });
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
