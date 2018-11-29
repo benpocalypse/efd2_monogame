@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
@@ -9,6 +9,7 @@ using EfD2.Systems;
 using EfD2.Components;
 using IndependentResolutionRendering;
 using Microsoft.Xna.Framework.Media;
+using System.Diagnostics;
 
 namespace EfD2
 {
@@ -86,17 +87,19 @@ namespace EfD2
 			base.Initialize();
 		}
 
-		/// <summary>
-		/// LoadContent will be called once per game and is the place to load
-		/// all of your content.
-		/// </summary>
-		protected override void LoadContent()
+        private Entity fpsText;
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
 		{
 			Entity playerEntity;
 			Entity swordHorizontal;
 			Entity swordVertical;
 			Entity pileOfGold;
-			Entity weapon;
+			//Entity weapon;
 			Entity someTestText;
 			Entity theGame;
 
@@ -104,7 +107,7 @@ namespace EfD2
 			swordHorizontal = new Entity("Sword Horizontal");
 			swordVertical = new Entity("Sword Vertical");
 			pileOfGold = new Entity("gold");
-			weapon = new Entity("weapon");
+			//weapon = new Entity("weapon");
 			someTestText = new Entity("text");
 
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(4, 7), ZOrder = (float)DisplayLayer.Text });
@@ -117,16 +120,19 @@ namespace EfD2
 			t.Border = true;
 			someTestText.AddComponent(t);
 
-			pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = (float)DisplayLayer.Floating });
+            fpsText = new Entity("Frames Per Second");
+            fpsText.AddComponent(new Positionable { CurrentPosition = new Vector2(20, 2), ZOrder = (float)DisplayLayer.Text });
+
+            pileOfGold.AddComponent(new Positionable { CurrentPosition = new Vector2(100, 100), ZOrder = (float)DisplayLayer.Floating });
 			pileOfGold.AddComponent(new Collidable());
 			pileOfGold.AddComponent(new Collectible() { Type = CollectibleType.Gold, Value = 1 });
 			pileOfGold.AddComponent(new Drawable(AnimationType.Idle, new Animation(AnimationType.Idle,
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
 
-			weapon.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
-			weapon.AddComponent(new Collidable());
-			weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
+			//weapon.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
+			//weapon.AddComponent(new Collidable());
+			//weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
 
 			//mapSystem.GenerateMap();
 
@@ -134,7 +140,7 @@ namespace EfD2
 
 			playerEntity.AddComponent(new Positionable() { ZOrder = (float)DisplayLayer.Player });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
-			playerEntity.AddComponent(new Collidable() { BoundingBox = new RectangleF(0, 0, 6, 7) });
+			playerEntity.AddComponent(new Collidable() { BoundingBox = new RectangleF(0, 0, 6, 6) });
 			playerEntity.AddComponent(new Actor() { Type = ActorType.Player });
 			playerEntity.AddComponent(new Attacking() { AttactState = AttackStateType.NotAttacking });
 			playerEntity.AddComponent(new Inventory());
@@ -164,14 +170,20 @@ namespace EfD2
 			Dispose();
 		}
 
-		/// <summary>
-		/// Allows the game to run logic such as updating the world,
-		/// checking for collisions, gathering input, and playing audio.
-		/// </summary>
-		/// <param name="gameTime">Provides a snapshot of timing values.</param>
-		protected override void Update(GameTime gameTime)
+        private Stopwatch stopWatch = new Stopwatch();
+        float FPS = 0.0f;
+
+        /// <summary>
+        /// Allows the game to run logic such as updating the world,
+        /// checking for collisions, gathering input, and playing audio.
+        /// </summary>
+        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        protected override void Update(GameTime gameTime)
 		{
-			keyboard = Keyboard.GetState();
+
+            stopWatch.Start();
+
+            keyboard = Keyboard.GetState();
 			mouse = Mouse.GetState();
 
 			// For Mobile devices, this logic will close the Game when the Back button is pressed
@@ -207,7 +219,20 @@ namespace EfD2
 			previousKeyboard = keyboard;
 
 			base.Update(gameTime);
-		}
+
+            stopWatch.Stop();
+            FPS = 1000f / (float)stopWatch.Elapsed.Milliseconds;
+
+            fpsText.RemoveComponents<HasText>();
+
+            HasText t = new HasText();
+            t.Text.Add("FPS: " + FPS.ToString("00.00"));
+            t.Homgeneous = false;
+            t.Border = false;
+            fpsText.AddComponent(t);
+
+            stopWatch.Reset();
+        }
 
 		/// <summary>
 		/// This is called when the game should draw itself.

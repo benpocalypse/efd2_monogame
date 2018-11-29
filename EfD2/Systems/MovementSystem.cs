@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -43,12 +43,14 @@ namespace EfD2
 				var draw = e.GetComponent<Drawable>();
 
 				bool accelerating = false;
-
+                //System.Console.WriteLine("1. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
 				position.PreviousPosition = position.CurrentPosition;
 				move.PreviousDirection = move.CurrentDirection;
 
-				// If the component reacts to input, process it here
-				if (input != null)
+                //System.Console.WriteLine("2. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
+
+                // If the component reacts to input, process it here
+                if (input != null)
 				{
 					if (input.CurrentInput.Contains(Input.Right))
 					{
@@ -77,7 +79,9 @@ namespace EfD2
 					}
 				}
 
-				if (accelerating == true)
+                //System.Console.WriteLine("3. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
+
+                if (accelerating == true)
 				{
 					// Update our acceleration based on direction
 					if (move.CurrentDirection == move.PreviousDirection)

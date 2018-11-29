@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -364,7 +364,7 @@ namespace EfD2.Systems
 
 		private void DebugThing()
 		{
-			/*
+            /*
 			if (EntityMatcher.DoesEntityExist("Entrance"))
 			{
 				var comp = EntityMatcher.GetEntity("Entrance");
@@ -380,7 +380,7 @@ namespace EfD2.Systems
 
 				Console.WriteLine("x = " + ((pos.CurrentPosition.X / 8) - MAP_X_OFFSET) + ", y = " + ((pos.CurrentPosition.Y / 8) - MAP_Y_OFFSET));
 			}
-			*/
+            */
 		}
 
 		///****************************************************************************
@@ -768,13 +768,13 @@ namespace EfD2.Systems
 			{
 				var ent = EntityMatcher.GetEntity("Entrance");
 				EntityMatcher.Remove(ent);
-			}
+            }
 
 			if (EntityMatcher.DoesEntityExist("Exit"))
 			{
 				var ent = EntityMatcher.GetEntity("Exit");
 				EntityMatcher.Remove(ent);
-			}
+            }
 
 			for (int x = 0; x < MAPWIDTH; x++)
 			{
@@ -786,7 +786,7 @@ namespace EfD2.Systems
 						{
 							var e = EntityMatcher.GetEntity("Map" + x + ", " + y);
 							EntityMatcher.Remove(e);
-						}
+                        }
 					}
 				}
 			}
@@ -841,7 +841,6 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Entrance");
 								tempEntity.AddComponents(true, componentCollection);
-								Console.WriteLine("Adding " + tempEntity.components.Count + " components");
 							}
 							break;
 
@@ -860,7 +859,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Exit");
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_FLOOR:
@@ -873,7 +872,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 							
 						case MT_WALL_TOP:
@@ -887,7 +886,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 						case MT_WALL_MID:
 							{
@@ -900,7 +899,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_WALL_TOP_LEFT_CORNER:
@@ -914,7 +913,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_WALL_TOP_RIGHT_CORNER:
@@ -928,7 +927,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_WALL_BOTTOM_LEFT_CORNER:
@@ -942,7 +941,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_WALL_BOTTOM_RIGHT_CORNER:
@@ -956,7 +955,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 
 						case MT_WALL_LEFT_END:
@@ -970,7 +969,7 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
 			
 						case MT_WALL_RIGHT_END:
@@ -984,8 +983,9 @@ namespace EfD2.Systems
 
 								var tempEntity = new Entity("Map" + i + ", " + j);
 								tempEntity.AddComponents(true, componentCollection);
-							}
+                            }
 							break;
+
 						default:
 							break;
 					}

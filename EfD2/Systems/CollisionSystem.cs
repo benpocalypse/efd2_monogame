@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -64,7 +64,9 @@ namespace EfD2.Systems
 						{
 							ev2.Triggered = true;
 						}
-					}
+
+                        System.Console.WriteLine(e.Id + " is colliding with " + o.Id);
+                    }
 					else
 					{
 						if(col1.CollidingEntities.Contains(o))

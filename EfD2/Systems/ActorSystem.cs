@@ -40,16 +40,27 @@ namespace EfD2.Systems
 			{
 				var act = e.GetComponent<Actor>();
 
+                // FIXME - Is this really where/how we should handle this?
 				switch (act.Type)
 				{
 					case ActorType.Player:
 						{
 							if (gameState.State == GameStateType.EnterMap)
 							{
-								Entity exit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
-								e.GetComponent<Positionable>().CurrentPosition = exit.GetComponent<Positionable>().CurrentPosition;
-								e.GetComponent<Positionable>().PreviousPosition = exit.GetComponent<Positionable>().CurrentPosition;
-							}
+                                Entity openSpaceNearExit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+
+                                // FIXME - Need to center the player here, not upper-left align.
+                                var col = e.GetComponent<Collidable>();
+								e.GetComponent<Positionable>().CurrentPosition = 
+                                    new Vector2(
+                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.X + ((8-col.BoundingBox.Width)/2),
+                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.Y + ((8 - col.BoundingBox.Height ) / 2)
+                                                );
+                                e.GetComponent<Positionable>().PreviousPosition = e.GetComponent<Positionable>().CurrentPosition;
+
+                                // FIXME - this isn't the right place to handle this. When changing maps, all entities CollidingEntities should be cleared.
+                                col.CollidingEntities.Clear();
+                             }
 						}
 						break;
 

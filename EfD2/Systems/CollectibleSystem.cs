@@ -42,6 +42,7 @@ namespace EfD2.Systems
 
 				foreach (Entity collidingEntity in collidable.CollidingEntities)
 				{
+                    // If the entity the Collectible is colliding with has an Inventory...
 					if (collidingEntity.GetComponent<Inventory>() != null)
 					{
 						if (collectible.Type == CollectibleType.Gold)

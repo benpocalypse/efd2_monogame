@@ -63,7 +63,7 @@ namespace EfD2.Systems
 			}
 
 			// If we didn't change states as a result of of our normal State Machine, 
-			// then process changes based on Events generated elsewhere.
+			// then process Events that could change the GameState.
 			if (stateChanged == false)
 			{
 				foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))

@@ -18,7 +18,7 @@ namespace EfD2.Systems
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
-		private const bool DEBUG = false;
+		private const bool DEBUG = true;
 		private Texture2D dummyTexture;
 		private Color Colori;
 
@@ -93,15 +93,25 @@ namespace EfD2.Systems
 								var newRect = new RectangleF(openPos.CurrentPosition.X, openPos.CurrentPosition.Y, 8, 8);
 								DrawBorder(newRect.ToRectangle());
 							}
-						}
+
+                            var playerSpot = EntityMatcher.GetEntity("Player");
+                            if (playerSpot != null)
+                            {
+                                var playerPos = playerSpot.GetComponent<Positionable>();
+                                var playerCol = playerSpot.GetComponent<Collidable>();
+
+                                var playerRect = new RectangleF(playerPos.CurrentPosition.X, playerPos.CurrentPosition.Y, playerCol.BoundingBox.Width, playerCol.BoundingBox.Height);
+                                DrawBorder(playerRect.ToRectangle());
+                            }
+                        }
 
 						var texture = a.FrameList[a.CurrentFrame];						
 						var pos = position.CurrentPosition;
 
 						if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+							spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
 						else
-							spriteBatch.Draw(texture, pos, null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+							spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
 					}
 				}
             }
