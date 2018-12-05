@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
@@ -49,7 +49,6 @@ namespace EfD2.Systems
 							{
                                 Entity openSpaceNearExit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
 
-                                // FIXME - Need to center the player here, not upper-left align.
                                 var col = e.GetComponent<Collidable>();
 								e.GetComponent<Positionable>().CurrentPosition = 
                                     new Vector2(
@@ -61,6 +60,10 @@ namespace EfD2.Systems
                                 // FIXME - this isn't the right place to handle this. When changing maps, all entities CollidingEntities should be cleared.
                                 col.CollidingEntities.Clear();
                              }
+
+                            // How do we handle attacking?
+                            var attackState = e.GetComponent<Attacking>();
+
 						}
 						break;
 

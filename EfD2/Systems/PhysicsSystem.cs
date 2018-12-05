@@ -34,7 +34,7 @@ namespace EfD2.Systems
 		// FIXME - Have this take direction, mass, etc into account in the future.
 		public void Update(GameTime gameTime)
 		{
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => _.GetComponent<Movable>() != null))
+			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
 				// If the entity is colliding, have it react to physics.
 				if (e.GetComponent<Collidable>().CollidingEntities.Count > 0)

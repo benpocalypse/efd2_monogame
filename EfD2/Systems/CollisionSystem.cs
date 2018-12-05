@@ -22,35 +22,44 @@ namespace EfD2.Systems
 		}
 
 		public Filter filterMatch
-		{
+        {
 			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
 		}
 
-		public void Execute(Entity modifiedEntity)
+        private Filter filterMovableCollidables
+        {
+            get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Movable)); }
+        }
+
+        public void Execute(Entity modifiedEntity)
 		{
 			receivedEntity = modifiedEntity;
 		}
 
 		public void Update(GameTime gameTime)
 		{
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+            foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMovableCollidables))
 			{
-				var pos1 = e.GetComponent<Positionable>();
-				var col1 = e.GetComponent<Collidable>();
-				var rect1 = new RectangleF(pos1.CurrentPosition.X, pos1.CurrentPosition.Y, col1.BoundingBox.Width, col1.BoundingBox.Height);
+                //foreach (Entity o in EntityMatcher.GetMatchedEntities(filterStationaryCollidables).Where(_ => !_.Equals(e))) // && _.GetComponent<Movable>() != null))
+                foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => !_.Equals(o)))
+                {
+                    var pos1 = e.GetComponent<Positionable>();
+                    var col1 = e.GetComponent<Collidable>();
+                    var rect1 = new RectangleF(pos1.CurrentPosition.X, pos1.CurrentPosition.Y, col1.BoundingBox.Width, col1.BoundingBox.Height);
 
-				foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMatch).Where(_ => !_.Equals(e))) // && _.GetComponent<Movable>() != null))
-				{
-					var pos2 = o.GetComponent<Positionable>();
+                    var pos2 = o.GetComponent<Positionable>();
 					var col2 = o.GetComponent<Collidable>();
 					var rect2 = new RectangleF(pos2.CurrentPosition.X, pos2.CurrentPosition.Y, col2.BoundingBox.Width, col2.BoundingBox.Height);
 
 					// If there is a collision...
 					if (rect1.Intersects(rect2))
 					{
-						// add the collision to the colliding entity.
-						if (!col1.CollidingEntities.Contains(o))
-							col1.CollidingEntities.Add(o);
+						// add the collision to the movable/colliding entity.
+						if (!col2.CollidingEntities.Contains(e))
+                            col2.CollidingEntities.Add(e);
+
+                        if (!col1.CollidingEntities.Contains(o))
+                            col1.CollidingEntities.Add(o);
 
 						// Now, if there are events associated with the collision, flag them.
 						var ev1 = e.GetComponent<Event>();
@@ -65,12 +74,12 @@ namespace EfD2.Systems
 							ev2.Triggered = true;
 						}
 
-                        System.Console.WriteLine(e.Id + " is colliding with " + o.Id);
+                        System.Console.WriteLine(o.Id + " is colliding with " + e.Id);
                     }
 					else
 					{
-						if(col1.CollidingEntities.Contains(o))
-							col1.CollidingEntities.Remove(o);
+						if(col2.CollidingEntities.Contains(e))
+							col2.CollidingEntities.Remove(e);
 					}
 				}
 
