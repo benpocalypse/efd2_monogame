@@ -10,6 +10,7 @@ using EfD2.Components;
 using IndependentResolutionRendering;
 using Microsoft.Xna.Framework.Media;
 using System.Diagnostics;
+using EfD2.Helpers;
 
 namespace EfD2
 {
@@ -148,7 +149,7 @@ namespace EfD2
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
-								 new Animation(AnimationType.Running,
+								 new Animation(AnimationType.Moving,
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player1"),
 													   Content.Load<Texture2D>("player0"),

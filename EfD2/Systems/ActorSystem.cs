@@ -33,8 +33,6 @@ namespace EfD2.Systems
 		public void Update(GameTime gameTime)
 		{
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-			var gameEntity = EntityMatcher.GetEntity("The Game");
-			var gameState = gameEntity.GetComponent<GameState>();
 
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
@@ -45,7 +43,10 @@ namespace EfD2.Systems
 				{
 					case ActorType.Player:
 						{
-							if (gameState.State == GameStateType.EnterMap)
+                            var gameEntity = EntityMatcher.GetEntity("The Game");
+                            var gameState = gameEntity.GetComponent<GameState>();
+
+                            if (gameState.State == GameStateType.EnterMap)
 							{
                                 Entity openSpaceNearExit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
 
@@ -57,7 +58,8 @@ namespace EfD2.Systems
                                                 );
                                 e.GetComponent<Positionable>().PreviousPosition = e.GetComponent<Positionable>().CurrentPosition;
 
-                                // FIXME - this isn't the right place to handle this. When changing maps, all entities CollidingEntities should be cleared.
+                                // FIXME - This isn't the right place to handle this. When changing maps, all entities CollidingEntities 
+                                //         should be cleared already. Not sure why this is necessary...
                                 col.CollidingEntities.Clear();
                              }
 

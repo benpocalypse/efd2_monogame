@@ -150,7 +150,7 @@ namespace EfD2
 				{
 					if (move.CurrentDirection != Direction.None)
 					{
-						anim.Type = AnimationType.Running;
+						anim.Type = AnimationType.Moving;
 					}
 					else
 					{

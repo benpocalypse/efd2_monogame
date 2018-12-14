@@ -8,7 +8,7 @@ namespace EfD2.Components
 	{
 		Entity IComponent.entity { get; set; }
 
-		public EventType Type = EventType.None;
+		public GameEventType Type = GameEventType.None;
 		public EventTrigger Trigger = EventTrigger.None;
 		public bool Triggered = false;
 

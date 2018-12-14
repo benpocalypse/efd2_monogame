@@ -74,7 +74,7 @@ namespace EfD2.Systems
 					{
 						switch (ev.Type)
 						{
-							case EventType.PlayerHitExit:
+							case GameEventType.PlayerHitExit:
 								gameState.State = GameStateType.EnterMap;
 								break;
 						}

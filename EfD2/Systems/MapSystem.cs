@@ -11,6 +11,7 @@ using EfD2.Components;
 using EfD2;
 using Microsoft.Xna.Framework.Content;
 using System.Diagnostics;
+using EfD2.Helpers;
 
 namespace EfD2.Systems
 {
@@ -847,7 +848,7 @@ namespace EfD2.Systems
 						case MT_EXIT:
 							{
 								var ev = new Event();
-								ev.Type = EventType.PlayerHitExit;
+								ev.Type = GameEventType.PlayerHitExit;
 								ev.Trigger = EventTrigger.Collision;
 								IComponent[] componentCollection = new IComponent[]
 								{

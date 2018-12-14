@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using ECS;
-using EfD2;
-
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
 using System.Collections;
+using EfD2.Helpers;
 
 namespace EfD2.Components
 {
-	internal class Drawable : IComponent, IEnumerable
+    internal class Drawable : IComponent, IEnumerable
 	{
 		Entity IComponent.entity { get; set; }
 
 		public List<Animation> AnimationList;
 		public AnimationType Type { get; set; }
 		public DisplayLayer ZOrder = DisplayLayer.Background;
-		public Visibility Visible = Visibility.Visible;
 		public bool FlipOnXAxis = false;
 		public bool FlipOnYAxis = false;
 

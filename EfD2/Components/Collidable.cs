@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ECS;
+using EfD2.Helpers;
 
 namespace EfD2.Components
 {
