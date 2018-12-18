@@ -100,7 +100,7 @@ namespace EfD2
 			Entity swordHorizontal;
 			Entity swordVertical;
 			Entity pileOfGold;
-			//Entity weapon;
+            Entity sword;
 			Entity someTestText;
 			Entity theGame;
 
@@ -108,7 +108,7 @@ namespace EfD2
 			swordHorizontal = new Entity("Sword Horizontal");
 			swordVertical = new Entity("Sword Vertical");
 			pileOfGold = new Entity("gold");
-			//weapon = new Entity("weapon");
+			sword = new Entity("sword");
 			someTestText = new Entity("text");
 
 			someTestText.AddComponent(new Positionable { CurrentPosition = new Vector2(4, 7), ZOrder = (float)DisplayLayer.Text });
@@ -131,13 +131,12 @@ namespace EfD2
 											     Content.Load<Texture2D>("chest_gold0"),
                                                  Content.Load<Texture2D>("chest_gold1"))) { ZOrder = DisplayLayer.Floating });
 
-			//weapon.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
-			//weapon.AddComponent(new Collidable());
-			//weapon.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("wall1_1"))));
-
-			//mapSystem.GenerateMap();
-
-			//swordHorizontal.AddComponent
+			sword.AddComponent(new Positionable { CurrentPosition = new Vector2(130, 130), ZOrder = (float)DisplayLayer.Floating });
+            sword.AddComponent(new Collectible());
+            sword.AddComponent(new Collidable());
+            sword.AddComponent(new Damage() { Value = 1 });
+            sword.AddComponent(new Ephemeral() { PersistTime = 1, Active = false });
+            sword.AddComponent(new Drawable(new Animation(AnimationType.None, Content.Load<Texture2D>("sword1"))) { Visible = false});
 
 			playerEntity.AddComponent(new Positionable() { ZOrder = (float)DisplayLayer.Player });
 			playerEntity.AddComponent(new Movable() { MoveSpeed = 60 });
@@ -146,6 +145,7 @@ namespace EfD2
 			playerEntity.AddComponent(new Attacking() { AttactState = AttackStateType.NotAttacking });
 			playerEntity.AddComponent(new Inventory());
 			playerEntity.AddComponent(new Health() { Max = 3, Value = 2 });
+            playerEntity.AddComponent(new Equipment() { Item = sword });
 
 			var d = new Drawable(new Animation(AnimationType.Idle,
 													   Content.Load<Texture2D>("player0")),
@@ -153,7 +153,9 @@ namespace EfD2
 													   Content.Load<Texture2D>("player0"),
 													   Content.Load<Texture2D>("player1"),
 													   Content.Load<Texture2D>("player0"),
-					 								   Content.Load<Texture2D>("player2"))) { ZOrder = DisplayLayer.Player };
+					 								   Content.Load<Texture2D>("player2")),
+                                 new Animation(AnimationType.Attacking,
+                                                        Content.Load<Texture2D>("player1"))) { ZOrder = DisplayLayer.Player };
 			playerEntity.AddComponent(d);
 			playerEntity.AddComponent(new HasInput());
 

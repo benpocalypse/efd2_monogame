@@ -25,7 +25,6 @@ namespace EfD2.Systems
 
 		// At the top of your class:
 		private Texture2D pixel;
-		private int Odd = 0;
 
 		private ContentManager contentManager;
 		private SpriteBatch spriteBatch;
@@ -70,51 +69,54 @@ namespace EfD2.Systems
                 var position = e.GetComponent<Positionable>();
                 var animatable = e.GetComponent<Drawable>();
 
-				foreach(Animation a in animatable.AnimationList)
-				{
-					if (a.Type == animatable.Type)
-					{
-						a.FrameCounter += delta;
+                if (animatable.Visible == true)
+                {
+                    foreach (Animation a in animatable.AnimationList)
+                    {
+                        if (a.Type == animatable.Type)
+                        {
+                            a.FrameCounter += delta;
 
-						if (a.FrameCounter >= a.FrameSpeed)
-						{
-							a.FrameCounter = 0;
-							a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
-						}
-
-						//position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
-
-						if (DEBUG == true)
-						{
-							var openSpot = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
-							if (openSpot != null)
-							{
-								var openPos = openSpot.GetComponent<Positionable>();
-
-								var newRect = new RectangleF(openPos.CurrentPosition.X, openPos.CurrentPosition.Y, 8, 8);
-								DrawBorder(newRect.ToRectangle());
-							}
-
-                            var playerSpot = EntityMatcher.GetEntity("Player");
-                            if (playerSpot != null)
+                            if (a.FrameCounter >= a.FrameSpeed)
                             {
-                                var playerPos = playerSpot.GetComponent<Positionable>();
-                                var playerCol = playerSpot.GetComponent<Collidable>();
-
-                                var playerRect = new RectangleF(playerPos.CurrentPosition.X, playerPos.CurrentPosition.Y, playerCol.BoundingBox.Width, playerCol.BoundingBox.Height);
-                                DrawBorder(playerRect.ToRectangle());
+                                a.FrameCounter = 0;
+                                a.CurrentFrame = (++a.CurrentFrame) % (a.FrameList.Count);
                             }
+
+                            //position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
+
+                            if (DEBUG == true)
+                            {
+                                var openSpot = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+                                if (openSpot != null)
+                                {
+                                    var openPos = openSpot.GetComponent<Positionable>();
+
+                                    var newRect = new RectangleF(openPos.CurrentPosition.X, openPos.CurrentPosition.Y, 8, 8);
+                                    DrawBorder(newRect.ToRectangle());
+                                }
+
+                                var playerSpot = EntityMatcher.GetEntity("Player");
+                                if (playerSpot != null)
+                                {
+                                    var playerPos = playerSpot.GetComponent<Positionable>();
+                                    var playerCol = playerSpot.GetComponent<Collidable>();
+
+                                    var playerRect = new RectangleF(playerPos.CurrentPosition.X, playerPos.CurrentPosition.Y, playerCol.BoundingBox.Width, playerCol.BoundingBox.Height);
+                                    DrawBorder(playerRect.ToRectangle());
+                                }
+                            }
+
+                            var texture = a.FrameList[a.CurrentFrame];
+                            var pos = position.CurrentPosition;
+
+                            if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
+                                spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+                            else
+                                spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
                         }
-
-						var texture = a.FrameList[a.CurrentFrame];						
-						var pos = position.CurrentPosition;
-
-						if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
-							spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
-						else
-							spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					}
-				}
+                    }
+                }
             }
 		}
 

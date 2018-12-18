@@ -16,6 +16,7 @@ namespace EfD2.Components
 		public DisplayLayer ZOrder = DisplayLayer.Background;
 		public bool FlipOnXAxis = false;
 		public bool FlipOnYAxis = false;
+        public bool Visible = true;
 
 		public Drawable()
 		{

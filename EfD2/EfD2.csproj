@@ -74,6 +74,7 @@
     <Compile Include="Systems\HUDSystem.cs" />
     <Compile Include="Helpers\Animation.cs" />
     <Compile Include="Helpers\RectangleF.cs" />
+    <Compile Include="Components\Equipment.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />

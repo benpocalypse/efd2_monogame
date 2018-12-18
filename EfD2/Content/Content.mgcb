@@ -1165,6 +1165,18 @@
 /processorParam:TextureFormat=Color
 /build:player2.png
 
+#begin sword1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:sword1.png
+
 #begin wall1_1.png
 /importer:TextureImporter
 /processor:TextureProcessor

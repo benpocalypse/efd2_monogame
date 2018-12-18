@@ -39,22 +39,25 @@ namespace EfD2
 			{
 				var ephemeral = e.GetComponent<Ephemeral>();
 
-				if (ephemeral.Time < ephemeral.PersistTime)
-					ephemeral.Time += delta;
+                if (ephemeral.Active == true)
+                {
+                    if (ephemeral.Time < ephemeral.PersistTime)
+                        ephemeral.Time += delta;
 
-				if (ephemeral.Time >= ephemeral.PersistTime)
-				{
-					if ((ephemeral.Repetitions > 0) && (ephemeral.RepetitionCount < ephemeral.Repetitions))
-					{
-						ephemeral.Time = 0;
-						ephemeral.RepetitionCount++;
-					}
-					else
-					{
-						// FIXME - May not want to remove the Entity here. Although...maybe we do?
-						EntityMatcher.Remove(e);
-					}
-				}
+                    if (ephemeral.Time >= ephemeral.PersistTime)
+                    {
+                        if ((ephemeral.Repetitions > 0) && (ephemeral.RepetitionCount < ephemeral.Repetitions))
+                        {
+                            ephemeral.Time = 0;
+                            ephemeral.RepetitionCount++;
+                        }
+                        else
+                        {
+                            // FIXME - May not want to remove the Entity here. Although...maybe we do?
+                            EntityMatcher.Remove(e);
+                        }
+                    }
+                }
 			}
 		}
 	}
