@@ -5,12 +5,3 @@ This version will be using ECS instead of my old OO paradigm, with Monogame as t
 
 # Screenshot
 ![Current Screenshot](https://raw.githubusercontent.com/benpocalypse/efd2_monogame/master/screenshot.png)
-
-# Todo:
-~~- Proper Text System (not just a font drawing system)~~
- - Attacking
- - Enemies
- - Enemy movement
- - Items
- - Controller support
- - Configuration
