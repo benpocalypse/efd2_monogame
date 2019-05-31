@@ -16,7 +16,7 @@ namespace EfD2.Systems
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
-		public Filter filterMatch
+		public Filter filterActorMatch
 		{
 			get { return new Filter().AllOf(typeof(Actor)); }
 		}
@@ -32,9 +32,7 @@ namespace EfD2.Systems
 
 		public void Update(GameTime gameTime)
 		{
-			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+		    foreach (Entity e in EntityMatcher.GetMatchedEntities(filterActorMatch))
 			{
 				var act = e.GetComponent<Actor>();
 
@@ -43,23 +41,22 @@ namespace EfD2.Systems
 				{
 					case ActorType.Player:
 						{
-                            var gameEntity = EntityMatcher.GetEntity("The Game");
-                            var gameState = gameEntity.GetComponent<GameState>();
+                            var gameState = EntityMatcher.GetEntity("The Game").GetComponent<GameState>();
 
-                            if (gameState.State == GameStateType.EnterMap)
+                            if (gameState.CurrentState == GameStateType.EnterMap)
 							{
                                 Entity openSpaceNearExit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
 
                                 var col = e.GetComponent<Collidable>();
 								e.GetComponent<Positionable>().CurrentPosition = 
                                     new Vector2(
-                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.X + ((8-col.BoundingBox.Width)/2),
-                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.Y + ((8 - col.BoundingBox.Height ) / 2)
+                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.X + ((8 - col.BoundingBox.Width) / 2),
+                                                openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.Y + ((8 - col.BoundingBox.Height) / 2)
                                                 );
-                                e.GetComponent<Positionable>().PreviousPosition = e.GetComponent<Positionable>().CurrentPosition;
 
                                 // FIXME - This isn't the right place to handle this. When changing maps, all entities CollidingEntities 
                                 //         should be cleared already. Not sure why this is necessary...
+                                e.GetComponent<Positionable>().PreviousPosition = e.GetComponent<Positionable>().CurrentPosition;
                                 col.CollidingEntities.Clear();
                              }
 

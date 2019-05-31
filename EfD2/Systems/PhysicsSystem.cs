@@ -12,19 +12,10 @@ using EfD2.Components;
 namespace EfD2.Systems
 {
 	internal class PhysicsSystem
-		: IReactiveSystem
 	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
-
 		public Filter filterMatch
 		{
 			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Movable)); }
-		}
-
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
 		}
 
 		public PhysicsSystem()

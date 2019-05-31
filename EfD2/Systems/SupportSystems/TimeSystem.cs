@@ -10,25 +10,17 @@ using ECS;
 using EfD2.Components;
 using Microsoft.Xna.Framework.Content;
 
-namespace EfD2
+namespace EfD2.Systems.SupportSystems
 {
-	public class TimeSystem : IReactiveSystem
+	public class TimeSystem
 	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
+        public Filter filterMatch
+        {
+            get { return new Filter().AllOf(typeof(Ephemeral)); }
+        }
 
-		public TimeSystem()
+        public TimeSystem()
 		{
-		}
-
-		public Filter filterMatch
-		{
-			get { return new Filter().AllOf(typeof(Ephemeral)); }
-		}
-
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
 		}
 
 		public void Update(GameTime gameTime)

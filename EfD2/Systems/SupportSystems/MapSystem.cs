@@ -13,16 +13,12 @@ using Microsoft.Xna.Framework.Content;
 using System.Diagnostics;
 using EfD2.Helpers;
 
-namespace EfD2.Systems
+namespace EfD2.Systems.SupportSystems
 {
 	public class MapSystem 
-		: IReactiveSystem
 	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
-
-		private const int MAPWIDTH =		24;
-		private const int MAPHEIGHT =		18;
+        private const int MAPWIDTH  = 24;
+		private const int MAPHEIGHT = 18;
 
 		// Defined storage for our tiles
 		private const int MT_EMPTY = 0;
@@ -51,11 +47,6 @@ namespace EfD2.Systems
 			get { return new Filter().AllOf(typeof(GameState)); }
 		}
 
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
-		}
-
 		public MapSystem(ref ContentManager _content)
 		{
 			Content = _content;
@@ -73,12 +64,13 @@ namespace EfD2.Systems
 		{
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				var state = e.GetComponent<GameState>().State;
+				var state = e.GetComponent<GameState>().CurrentState;
 
 				switch (state)
 				{
 					case GameStateType.EnterMap:
 						GenerateMap();
+                        System.Console.WriteLine("MapSystem().UpdateOpenSpaceNearEntrance();");
 						UpdateOpenSpaceNearEntrance();
 						break;
 
@@ -847,8 +839,8 @@ namespace EfD2.Systems
 
 						case MT_EXIT:
 							{
-								var ev = new Event();
-								ev.Type = GameEventType.PlayerHitExit;
+								var ev = new Events();
+								ev.Type = GameEventType.ExitedLevel;
 								ev.Trigger = EventTrigger.Collision;
 								IComponent[] componentCollection = new IComponent[]
 								{

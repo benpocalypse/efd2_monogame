@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using ECS;
 
-namespace EfD2
+namespace EfD2.Components
 {
-	public class HasInput : IComponent
+	public class Input : IComponent
 	{
 		Entity IComponent.entity { get; set; }
 
 		public InputType Type = InputType.Direct;
-		public List<Input> CurrentInput;
+		public List<InputValue> CurrentInput;
 
-		public HasInput()
+		public Input()
 		{
-			CurrentInput = new List<Input>();
+			CurrentInput = new List<InputValue>();
 		}
 	}
 }

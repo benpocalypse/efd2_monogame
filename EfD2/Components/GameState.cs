@@ -8,9 +8,11 @@ namespace EfD2.Components
 	{
 		Entity IComponent.entity { get; set; }
 
-		public GameStateType State { get; set; } = GameStateType.Intro;
+		public GameStateType CurrentState { get; set; } = GameStateType.Unknown;
+        public GameStateType PreviousState { get; set; } = GameStateType.Unknown;
+        public GameStateType RequestedState { get; set; } = GameStateType.Intro;
 
-		public GameState()
+        public GameState()
 		{
 		}
 	}

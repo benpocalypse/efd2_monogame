@@ -21,7 +21,7 @@ namespace EfD2
 		{
 		}
 
-		public Filter filterMatch
+		public Filter filterMovableMatch
 		{
 			get { return new Filter().AllOf(typeof(Positionable), typeof(Movable)); }
 		}
@@ -35,14 +35,14 @@ namespace EfD2
 		{
 			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMovableMatch))
 			{
 				var position = e.GetComponent<Positionable>();
 				var move = e.GetComponent<Movable>();
-				var input = e.GetComponent<HasInput>();
 				var draw = e.GetComponent<Drawable>();
 
 				bool accelerating = false;
+
                 //System.Console.WriteLine("1. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
 				position.PreviousPosition = position.CurrentPosition;
 				move.PreviousDirection = move.CurrentDirection;
@@ -50,9 +50,11 @@ namespace EfD2
                 //System.Console.WriteLine("2. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
 
                 // If the component reacts to input, process it here
-                if (input != null)
-				{
-					if (input.CurrentInput.Contains(Input.Right))
+                if (e.HasComponent<Input>() == true)
+                {
+                    var input = e.GetComponent<Input>();
+
+                    if (input.CurrentInput.Contains(Input.Right))
 					{
 						move.CurrentDirection = Direction.Right;
 						draw.FlipOnXAxis = false;

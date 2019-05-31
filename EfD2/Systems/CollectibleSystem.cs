@@ -17,7 +17,7 @@ namespace EfD2.Systems
 		public bool isTriggered { get { return receivedEntity != null; } }
 		public Entity receivedEntity;
 
-		public Filter filterMatch
+		public Filter filterActorMatch
 		{
 			get { return new Filter().AllOf(typeof(Collectible), typeof(Collidable)); }
 		}
@@ -31,11 +31,12 @@ namespace EfD2.Systems
 		{
 		}
 
+        // FIXME - is this really the way we want to handle this? Couldn't this be done in the Collision or Physics systems?
 		public void Update(GameTime gameTime)
 		{
 			List<Entity> entitiesToRemove = new List<Entity>();
 
-			foreach (Entity collectibleEntity in EntityMatcher.GetMatchedEntities(filterMatch))
+			foreach (Entity collectibleEntity in EntityMatcher.GetMatchedEntities(filterActorMatch))
 			{
 				var collidable = collectibleEntity.GetComponent<Collidable>();
 				var collectible = collectibleEntity.GetComponent<Collectible>();
@@ -45,16 +46,18 @@ namespace EfD2.Systems
                     // If the entity the Collectible is colliding with has an Inventory...
 					if (collidingEntity.GetComponent<Inventory>() != null)
 					{
-						if (collectible.Type == CollectibleType.Gold)
+						switch (collectible.Type)
 						{
-							collidingEntity.GetComponent<Inventory>().Gold += collectible.Value;
-
-							collidingEntity.GetComponent<Collidable>().CollidingEntities.Remove(collectibleEntity);
-
-							if (!entitiesToRemove.Contains(collectibleEntity))
-								entitiesToRemove.Add(collectibleEntity);
+                            case CollectibleType.Gold:
+    							collidingEntity.GetComponent<Inventory>().Gold += collectible.Value;
+                                break;
 						}
-					}
+
+                        collidingEntity.GetComponent<Collidable>().CollidingEntities.Remove(collectibleEntity);
+
+                        if (!entitiesToRemove.Contains(collectibleEntity))
+                            entitiesToRemove.Add(collectibleEntity);
+                    }
 				}
 			}
 

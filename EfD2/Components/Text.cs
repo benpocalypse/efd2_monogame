@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using ECS;
 
-namespace EfD2
+namespace EfD2.Components
 {
-	internal class HasText : IComponent
+	internal class Text : IComponent
 	{
 		Entity IComponent.entity { get; set; }
-		public List<string> Text;
+		public List<string> TextList;
 		public bool Border = false;
 		public bool Homgeneous = true;
 		public int CurrentText = 0;
 		public DisplayLayer ZOrder = DisplayLayer.Text;
 
-		public HasText()
+		public Text()
 		{
-			Text = new List<string>();
+			TextList = new List<string>();
 		}
 	}
 }

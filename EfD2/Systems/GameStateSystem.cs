@@ -11,7 +11,10 @@ using EfD2.Components;
 
 namespace EfD2.Systems
 {
-	internal class GameSystem 
+    /// <summary>
+    /// This system handles the State Machine for the game only. Nothing more.
+    /// </summary>
+	internal class GameStateSystem 
 		: IReactiveSystem
 	{
 		public bool isTriggered { get { return receivedEntity != null; } }
@@ -27,7 +30,7 @@ namespace EfD2.Systems
 			receivedEntity = modifiedEntity;
 		}
 
-		public GameSystem()
+		public GameStateSystem()
 		{
 			
 		}
@@ -36,8 +39,7 @@ namespace EfD2.Systems
 		{
 			bool stateChanged = false;
 
-			var gameStateEntity = EntityMatcher.GetEntity("The Game");
-			var gameState = gameStateEntity.GetComponent<GameState>();
+			var gameState = EntityMatcher.GetEntity("The Game").GetComponent<GameState>();
 
 			// First, process any Event related changes to the GameState
 			switch (gameState.State)

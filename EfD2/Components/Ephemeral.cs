@@ -1,6 +1,6 @@
 ﻿using ECS;
 
-namespace EfD2
+namespace EfD2.Components
 {
 	internal class Ephemeral : IComponent
 	{

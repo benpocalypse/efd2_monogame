@@ -6,25 +6,29 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace EfD2
 {
-	public enum GameStateType
+    public enum GameStateType
 	{
 		Intro,
 		TitleScreen,
-		EnterMap,
-		Playing
+		Playing,
+        GameOver,
+        Unknown
 	};
 
+    // This is used to inform across Systems.
 	public enum GameEventType
 	{
 		None,
-		PlayerHitExit,
-		EndOfLevel
+        EnteredLevel,
+		ExitedLevel
 	};
 
 	public enum EventTrigger
 	{
 		None,
+        GameState,
 		Collision,
+        Action,
 		Time
 	};
 
@@ -59,15 +63,6 @@ namespace EfD2
 		Right
 	};
 
-    public enum ActorStateType
-    {
-        None,
-        Idle,
-        Moving,
-        Attacking,
-        Hurt
-    };
-
     public enum AnimationType
 	{
 		None,
@@ -90,7 +85,7 @@ namespace EfD2
 		MAX_LAYER
 	};
 
-	public enum Input
+	public enum InputValue
 	{
 		None,
 		Up,
@@ -111,10 +106,12 @@ namespace EfD2
 
 
     // Thread safe Singleton that uses Lazy loading, via - http://csharpindepth.com/articles/general/singleton.aspx
+    /*
     public sealed class Globals
     {
         public const float Acceleration = 0.05f;
         public const float Decceleration = 0.1f;
+        public const string PlayerString = "The Player";
 
         private static readonly Lazy<Globals> lazy =
             new Lazy<Globals>(() => new Globals());
@@ -123,6 +120,34 @@ namespace EfD2
 
         private Globals()
         {
+        }
+    }
+    */
+
+    public sealed class Globals
+    {
+        private static readonly Globals instance = new Globals();
+
+        public readonly float Acceleration = 0.05f;
+        public readonly float Decceleration = 0.1f;
+        public readonly string PlayerTitle = "The Player";
+
+        // Explicit static constructor to tell C# compiler
+        // not to mark type as beforefieldinit
+        static Globals()
+        {
+        }
+
+        private Globals()
+        {
+        }
+
+        public static Globals Instance
+        {
+            get
+            {
+                return instance;
+            }
         }
     }
 }

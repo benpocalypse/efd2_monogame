@@ -10,14 +10,10 @@ using ECS;
 using EfD2.Components;
 using Microsoft.Xna.Framework.Content;
 
-namespace EfD2.Systems
+namespace EfD2.Systems.SupportSystems
 {
-	public class HUDSystem
-		: IReactiveSystem
+	public class HudSystem
 	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
-
 		private Texture2D hudCorner;
 		private Texture2D hudHorizontal;
 		private Texture2D hudVertical;
@@ -30,7 +26,7 @@ namespace EfD2.Systems
 
 		Entity goldHUDTextEntity;
 		Entity goldHUDValueEntity;
-		HasText goldHUDValueText;
+		Text goldHUDValueText;
 
 		Entity lifeHUDTextEntity;
 	
@@ -49,12 +45,7 @@ namespace EfD2.Systems
 			get { return new Filter().AllOf(typeof(Health)); }
 		}
 
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
-		}
-
-		public HUDSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
+		public HudSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
 		{
 			contentManager = _content;
 			spriteBatch = _spriteBatch;
@@ -68,15 +59,15 @@ namespace EfD2.Systems
 
 			goldHUDTextEntity = new Entity("Gold HUD");
 			goldHUDTextEntity.AddComponent(new Positionable { CurrentPosition = new Vector2(2, 2), ZOrder = (float)DisplayLayer.Text });
-			HasText t1 = new HasText();
-			t1.Text.Add("Gold:");
+			Text t1 = new Text();
+			t1.TextList.Add("Gold:");
 			t1.Homgeneous = false;
 			t1.Border = false;
 			goldHUDTextEntity.AddComponent(t1);
 
 			goldHUDValueEntity = new Entity("Gold HUD Value");
-			goldHUDValueText = new HasText();
-			goldHUDValueText.Text.Add("0");
+			goldHUDValueText = new Text();
+			goldHUDValueText.TextList.Add("0");
 			goldHUDValueText.Homgeneous = false;
 			goldHUDValueText.Border = false;
 			goldHUDValueEntity.AddComponent(goldHUDValueText);
@@ -84,8 +75,8 @@ namespace EfD2.Systems
 
 			lifeHUDTextEntity = new Entity("Life HUD Text");
 			lifeHUDTextEntity.AddComponent(new Positionable() { CurrentPosition = new Vector2(2, 1), ZOrder = (float)DisplayLayer.Text });
-			HasText t2 = new HasText();
-			t2.Text.Add("Life:");
+			Text t2 = new Text();
+			t2.TextList.Add("Life:");
 			t2.Homgeneous = false;
 			t2.Border = false;
 			lifeHUDTextEntity.AddComponent(t2);
@@ -94,7 +85,7 @@ namespace EfD2.Systems
 		public void Update(GameTime gameTime)
 		{
 			// Only show the HUD while we're playing
-			if (EntityMatcher.GetMatchedEntities(filterMatch).First().GetComponent<GameState>().State == GameStateType.Playing)
+			if (EntityMatcher.GetMatchedEntities(filterMatch).First().GetComponent<GameState>().CurrentState == GameStateType.Playing)
 			{
 				// Draw Verticals
 				for (int i = 1; i < 27; i++)
@@ -140,7 +131,7 @@ namespace EfD2.Systems
 				// Now draw text values
 				foreach (Entity e in EntityMatcher.GetMatchedEntities(inventoryFilterMatch))
 				{
-					goldHUDValueText.Text[0] = e.GetComponent<Inventory>().Gold.ToString();
+					goldHUDValueText.TextList[0] = e.GetComponent<Inventory>().Gold.ToString();
 				}
 			}
 		}

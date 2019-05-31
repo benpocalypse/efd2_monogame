@@ -18,7 +18,7 @@ namespace EfD2.Systems
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(Event)); }
+			get { return new Filter().AllOf(typeof(Events)); }
 		}
 
 		public void Execute(Entity modifiedEntity)
@@ -36,9 +36,9 @@ namespace EfD2.Systems
 
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
-				if (e.GetComponent<Event>().Triggered == true)
+				if (e.GetComponent<Events>().Triggered == true)
 				{
-					e.GetComponent<Event>().Triggered = false;
+					e.GetComponent<Events>().Triggered = false;
 				}
 			}
 		}

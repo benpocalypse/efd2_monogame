@@ -10,13 +10,10 @@ using ECS;
 using EfD2.Components;
 using Microsoft.Xna.Framework.Content;
 
-namespace EfD2
+namespace EfD2.Systems.SupportSystems
 {
-	public class TextSystem : IReactiveSystem
+	public class TextSystem
 	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
-
 		private ContentManager contentManager;
 		private SpriteBatch spriteBatch;
 		private Dictionary<string, Texture2D> fontDictionary = new Dictionary<string, Texture2D>(68);
@@ -24,12 +21,7 @@ namespace EfD2
 
 		public Filter filterMatch
 		{
-			get { return new Filter().AllOf(typeof(HasText), typeof(Positionable)); }
-		}
-
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
+			get { return new Filter().AllOf(typeof(Text), typeof(Positionable)); }
 		}
 
 		public TextSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
@@ -128,14 +120,14 @@ namespace EfD2
 			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
 			{
 				var ephemeral = e.GetComponent<Ephemeral>();
-				var text = e.GetComponent<HasText>();
+				var text = e.GetComponent<Text>();
 				var pos = e.GetComponent<Positionable>();
 
 				if (ephemeral != null)
 				{
-					if (ephemeral.RepetitionCount < text.Text.Count)
+					if (ephemeral.RepetitionCount < text.TextList.Count)
 					{
-						var current = text.Text[ephemeral.RepetitionCount];
+						var current = text.TextList[ephemeral.RepetitionCount];
 						DrawText(current, text, pos);
 
 						if (text.Border == true)
@@ -144,15 +136,15 @@ namespace EfD2
 				}
 				else
 				{
-					DrawText(text.Text[0], text, pos);
+					DrawText(text.TextList[0], text, pos);
 
 					if (text.Border == true)
-						DrawBorder(text.Text[0], text, pos);
+						DrawBorder(text.TextList[0], text, pos);
 				}
 			}
 		}
 
-		private void DrawText(string currentText, HasText text, Positionable pos)
+		private void DrawText(string currentText, Text text, Positionable pos)
 		{
 			Vector2 v = new Vector2(pos.CurrentPosition.X * 8, pos.CurrentPosition.Y * 8);
 
@@ -176,7 +168,7 @@ namespace EfD2
 			}
 		}
 
-		private void DrawBorder(string current, HasText text, Positionable pos)
+		private void DrawBorder(string current, Text text, Positionable pos)
 		{
 			Vector2 v1 = new Vector2((pos.CurrentPosition.X-1) * 8, (pos.CurrentPosition.Y-1) * 8);
 
@@ -185,7 +177,7 @@ namespace EfD2
 
 			if (text.Homgeneous == true)
 			{
-				foreach (string s in text.Text)
+				foreach (string s in text.TextList)
 				{
 					int maxHeight = 0;
 					int maxWidth = 0;
