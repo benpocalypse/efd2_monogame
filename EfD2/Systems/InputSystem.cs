@@ -15,7 +15,7 @@ namespace EfD2.Systems
 
         public Filter filterMovableMatch
         {
-            get { return new Filter().AllOf(typeof(Positionable), typeof(Movable)); }
+            get { return new Filter().AllOf(typeof(Input), typeof(Positionable), typeof(Movable)); }
         }
 
         public InputSystem()
@@ -24,11 +24,11 @@ namespace EfD2.Systems
 
         public void Update(GameTime gameTime)
         {
-            GetInput(gameTime);
-            DoMovementStuff(gameTime);
+            GetInputs(gameTime);
+            ProcessMovement(gameTime);
         }
 
-        public void GetInput(GameTime gameTime)
+        public void GetInputs(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -81,9 +81,10 @@ namespace EfD2.Systems
             }
         }
 
-        public void DoMovementStuff(GameTime gameTime)
+        public void ProcessMovement(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Globals g = Globals.Instance;
 
             foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMovableMatch))
             {
@@ -93,11 +94,8 @@ namespace EfD2.Systems
 
                 bool accelerating = false;
 
-                //System.Console.WriteLine("1. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
                 position.PreviousPosition = position.CurrentPosition;
                 move.PreviousDirection = move.CurrentDirection;
-
-                //System.Console.WriteLine("2. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
 
                 // If the component reacts to input, process it here
                 if (e.HasComponent<Input>() == true)
@@ -131,15 +129,13 @@ namespace EfD2.Systems
                     }
                 }
 
-                //System.Console.WriteLine("3. CurrentDirection = " + move.CurrentDirection + ", PreviousDirection = " + move.PreviousDirection);
-
                 if (accelerating == true)
                 {
                     // Update our acceleration based on direction
                     if (move.CurrentDirection == move.PreviousDirection)
                     {
                         if (move.Acceleration < move.MaxAcceleration)
-                            move.Acceleration += Globals.Acceleration;
+                            move.Acceleration += g.Acceleration;
                     }
                     else
                     {
@@ -168,7 +164,7 @@ namespace EfD2.Systems
                 else
                 {
                     if (move.Acceleration > 0.0f)
-                        move.Acceleration -= Globals.Decceleration;
+                        move.Acceleration -= g.Decceleration;
 
                     if (move.Acceleration <= 0.0f)
                     {

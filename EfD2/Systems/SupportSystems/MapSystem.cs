@@ -62,23 +62,31 @@ namespace EfD2.Systems.SupportSystems
 
 		public void Update()
 		{
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
-			{
-				var state = e.GetComponent<GameState>().CurrentState;
+            Globals g = Globals.Instance;
 
-				switch (state)
-				{
-					case GameStateType.EnterMap:
-						GenerateMap();
-                        System.Console.WriteLine("MapSystem().UpdateOpenSpaceNearEntrance();");
-						UpdateOpenSpaceNearEntrance();
-						break;
+            if (EntityMatcher.GetEntity(g.GameTitle).GetComponent<GameState>().CurrentState == GameStateType.Playing)
+            {
+                // FIXME - Process events, not the state here
+                var events = EntityMatcher.GetEntity(g.GameTitle).GetComponent<Events>();
 
-					default:
-						//ClearMap();
-						break;
-				}
-			}
+                foreach (var ev in events.EventList)
+                {
+                    switch (ev.Type)
+                    {
+                        case GameEventType.ExitedLevel:
+                        case GameEventType.EnteredLevel:
+                            GenerateMap();
+                            System.Console.WriteLine("MapSystem().UpdateOpenSpaceNearEntrance();");
+                            UpdateOpenSpaceNearEntrance();
+                            break;
+
+                        default:
+                            // ClearMap();
+                            break;
+                    }
+                }
+            }
+
 		}
 
 		public void GenerateMap()
@@ -296,30 +304,30 @@ namespace EfD2.Systems.SupportSystems
 		private void UpdateOpenSpaceNearEntrance()
 		{
 			Entity localEntrance;
-			Entity openSpaceNextToEntrance;
+			Entity openSpaceNearEntrance;
+            Globals g = Globals.Instance;
 
-			// Using string matching feels hacky, even thoug I'm the one that added it to the ECS.
-			if (EntityMatcher.DoesEntityExist("Entrance") == false)
+			if (EntityMatcher.DoesEntityExist(g.LevelEntranceTitle) == false)
 			{
 				return;
 			}
 			else
 			{
-				localEntrance = EntityMatcher.GetEntity("Entrance");
+				localEntrance = EntityMatcher.GetEntity(g.LevelEntranceTitle);
 			}
 
-			if (EntityMatcher.DoesEntityExist("OpenSpaceNextToEntrance") == false)
+			if (EntityMatcher.DoesEntityExist(g.OpenSpaceNearEntranceTitle) == false)
 			{
-				openSpaceNextToEntrance = new Entity("OpenSpaceNextToEntrance");
-				openSpaceNextToEntrance.AddComponent(new Positionable());
+				openSpaceNearEntrance = new Entity(g.OpenSpaceNearEntranceTitle);
+				openSpaceNearEntrance.AddComponent(new Positionable());
 			}
 			else
 			{
-				openSpaceNextToEntrance = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
+				openSpaceNearEntrance = EntityMatcher.GetEntity(g.OpenSpaceNearEntranceTitle);
 			}
 
 			var entrancePos = localEntrance.GetComponent<Positionable>();
-			var openPos = openSpaceNextToEntrance.GetComponent<Positionable>();
+			var openPos = openSpaceNearEntrance.GetComponent<Positionable>();
 
 			int x = Convert.ToInt32((entrancePos.CurrentPosition.X / 8) - MAP_X_OFFSET);
 			int y = Convert.ToInt32((entrancePos.CurrentPosition.Y / 8) - MAP_Y_OFFSET);
@@ -330,30 +338,46 @@ namespace EfD2.Systems.SupportSystems
 			if (y >= MAPHEIGHT)
 				y = 17;
 
+            bool bFound = false;
 			if (x < (MAPWIDTH - 1) && MapArray[x + 1, y] == MT_FLOOR)
 			{
 				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X + 8, entrancePos.CurrentPosition.Y);
-				return;
-			}
+                bFound = true;
+            }
 
-			if (x > 0 && MapArray[x - 1, y] == MT_FLOOR)
+			if ( (x > 0 && MapArray[x - 1, y] == MT_FLOOR) && (bFound == false) )
 			{
 				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X - 8, entrancePos.CurrentPosition.Y);
-				return;
-			}
+                bFound = true;
+            }
 
-			if (y < (MAPHEIGHT - 1) && MapArray[x, y + 1] == MT_FLOOR)
-			{
+			if ( (y < (MAPHEIGHT - 1) && MapArray[x, y + 1] == MT_FLOOR) && (bFound == false))
+            {
 				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X, entrancePos.CurrentPosition.Y + 8);
-				return;
-			}
+                bFound = true;
+            }
 
-			if (y > 0 && MapArray[x, y - 1] == MT_FLOOR)
-			{
+			if ( (y > 0 && MapArray[x, y - 1] == MT_FLOOR) && (bFound == false))
+            {
 				openPos.CurrentPosition = new Vector2(entrancePos.CurrentPosition.X, entrancePos.CurrentPosition.Y - 8);
-				return;
-			}
-		}
+                bFound = true;
+            }
+
+            if (openSpaceNearEntrance != null)
+            {
+                var col = EntityMatcher.GetEntity(g.PlayerTitle).GetComponent<Collidable>();
+                EntityMatcher.GetEntity(g.PlayerTitle).GetComponent<Positionable>().CurrentPosition =
+                    new Vector2(
+                                openSpaceNearEntrance.GetComponent<Positionable>().CurrentPosition.X + ((8 - col.BoundingBox.Width) / 2),
+                                openSpaceNearEntrance.GetComponent<Positionable>().CurrentPosition.Y + ((8 - col.BoundingBox.Height) / 2)
+                                );
+
+                // FIXME - This isn't the right place to handle this. When changing maps, all entities CollidingEntities 
+                //         should be cleared already. Not sure why this is necessary...
+                EntityMatcher.GetEntity(g.PlayerTitle).GetComponent<Positionable>().PreviousPosition = EntityMatcher.GetEntity(g.PlayerTitle).GetComponent<Positionable>().CurrentPosition;
+                col.CollidingEntities.Clear();
+            }
+        }
 
 		private void DebugThing()
 		{
@@ -757,15 +781,17 @@ namespace EfD2.Systems.SupportSystems
 
 		private void ClearMap()
 		{
-			if(EntityMatcher.DoesEntityExist("Entrance"))
+            Globals g = Globals.Instance;
+
+			if(EntityMatcher.DoesEntityExist(g.LevelEntranceTitle))
 			{
-				var ent = EntityMatcher.GetEntity("Entrance");
+				var ent = EntityMatcher.GetEntity(g.LevelEntranceTitle);
 				EntityMatcher.Remove(ent);
             }
 
-			if (EntityMatcher.DoesEntityExist("Exit"))
+			if (EntityMatcher.DoesEntityExist(g.LevelExitTitle))
 			{
-				var ent = EntityMatcher.GetEntity("Exit");
+				var ent = EntityMatcher.GetEntity(g.LevelExitTitle);
 				EntityMatcher.Remove(ent);
             }
 
@@ -791,6 +817,8 @@ namespace EfD2.Systems.SupportSystems
 		///****************************************************************************
 		private void DrawMap()
 		{
+            Globals g = Globals.Instance;
+
 			// Each time we draw a map, randomly pick one of the 3 types of floors
 			// to add a little variety to our maps.
 			Random r = new Random();
@@ -832,14 +860,14 @@ namespace EfD2.Systems.SupportSystems
 									new Collidable()
 									};
 
-								var tempEntity = new Entity("Entrance");
+								var tempEntity = new Entity(g.LevelEntranceTitle);
 								tempEntity.AddComponents(true, componentCollection);
 							}
 							break;
 
 						case MT_EXIT:
 							{
-								var ev = new Events();
+								var ev = new Event();
 								ev.Type = GameEventType.ExitedLevel;
 								ev.Trigger = EventTrigger.Collision;
 								IComponent[] componentCollection = new IComponent[]
@@ -850,7 +878,7 @@ namespace EfD2.Systems.SupportSystems
 									new Collidable()
 								};
 
-								var tempEntity = new Entity("Exit");
+								var tempEntity = new Entity(g.LevelExitTitle);
 								tempEntity.AddComponents(true, componentCollection);
                             }
 							break;

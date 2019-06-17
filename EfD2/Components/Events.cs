@@ -16,8 +16,9 @@ namespace EfD2.Components
 		}
 	}
 
-    public class Event : IEnumerable<Event>
+    public class Event : IEnumerable<Event>, IComponent
     {
+        Entity IComponent.entity { get; set; }
         public GameEventType Type = GameEventType.None;
         public EventTrigger Trigger = EventTrigger.None;
         public bool Triggered = false;

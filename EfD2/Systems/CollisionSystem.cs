@@ -12,7 +12,7 @@ using EfD2.Helpers;
 
 namespace EfD2.Systems
 {
-	public class CollisionSystem
+	public sealed class CollisionSystem
 	{
 		public CollisionSystem()
 		{ 
@@ -28,18 +28,23 @@ namespace EfD2.Systems
             get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Movable)); }
         }
 
-        public Filter filterCollectibleMatch
+        private  Filter filterCollectibleMatch
         {
             get { return new Filter().AllOf(typeof(Collectible), typeof(Collidable)); }
         }
 
-		public void Update(GameTime gameTime)
+        private Filter filterEventMatch
+        {
+            get { return new Filter().AllOf(typeof(Event), typeof(Collidable)); }
+        }
+
+        public void Update(GameTime gameTime)
 		{
             MarkCollisions();
             ReactToCollisions();
 		}
 
-        public void MarkCollisions()
+        private void MarkCollisions()
         {
             foreach (Entity o in EntityMatcher.GetMatchedEntities(filterMovableCollidables))
             {
@@ -64,13 +69,13 @@ namespace EfD2.Systems
                             col1.CollidingEntities.Add(o);
 
                         // Now, if there are events associated with the collision, flag them.
-                        var ev1 = e.GetComponent<Events>();
+                        var ev1 = e.GetComponent<Event>();
                         if (ev1 != null && ev1.Trigger == EventTrigger.Collision)
                         {
                             ev1.Triggered = true;
                         }
 
-                        var ev2 = o.GetComponent<Events>();
+                        var ev2 = o.GetComponent<Event>();
                         if (ev2 != null && ev2.Trigger == EventTrigger.Collision)
                         {
                             ev2.Triggered = true;
@@ -88,13 +93,14 @@ namespace EfD2.Systems
             }
         }
 
-        public void ReactToCollisions()
+        private void ReactToCollisions()
         {
             // FIXME - do stuff in here
             ReactToCollectibles();
+            GenerateEvents();
         }
 
-        public void ReactToCollectibles()
+        private void ReactToCollectibles()
         {
             List<Entity> entitiesToRemove = new List<Entity>();
 
@@ -113,6 +119,11 @@ namespace EfD2.Systems
                             case CollectibleType.Gold:
                                 collidingEntity.GetComponent<Inventory>().Gold += collectible.Value;
                                 break;
+
+                            case CollectibleType.Health:
+                                if (collidingEntity.GetComponent<Health>().Value < collidingEntity.GetComponent<Health>().Max)
+                                    collidingEntity.GetComponent<Health>().Value += 1;
+                                break;
                         }
 
                         collidingEntity.GetComponent<Collidable>().CollidingEntities.Remove(collectibleEntity);
@@ -123,9 +134,23 @@ namespace EfD2.Systems
                 }
             }
 
-            foreach (Entity e in entitiesToRemove)
+            EntityMatcher.Remove(entitiesToRemove);
+        }
+
+        private void GenerateEvents()
+        {
+            Globals g = Globals.Instance;
+            foreach(Entity e in EntityMatcher.GetMatchedEntities(filterEventMatch).Where(_ => _.GetComponent<Event>().Triggered == true))
             {
-                EntityMatcher.Remove(e);
+                // If the player hits the exit, trigger the game event.
+                if (e.Id.Equals(g.LevelExitTitle) && e.GetComponent<Collidable>().CollidingEntities.Contains(EntityMatcher.GetEntity(g.PlayerTitle)))
+                {
+                    EntityMatcher.GetEntity(g.GameTitle)
+                            .GetComponent<Events>()
+                            .EventList
+                            .Add(new Event()
+                                { Triggered = true, Trigger = EventTrigger.Collision, Type = GameEventType.ExitedLevel });
+                }
             }
         }
     }

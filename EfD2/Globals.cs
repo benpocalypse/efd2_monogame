@@ -130,7 +130,11 @@ namespace EfD2
 
         public readonly float Acceleration = 0.05f;
         public readonly float Decceleration = 0.1f;
-        public readonly string PlayerTitle = "The Player";
+        public readonly string PlayerTitle = "ThePlayer";
+        public readonly string OpenSpaceNearEntranceTitle = "OpenSpaceNextToEntrance";
+        public readonly string GameTitle = "TheGame";
+        public readonly string LevelEntranceTitle = "LevelEntrance";
+        public readonly string LevelExitTitle = "LevelExit";
 
         // Explicit static constructor to tell C# compiler
         // not to mark type as beforefieldinit

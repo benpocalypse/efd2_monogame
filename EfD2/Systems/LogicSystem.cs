@@ -39,20 +39,18 @@ namespace EfD2.Systems
 
         public void ProcessEvents()
         {
-            foreach (Entity e in EntityMatcher.GetMatchedEntities(filterEventMatch))
+            Globals g = Globals.Instance;
+            var ev = EntityMatcher.GetEntity(g.GameTitle).GetComponent<Events>();
+
+            foreach (Event _event in ev.EventList.Where(_ => _.Triggered == true))
             {
-                var ev = e.GetComponent<Events>();
-
-                foreach (Event _event in ev.EventList.Where(_ => _.Triggered == true))
+                switch (_event.Type)
                 {
-                    switch (_event.Type)
-                    {
-                        case GameEventType.EnteredLevel:
-                            break;
+                    case GameEventType.EnteredLevel:
+                        break;
 
-                        case GameEventType.ExitedLevel:
-                            break;
-                    }
+                    case GameEventType.ExitedLevel:
+                        break;
                 }
             }
         }
@@ -74,11 +72,11 @@ namespace EfD2.Systems
             switch (gameState.CurrentState)
             {
                 case GameStateType.Intro:
-                    gameState.CurrentState = GameStateType.TitleScreen;
+                    gameState.RequestedState = GameStateType.TitleScreen;
                     break;
 
                 case GameStateType.TitleScreen:
-                    gameState.CurrentState = GameStateType.Playing;
+                    gameState.RequestedState = GameStateType.Playing;
                     break;
 
                 case GameStateType.Playing:
@@ -92,6 +90,8 @@ namespace EfD2.Systems
 
         private void ProcessEnterState(GameStateType state)
         {
+            Globals g = Globals.Instance;
+
             switch (state)
             {
                 case GameStateType.Intro:
@@ -101,26 +101,8 @@ namespace EfD2.Systems
                     break;
 
                 case GameStateType.Playing:
-                    {
-                        var ev = EntityMatcher.GetMatchedEntities(filterEventMatch).First().GetComponent<Events>();
-                        ev.EventList.Add(new Event() { Triggered = true, Trigger = EventTrigger.GameState, Type = GameEventType.EnteredLevel });
-
-                        Entity openSpaceNearExit = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
-                        if (openSpaceNearExit != null)
-                        {
-                            var col = e.GetComponent<Collidable>();
-                            e.GetComponent<Positionable>().CurrentPosition =
-                                new Vector2(
-                                            openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.X + ((8 - col.BoundingBox.Width) / 2),
-                                            openSpaceNearExit.GetComponent<Positionable>().CurrentPosition.Y + ((8 - col.BoundingBox.Height) / 2)
-                                            );
-
-                            // FIXME - This isn't the right place to handle this. When changing maps, all entities CollidingEntities 
-                            //         should be cleared already. Not sure why this is necessary...
-                            e.GetComponent<Positionable>().PreviousPosition = e.GetComponent<Positionable>().CurrentPosition;
-                            col.CollidingEntities.Clear();
-                        }
-                    }
+                    var ev = EntityMatcher.GetEntity(g.GameTitle).GetComponent<Events>();
+                    ev.EventList.Add(new Event() { Type = GameEventType.EnteredLevel, Trigger = EventTrigger.GameState, Triggered = true });
                     break;
 
                 case GameStateType.GameOver:
@@ -148,6 +130,7 @@ namespace EfD2.Systems
 
         public void ProcessActorActions()
         {
+            /*
             foreach (Entity e in EntityMatcher.GetMatchedEntities(filterActorMatch))
             {
                 var act = e.GetComponent<Actor>();
@@ -189,6 +172,7 @@ namespace EfD2.Systems
                         break;
                 }
             }
+            */
         }
 
         public void ClearActiveEvents()

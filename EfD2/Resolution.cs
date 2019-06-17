@@ -36,8 +36,8 @@ namespace IndependentResolutionRendering
 			_Height = device.PreferredBackBufferHeight;
 			_Device = device;
 			_dirtyMatrix = true;
-			ApplyResolutionSettings();
-		}
+            ApplyResolutionSettings();
+        }
 
 
 		static public Matrix getTransformationMatrix()

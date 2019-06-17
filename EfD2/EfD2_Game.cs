@@ -89,8 +89,6 @@ namespace EfD2
         protected override void LoadContent()
 		{
 			Entity playerEntity;
-			Entity swordHorizontal;
-			Entity swordVertical;
 			Entity pileOfGold;
             Entity sword;
 			Entity someTestText;
@@ -99,8 +97,6 @@ namespace EfD2
             var g = Globals.Instance;
 
             playerEntity = new Entity(g.PlayerTitle);
-			swordHorizontal = new Entity("Sword Horizontal");
-			swordVertical = new Entity("Sword Vertical");
 			pileOfGold = new Entity("gold");
 			sword = new Entity("sword");
 			someTestText = new Entity("text");
@@ -153,12 +149,12 @@ namespace EfD2
 			playerEntity.AddComponent(d);
 			playerEntity.AddComponent(new Input());
 
-			theGame = new Entity("The Game");
-			theGame.AddComponent(new GameState() { CurrentState = GameStateType.Intro } );
+			theGame = new Entity(g.GameTitle);
+			theGame.AddComponent(new GameState() { CurrentState = GameStateType.Unknown, RequestedState = GameStateType.Intro } );
             theGame.AddComponent(new Events());
 
 			//Song song = Content.Load<Song>("01 The Guillotine Factory - Assembly Line");
-			Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
+			//Song song = Content.Load<Song>("13 H-Pizzle - Ghosts of a Fallen Empire");
 			//MediaPlayer.Play(song);
 			MediaPlayer.Volume = 0.2f;
 		}

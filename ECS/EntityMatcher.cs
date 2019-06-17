@@ -44,9 +44,9 @@ namespace ECS
 			return subscribedEntities.Any(_ => _.Id == whichEntity);
 		}
 
-		public static void Remove(string whichEntity)
+		public static bool Remove(string whichEntity)
 		{
-			subscribedEntities.Remove(GetEntity(whichEntity));
+			return subscribedEntities.Remove(GetEntity(whichEntity));
 		}
 
 		public static bool Remove(Entity whichEntity)
@@ -54,7 +54,20 @@ namespace ECS
 			return subscribedEntities.Remove(whichEntity);
 		}
 
-		public static void RemoveAll()
+        public static bool Remove(List<Entity> entities)
+        {
+            bool success = true;
+
+            foreach (Entity e in entities)
+            {
+                if (success == true)
+                    success = subscribedEntities.Remove(e);
+            }
+
+            return success;
+        }
+
+        public static void RemoveAll()
 		{
 			subscribedEntities.Clear();
 		}
