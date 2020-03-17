@@ -7,102 +7,110 @@ using Microsoft.Xna.Framework.Graphics;
 namespace EfD2
 {
     public enum GameStateType
-	{
-		Intro,
-		TitleScreen,
-		Playing,
+    {
+        Intro,
+        TitleScreen,
+        Playing,
         GameOver,
         Unknown
-	};
+    };
 
     // This is used to inform across Systems.
-	public enum GameEventType
-	{
-		None,
+    public enum GameEventType
+    {
+        None,
         EnteredLevel,
-		ExitedLevel
-	};
+        ExitedLevel
+    };
 
-	public enum EventTrigger
-	{
-		None,
+    public enum EventTrigger
+    {
+        None,
         GameState,
-		Collision,
+        Collision,
         Action,
-		Time
-	};
+        Time
+    };
 
-	public enum ActorType
-	{
-		None,
-		Player,
-		Monster,
-		Entrance,
-		Exit
-	};
+    public enum ActorType
+    {
+        None,
+        Player,
+        Monster,
+        Entrance,
+        Exit
+    };
 
-	public enum AttackStateType
-	{
-		Attacking,
-		NotAttacking
-	};
+    public enum ActorStateType
+    {
+        None,
+        Idle,
+        Moving,
+        Attacking,
+        Hurt
+    };
 
-	public enum CollectibleType
-	{
-		None,
-		Gold,
-		Health
-	};
+    public enum AttackStateType
+    {
+        Attacking,
+        NotAttacking
+    };
 
-	public enum Direction
-	{
-		None,
-		Up,
-		Down,
-		Left,
-		Right
-	};
+    public enum CollectibleType
+    {
+        None,
+        Gold,
+        Health
+    };
+
+    public enum Direction
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right
+    };
 
     public enum AnimationType
-	{
-		None,
-		Idle,
-		Moving,
-		Attacking,
-		Hurt
-	};
+    {
+        None,
+        Idle,
+        Moving,
+        Attacking,
+        Hurt
+    };
 
-	public enum DisplayLayer
-	{
-		Background,
-		Player,
-		Particles,
-		Foreground,
-		Floating,
-		TextBackground,
-		Text,
-		Menu,
-		MAX_LAYER
-	};
+    public static class DisplayLayer
+    {
+        public const float Background = 0.0f;
+        public const float Player = 0.2f;
+        public const float Particles = 0.3f;
+        public const float Foreground = 0.4f;
+        public const float Floating = 0.5f;
+        public const float TextBackground = 0.6f;
+        public const float Text = 0.7f;
+        public const float Menu = 0.8f;
+    };
 
-	public enum InputValue
-	{
-		None,
-		Up,
-		Down,
-		Left,
-		Right,
-		A,
-		B,
-		Select,
-		Start
-	};
+    public enum InputValue
+    {
+        None,
+        Up,
+        Down,
+        Left,
+        Right,
+        A,
+        B,
+        Select,
+        Start
+    };
 
-	public enum InputType
-	{
-		Direct, // Moves 1:1 with the input given
-		Menu
-	};
+    public enum InputType
+    {
+        Direct, // Moves 1:1 with the input given
+        Menu
+    };
 
 
     // Thread safe Singleton that uses Lazy loading, via - http://csharpindepth.com/articles/general/singleton.aspx
@@ -126,7 +134,7 @@ namespace EfD2
 
     public sealed class Globals
     {
-        private static readonly Globals instance = new Globals();
+        private static readonly Globals _instance = new Globals();
 
         public readonly float Acceleration = 0.05f;
         public readonly float Decceleration = 0.1f;
@@ -150,7 +158,7 @@ namespace EfD2
         {
             get
             {
-                return instance;
+                return _instance;
             }
         }
     }

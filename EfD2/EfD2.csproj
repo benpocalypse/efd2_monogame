@@ -66,7 +66,6 @@
     <Compile Include="Helpers\Animation.cs" />
     <Compile Include="Helpers\RectangleF.cs" />
     <Compile Include="Components\Equipment.cs" />
-    <Compile Include="ActorStateType.cs" />
     <Compile Include="Systems\SupportSystems\TimeSystem.cs" />
     <Compile Include="Systems\SupportSystems\TextSystem.cs" />
     <Compile Include="Systems\SupportSystems\HUDSystem.cs" />

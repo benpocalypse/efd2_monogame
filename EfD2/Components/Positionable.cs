@@ -10,33 +10,56 @@ using Microsoft.Xna.Framework;
 
 namespace EfD2.Components
 {
-	internal class Positionable : IComponent
-	{
-		Entity IComponent.entity { get; set; }
-        
-		private Vector2 _currentPosition;
+    internal class Positionable : IComponent
+    {
+        Entity IComponent.entity { get; set; }
 
+        public enum PositionModeEnum
+        {
+            Absolute,
+            Relative
+        }
+
+        private Vector2 _currentPosition;
         public Vector2 CurrentPosition
         {
             get { return _currentPosition; }
             set { _currentPosition = value; }
         }
 
-		private Vector2 _previouisPosition;
+        private Vector2 _previousPosition;
+        public Vector2 PreviousPosition
+        {
+            get { return _previousPosition; }
+            set { _previousPosition = value; }
+        }
 
-		public Vector2 PreviousPosition
-		{
-			get { return _previouisPosition; }
-			set { _previouisPosition = value; }
-		}
+        private Vector2 _relativePosition;
 
-		public float ZOrder = 0.0f;
+        public Vector2 RelativePosition
+        {
+            get { return _relativePosition; }
+            set { _relativePosition = value; }
+        }
 
-        public void SetX(float newX) =>_currentPosition.X = newX;
+        private PositionModeEnum _positionMode = PositionModeEnum.Absolute;
+        public PositionModeEnum PositionMode
+        {
+            get { return _positionMode; }
+            set { _positionMode = value; }
+        }
+
+
+
+        public Entity RelativeReference = null;
+
+        public float ZOrder = 0.0f;
+
+        public void SetX(float newX) => _currentPosition.X = newX;
         public void SetY(float newY) => _currentPosition.Y = newY;
 
         public Positionable()
         {
         }
-	}
+    }
 }

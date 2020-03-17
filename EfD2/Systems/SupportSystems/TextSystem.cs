@@ -12,268 +12,268 @@ using Microsoft.Xna.Framework.Content;
 
 namespace EfD2.Systems.SupportSystems
 {
-	public class TextSystem
-	{
-		private ContentManager contentManager;
-		private SpriteBatch spriteBatch;
-		private Dictionary<string, Texture2D> fontDictionary = new Dictionary<string, Texture2D>(68);
-		private Texture2D[] borderArray;
+    public class TextSystem
+    {
+        private ContentManager contentManager;
+        private SpriteBatch spriteBatch;
+        private Dictionary<string, Texture2D> fontDictionary = new Dictionary<string, Texture2D>(68);
+        private Texture2D[] borderArray;
 
-		public Filter filterMatch
-		{
-			get { return new Filter().AllOf(typeof(Text), typeof(Positionable)); }
-		}
+        public Filter filterMatch
+        {
+            get { return new Filter().AllOf(typeof(Text), typeof(Positionable)); }
+        }
 
-		public TextSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
-		{
-			contentManager = _content;
-			spriteBatch = _spriteBatch;
+        public TextSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
+        {
+            contentManager = _content;
+            spriteBatch = _spriteBatch;
 
-			// Add our numbers
-			for (int i = 0; i < 10; i++)
-			{
-				fontDictionary.Add(i.ToString(), contentManager.Load<Texture2D>("font/" + i.ToString()));
+            // Add our numbers
+            for (int i = 0; i < 10; i++)
+            {
+                fontDictionary.Add(i.ToString(), contentManager.Load<Texture2D>("font/" + i.ToString()));
 
-			}
+            }
 
-			fontDictionary.Add(":", contentManager.Load<Texture2D>("font/colon"));
-			fontDictionary.Add("@", contentManager.Load<Texture2D>("font/copyright"));
-			fontDictionary.Add(",", contentManager.Load<Texture2D>("font/comma"));
-			fontDictionary.Add("-", contentManager.Load<Texture2D>("font/dash"));
-			fontDictionary.Add(".", contentManager.Load<Texture2D>("font/period"));
-			fontDictionary.Add("!", contentManager.Load<Texture2D>("font/!"));
-			fontDictionary.Add("?", contentManager.Load<Texture2D>("font/question"));
-			fontDictionary.Add(" ", contentManager.Load<Texture2D>("black"));
+            fontDictionary.Add(":", contentManager.Load<Texture2D>("font/colon"));
+            fontDictionary.Add("@", contentManager.Load<Texture2D>("font/copyright"));
+            fontDictionary.Add(",", contentManager.Load<Texture2D>("font/comma"));
+            fontDictionary.Add("-", contentManager.Load<Texture2D>("font/dash"));
+            fontDictionary.Add(".", contentManager.Load<Texture2D>("font/period"));
+            fontDictionary.Add("!", contentManager.Load<Texture2D>("font/!"));
+            fontDictionary.Add("?", contentManager.Load<Texture2D>("font/question"));
+            fontDictionary.Add(" ", contentManager.Load<Texture2D>("black"));
 
-			fontDictionary.Add("A", contentManager.Load<Texture2D>("font/aa"));
-			fontDictionary.Add("B", contentManager.Load<Texture2D>("font/bb"));
-			fontDictionary.Add("C", contentManager.Load<Texture2D>("font/cc"));
-			fontDictionary.Add("D", contentManager.Load<Texture2D>("font/dd"));
-			fontDictionary.Add("E", contentManager.Load<Texture2D>("font/ee"));
-			fontDictionary.Add("F", contentManager.Load<Texture2D>("font/ff"));
-			fontDictionary.Add("G", contentManager.Load<Texture2D>("font/gg"));
-			fontDictionary.Add("H", contentManager.Load<Texture2D>("font/hh"));
-			fontDictionary.Add("I", contentManager.Load<Texture2D>("font/ii"));
-			fontDictionary.Add("J", contentManager.Load<Texture2D>("font/jj"));
-			fontDictionary.Add("K", contentManager.Load<Texture2D>("font/kk"));
-			fontDictionary.Add("L", contentManager.Load<Texture2D>("font/ll"));
-			fontDictionary.Add("M", contentManager.Load<Texture2D>("font/mm"));
-			fontDictionary.Add("N", contentManager.Load<Texture2D>("font/nn"));
-			fontDictionary.Add("O", contentManager.Load<Texture2D>("font/oo"));
-			fontDictionary.Add("P", contentManager.Load<Texture2D>("font/pp"));
-			fontDictionary.Add("Q", contentManager.Load<Texture2D>("font/qq"));
-			fontDictionary.Add("R", contentManager.Load<Texture2D>("font/rr"));
-			fontDictionary.Add("S", contentManager.Load<Texture2D>("font/ss"));
-			fontDictionary.Add("T", contentManager.Load<Texture2D>("font/tt"));
-			fontDictionary.Add("U", contentManager.Load<Texture2D>("font/uu"));
-			fontDictionary.Add("V", contentManager.Load<Texture2D>("font/vv"));
-			fontDictionary.Add("W", contentManager.Load<Texture2D>("font/ww"));
-			fontDictionary.Add("X", contentManager.Load<Texture2D>("font/xx"));
-			fontDictionary.Add("Y", contentManager.Load<Texture2D>("font/yy"));
-			fontDictionary.Add("Z", contentManager.Load<Texture2D>("font/zz"));
+            fontDictionary.Add("A", contentManager.Load<Texture2D>("font/aa"));
+            fontDictionary.Add("B", contentManager.Load<Texture2D>("font/bb"));
+            fontDictionary.Add("C", contentManager.Load<Texture2D>("font/cc"));
+            fontDictionary.Add("D", contentManager.Load<Texture2D>("font/dd"));
+            fontDictionary.Add("E", contentManager.Load<Texture2D>("font/ee"));
+            fontDictionary.Add("F", contentManager.Load<Texture2D>("font/ff"));
+            fontDictionary.Add("G", contentManager.Load<Texture2D>("font/gg"));
+            fontDictionary.Add("H", contentManager.Load<Texture2D>("font/hh"));
+            fontDictionary.Add("I", contentManager.Load<Texture2D>("font/ii"));
+            fontDictionary.Add("J", contentManager.Load<Texture2D>("font/jj"));
+            fontDictionary.Add("K", contentManager.Load<Texture2D>("font/kk"));
+            fontDictionary.Add("L", contentManager.Load<Texture2D>("font/ll"));
+            fontDictionary.Add("M", contentManager.Load<Texture2D>("font/mm"));
+            fontDictionary.Add("N", contentManager.Load<Texture2D>("font/nn"));
+            fontDictionary.Add("O", contentManager.Load<Texture2D>("font/oo"));
+            fontDictionary.Add("P", contentManager.Load<Texture2D>("font/pp"));
+            fontDictionary.Add("Q", contentManager.Load<Texture2D>("font/qq"));
+            fontDictionary.Add("R", contentManager.Load<Texture2D>("font/rr"));
+            fontDictionary.Add("S", contentManager.Load<Texture2D>("font/ss"));
+            fontDictionary.Add("T", contentManager.Load<Texture2D>("font/tt"));
+            fontDictionary.Add("U", contentManager.Load<Texture2D>("font/uu"));
+            fontDictionary.Add("V", contentManager.Load<Texture2D>("font/vv"));
+            fontDictionary.Add("W", contentManager.Load<Texture2D>("font/ww"));
+            fontDictionary.Add("X", contentManager.Load<Texture2D>("font/xx"));
+            fontDictionary.Add("Y", contentManager.Load<Texture2D>("font/yy"));
+            fontDictionary.Add("Z", contentManager.Load<Texture2D>("font/zz"));
 
-			fontDictionary.Add("a", contentManager.Load<Texture2D>("font/a"));
-			fontDictionary.Add("b", contentManager.Load<Texture2D>("font/b"));
-			fontDictionary.Add("c", contentManager.Load<Texture2D>("font/c"));
-			fontDictionary.Add("d", contentManager.Load<Texture2D>("font/d"));
-			fontDictionary.Add("e", contentManager.Load<Texture2D>("font/e"));
-			fontDictionary.Add("f", contentManager.Load<Texture2D>("font/f"));
-			fontDictionary.Add("g", contentManager.Load<Texture2D>("font/g"));
-			fontDictionary.Add("h", contentManager.Load<Texture2D>("font/h"));
-			fontDictionary.Add("i", contentManager.Load<Texture2D>("font/i"));
-			fontDictionary.Add("j", contentManager.Load<Texture2D>("font/j"));
-			fontDictionary.Add("k", contentManager.Load<Texture2D>("font/k"));
-			fontDictionary.Add("l", contentManager.Load<Texture2D>("font/l"));
-			fontDictionary.Add("m", contentManager.Load<Texture2D>("font/m"));
-			fontDictionary.Add("n", contentManager.Load<Texture2D>("font/n"));
-			fontDictionary.Add("o", contentManager.Load<Texture2D>("font/o"));
-			fontDictionary.Add("p", contentManager.Load<Texture2D>("font/p"));
-			fontDictionary.Add("q", contentManager.Load<Texture2D>("font/q"));
-			fontDictionary.Add("r", contentManager.Load<Texture2D>("font/r"));
-			fontDictionary.Add("s", contentManager.Load<Texture2D>("font/s"));
-			fontDictionary.Add("t", contentManager.Load<Texture2D>("font/t"));
-			fontDictionary.Add("u", contentManager.Load<Texture2D>("font/u"));
-			fontDictionary.Add("v", contentManager.Load<Texture2D>("font/v"));
-			fontDictionary.Add("w", contentManager.Load<Texture2D>("font/w"));
-			fontDictionary.Add("x", contentManager.Load<Texture2D>("font/x"));
-			fontDictionary.Add("y", contentManager.Load<Texture2D>("font/y"));
-			fontDictionary.Add("z", contentManager.Load<Texture2D>("font/z"));
+            fontDictionary.Add("a", contentManager.Load<Texture2D>("font/a"));
+            fontDictionary.Add("b", contentManager.Load<Texture2D>("font/b"));
+            fontDictionary.Add("c", contentManager.Load<Texture2D>("font/c"));
+            fontDictionary.Add("d", contentManager.Load<Texture2D>("font/d"));
+            fontDictionary.Add("e", contentManager.Load<Texture2D>("font/e"));
+            fontDictionary.Add("f", contentManager.Load<Texture2D>("font/f"));
+            fontDictionary.Add("g", contentManager.Load<Texture2D>("font/g"));
+            fontDictionary.Add("h", contentManager.Load<Texture2D>("font/h"));
+            fontDictionary.Add("i", contentManager.Load<Texture2D>("font/i"));
+            fontDictionary.Add("j", contentManager.Load<Texture2D>("font/j"));
+            fontDictionary.Add("k", contentManager.Load<Texture2D>("font/k"));
+            fontDictionary.Add("l", contentManager.Load<Texture2D>("font/l"));
+            fontDictionary.Add("m", contentManager.Load<Texture2D>("font/m"));
+            fontDictionary.Add("n", contentManager.Load<Texture2D>("font/n"));
+            fontDictionary.Add("o", contentManager.Load<Texture2D>("font/o"));
+            fontDictionary.Add("p", contentManager.Load<Texture2D>("font/p"));
+            fontDictionary.Add("q", contentManager.Load<Texture2D>("font/q"));
+            fontDictionary.Add("r", contentManager.Load<Texture2D>("font/r"));
+            fontDictionary.Add("s", contentManager.Load<Texture2D>("font/s"));
+            fontDictionary.Add("t", contentManager.Load<Texture2D>("font/t"));
+            fontDictionary.Add("u", contentManager.Load<Texture2D>("font/u"));
+            fontDictionary.Add("v", contentManager.Load<Texture2D>("font/v"));
+            fontDictionary.Add("w", contentManager.Load<Texture2D>("font/w"));
+            fontDictionary.Add("x", contentManager.Load<Texture2D>("font/x"));
+            fontDictionary.Add("y", contentManager.Load<Texture2D>("font/y"));
+            fontDictionary.Add("z", contentManager.Load<Texture2D>("font/z"));
 
-			borderArray = new Texture2D[8];
-			// and finally add the borders.
-			borderArray[0] = contentManager.Load<Texture2D>("font/border_top_left");
-			borderArray[1] = contentManager.Load<Texture2D>("font/border_top_middle");
-			borderArray[2] = contentManager.Load<Texture2D>("font/border_top_right");
+            borderArray = new Texture2D[8];
+            // and finally add the borders.
+            borderArray[0] = contentManager.Load<Texture2D>("font/border_top_left");
+            borderArray[1] = contentManager.Load<Texture2D>("font/border_top_middle");
+            borderArray[2] = contentManager.Load<Texture2D>("font/border_top_right");
 
-			borderArray[3] = contentManager.Load<Texture2D>("font/border_left_middle");
-			borderArray[4] = contentManager.Load<Texture2D>("font/border_right_middle");
+            borderArray[3] = contentManager.Load<Texture2D>("font/border_left_middle");
+            borderArray[4] = contentManager.Load<Texture2D>("font/border_right_middle");
 
-			borderArray[5] = contentManager.Load<Texture2D>("font/border_bottom_left");
-			borderArray[6] = contentManager.Load<Texture2D>("font/border_bottom_middle");
-			borderArray[7] = contentManager.Load<Texture2D>("font/border_bottom_right");
-		}
+            borderArray[5] = contentManager.Load<Texture2D>("font/border_bottom_left");
+            borderArray[6] = contentManager.Load<Texture2D>("font/border_bottom_middle");
+            borderArray[7] = contentManager.Load<Texture2D>("font/border_bottom_right");
+        }
 
-		public void Update(GameTime gameTime)
-		{
-			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        public void Update(GameTime gameTime)
+        {
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
-			{
-				var ephemeral = e.GetComponent<Ephemeral>();
-				var text = e.GetComponent<Text>();
-				var pos = e.GetComponent<Positionable>();
+            foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+            {
+                var ephemeral = e.GetComponent<Ephemeral>();
+                var text = e.GetComponent<Text>();
+                var pos = e.GetComponent<Positionable>();
 
-				if (ephemeral != null)
-				{
-					if (ephemeral.RepetitionCount < text.TextList.Count)
-					{
-						var current = text.TextList[ephemeral.RepetitionCount];
-						DrawText(current, text, pos);
+                if (ephemeral != null)
+                {
+                    if (ephemeral.RepetitionCount < text.TextList.Count)
+                    {
+                        var current = text.TextList[ephemeral.RepetitionCount];
+                        DrawText(current, text, pos);
 
-						if (text.Border == true)
-							DrawBorder(current, text, pos);
-					}
-				}
-				else
-				{
-					DrawText(text.TextList[0], text, pos);
+                        if (text.Border == true)
+                            DrawBorder(current, text, pos);
+                    }
+                }
+                else
+                {
+                    DrawText(text.TextList[0], text, pos);
 
-					if (text.Border == true)
-						DrawBorder(text.TextList[0], text, pos);
-				}
-			}
-		}
+                    if (text.Border == true)
+                        DrawBorder(text.TextList[0], text, pos);
+                }
+            }
+        }
 
-		private void DrawText(string currentText, Text text, Positionable pos)
-		{
-			Vector2 v = new Vector2(pos.CurrentPosition.X * 8, pos.CurrentPosition.Y * 8);
+        private void DrawText(string currentText, Text text, Positionable pos)
+        {
+            Vector2 v = new Vector2(pos.CurrentPosition.X * 8, pos.CurrentPosition.Y * 8);
 
-			foreach (char c in currentText)
-			{
-				if (c == '\n')
-				{
-					v.Y += 8;
-					v.X = pos.CurrentPosition.X * 8;
-				}
-				else
-				{
-					var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
+            foreach (char c in currentText)
+            {
+                if (c == '\n')
+                {
+                    v.Y += 8;
+                    v.X = pos.CurrentPosition.X * 8;
+                }
+                else
+                {
+                    var tex = fontDictionary.FirstOrDefault(_ => _.Key == c.ToString());
 
-					if (tex.Value != null)
-					{
-						spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-						v.X += 8;
-					}
-				}
-			}
-		}
+                    if (tex.Value != null)
+                    {
+                        spriteBatch.Draw(tex.Value, v, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                        v.X += 8;
+                    }
+                }
+            }
+        }
 
-		private void DrawBorder(string current, Text text, Positionable pos)
-		{
-			Vector2 v1 = new Vector2((pos.CurrentPosition.X-1) * 8, (pos.CurrentPosition.Y-1) * 8);
+        private void DrawBorder(string current, Text text, Positionable pos)
+        {
+            Vector2 v1 = new Vector2((pos.CurrentPosition.X - 1) * 8, (pos.CurrentPosition.Y - 1) * 8);
 
-			int height = 0;
-			int width = 0;
+            int height = 0;
+            int width = 0;
 
-			if (text.Homgeneous == true)
-			{
-				foreach (string s in text.TextList)
-				{
-					int maxHeight = 0;
-					int maxWidth = 0;
-					var sub = s.Split('\n');
+            if (text.Homgeneous == true)
+            {
+                foreach (string s in text.TextList)
+                {
+                    int maxHeight = 0;
+                    int maxWidth = 0;
+                    var sub = s.Split('\n');
 
-					foreach (string subS in sub)
-					{
-						if (subS.Length > maxWidth)
-							maxWidth = subS.Length;
+                    foreach (string subS in sub)
+                    {
+                        if (subS.Length > maxWidth)
+                            maxWidth = subS.Length;
 
-						maxHeight++;
-					}
+                        maxHeight++;
+                    }
 
-					if (maxHeight > height)
-						height = maxHeight;
+                    if (maxHeight > height)
+                        height = maxHeight;
 
-					if (maxWidth > width)
-						width = maxWidth;
-				}
-			}
-			else
-			{
-				var sub = current.Split('\n');
-				foreach (string subS in sub)
-				{
-					if (subS.Length > width)
-						width = subS.Length;
+                    if (maxWidth > width)
+                        width = maxWidth;
+                }
+            }
+            else
+            {
+                var sub = current.Split('\n');
+                foreach (string subS in sub)
+                {
+                    if (subS.Length > width)
+                        width = subS.Length;
 
-					height++;
-				}
+                    height++;
+                }
 
-			}
+            }
 
-			for (int y = 0; y <= height; y++)
-			{
-				if (y == 0)
-				{
-					Vector2 v2 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y - 1) * 8);
-					spriteBatch.Draw(borderArray[0], v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					spriteBatch.Draw(borderArray[2], v2, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-				}
+            for (int y = 0; y <= height; y++)
+            {
+                if (y == 0)
+                {
+                    Vector2 v2 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y - 1) * 8);
+                    spriteBatch.Draw(borderArray[0], v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    spriteBatch.Draw(borderArray[2], v2, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                }
 
 
-				if (y == height-1)
-				{
-					Vector2 v3 = new Vector2((pos.CurrentPosition.X - 1) * 8, (pos.CurrentPosition.Y + height) * 8);
-					Vector2 v4 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y + height) * 8);
-					spriteBatch.Draw(borderArray[5], v3, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					spriteBatch.Draw(borderArray[7], v4, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-				}
-				
-				for (int x = 1; x <= width; x++)
-				{
-					if ((x == 1) && (y > 0) && (y <= height))
-					{
-						Vector2 v6 = v1;
+                if (y == height - 1)
+                {
+                    Vector2 v3 = new Vector2((pos.CurrentPosition.X - 1) * 8, (pos.CurrentPosition.Y + height) * 8);
+                    Vector2 v4 = new Vector2((pos.CurrentPosition.X + width) * 8, (pos.CurrentPosition.Y + height) * 8);
+                    spriteBatch.Draw(borderArray[5], v3, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    spriteBatch.Draw(borderArray[7], v4, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                }
 
-						spriteBatch.Draw(borderArray[3], v6, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					}
+                for (int x = 1; x <= width; x++)
+                {
+                    if ((x == 1) && (y > 0) && (y <= height))
+                    {
+                        Vector2 v6 = v1;
 
-					if ((x == width) && (y > 0) && (y <= height))
-					{
-						Vector2 v6 = v1;
-						v6.X += 16;
+                        spriteBatch.Draw(borderArray[3], v6, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    }
 
-						spriteBatch.Draw(borderArray[4], v6, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					}
+                    if ((x == width) && (y > 0) && (y <= height))
+                    {
+                        Vector2 v6 = v1;
+                        v6.X += 16;
 
-					v1.X += 8;
+                        spriteBatch.Draw(borderArray[4], v6, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    }
 
-					if (y == 0)
-					{
-						spriteBatch.Draw(borderArray[1], v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					}
+                    v1.X += 8;
 
-					if (y == height)
-					{
-						Vector2 v5 = v1;
-						v5.Y = v1.Y + 8;
-						spriteBatch.Draw(borderArray[6], v5, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)text.ZOrder / (float)DisplayLayer.MAX_LAYER);
-					}
+                    if (y == 0)
+                    {
+                        spriteBatch.Draw(borderArray[1], v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    }
 
-					//if (drawn == false)
-					{
-						var tex = fontDictionary.FirstOrDefault(_ => _.Key == " ");
+                    if (y == height)
+                    {
+                        Vector2 v5 = v1;
+                        v5.Y = v1.Y + 8;
+                        spriteBatch.Draw(borderArray[6], v5, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, text.ZOrder);
+                    }
 
-						if (tex.Value != null)
-						{
-							spriteBatch.Draw(tex.Value, v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, (float)DisplayLayer.TextBackground / (float)DisplayLayer.MAX_LAYER);
-						}
-					}
-				}
+                    //if (drawn == false)
+                    {
+                        var tex = fontDictionary.FirstOrDefault(_ => _.Key == " ");
 
-				v1.X = (pos.CurrentPosition.X - 1) * 8;
-				v1.Y += 8;
-			}
-		}
-	}
+                        if (tex.Value != null)
+                        {
+                            spriteBatch.Draw(tex.Value, v1, null, Color.White, 0f, new Vector2(0, 0), Vector2.One, SpriteEffects.None, DisplayLayer.TextBackground);
+                        }
+                    }
+                }
+
+                v1.X = (pos.CurrentPosition.X - 1) * 8;
+                v1.Y += 8;
+            }
+        }
+    }
 }

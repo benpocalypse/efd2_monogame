@@ -62,6 +62,10 @@ namespace EfD2.Systems
                 if (Keyboard.GetState().IsKeyDown(Keys.J))
                 {
                     input.CurrentInput.Add(InputValue.A);
+
+                    // FIXME - this isn't the right place to do this.
+                    var sword = EntityMatcher.GetEntity("thesword");
+                    sword.GetComponent<Drawable>().Visible = true;
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.K))

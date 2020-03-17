@@ -12,23 +12,23 @@ using EfD2.Helpers;
 
 namespace EfD2.Systems
 {
-	public sealed class CollisionSystem
-	{
-		public CollisionSystem()
-		{ 
-		}
-
-		public Filter filterMatch
+    public sealed class CollisionSystem
+    {
+        public CollisionSystem()
         {
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
-		}
+        }
+
+        public Filter filterMatch
+        {
+            get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable)); }
+        }
 
         private Filter filterMovableCollidables
         {
             get { return new Filter().AllOf(typeof(Positionable), typeof(Collidable), typeof(Movable)); }
         }
 
-        private  Filter filterCollectibleMatch
+        private Filter filterCollectibleMatch
         {
             get { return new Filter().AllOf(typeof(Collectible), typeof(Collidable)); }
         }
@@ -39,10 +39,10 @@ namespace EfD2.Systems
         }
 
         public void Update(GameTime gameTime)
-		{
+        {
             MarkCollisions();
             ReactToCollisions();
-		}
+        }
 
         private void MarkCollisions()
         {
@@ -85,6 +85,7 @@ namespace EfD2.Systems
                     }
                     else
                     {
+                        // FIXME - This is running CONSTANTLY
                         if (col2.CollidingEntities.Contains(e))
                             col2.CollidingEntities.Remove(e);
                     }
@@ -140,7 +141,7 @@ namespace EfD2.Systems
         private void GenerateEvents()
         {
             Globals g = Globals.Instance;
-            foreach(Entity e in EntityMatcher.GetMatchedEntities(filterEventMatch).Where(_ => _.GetComponent<Event>().Triggered == true))
+            foreach (Entity e in EntityMatcher.GetMatchedEntities(filterEventMatch).Where(_ => _.GetComponent<Event>().Triggered == true))
             {
                 // If the player hits the exit, trigger the game event.
                 if (e.Id.Equals(g.LevelExitTitle) && e.GetComponent<Collidable>().CollidingEntities.Contains(EntityMatcher.GetEntity(g.PlayerTitle)))
@@ -149,7 +150,7 @@ namespace EfD2.Systems
                             .GetComponent<Events>()
                             .EventList
                             .Add(new Event()
-                                { Triggered = true, Trigger = EventTrigger.Collision, Type = GameEventType.ExitedLevel });
+                            { Triggered = true, Trigger = EventTrigger.Collision, Type = GameEventType.ExitedLevel });
                 }
             }
         }

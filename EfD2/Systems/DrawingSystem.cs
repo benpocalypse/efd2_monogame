@@ -10,61 +10,62 @@ using ECS;
 using EfD2.Components;
 using Microsoft.Xna.Framework.Content;
 using EfD2.Helpers;
+using static EfD2.Components.Positionable;
 
 namespace EfD2.Systems
 {
-	public class DrawingSystem
-		: IReactiveSystem
-	{
-		public bool isTriggered { get { return receivedEntity != null; } }
-		public Entity receivedEntity;
+    public class DrawingSystem
+        : IReactiveSystem
+    {
+        public bool isTriggered { get { return receivedEntity != null; } }
+        public Entity receivedEntity;
 
-		private const bool DEBUG = true;
-		private Texture2D dummyTexture;
-		private Color Colori;
+        private const bool DEBUG = true;
+        private Texture2D dummyTexture;
+        private Color Colori;
 
-		// At the top of your class:
-		private Texture2D pixel;
+        // At the top of your class:
+        private Texture2D pixel;
 
-		private ContentManager contentManager;
-		private SpriteBatch spriteBatch;
+        private ContentManager contentManager;
+        private SpriteBatch spriteBatch;
 
-		public DrawingSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
-		{
-			contentManager = _content;
-			spriteBatch = _spriteBatch;
-
-			dummyTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
-			dummyTexture.SetData(new Color[] { Color.White });
-
-			pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-			pixel.SetData(new[] { Color.White });
-
-			Colori = Color.White;
-		}
-
-		public Filter filterMatch
-		{
-			get { return new Filter().AllOf(typeof(Positionable), typeof(Drawable)); }
-		}
-
-		public void Execute(Entity modifiedEntity)
-		{
-			receivedEntity = modifiedEntity;
-		}
-
-		public void DrawIntro(SpriteBatch spriteBatch, GameTime gameTime)
-		{
-			var introTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-			//spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, position.ZOrder);
-		}
-
-		public void Update(GameTime gameTime)
+        public DrawingSystem(ref ContentManager _content, ref SpriteBatch _spriteBatch)
         {
-			var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            contentManager = _content;
+            spriteBatch = _spriteBatch;
 
-			foreach(Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
+            dummyTexture = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1);
+            dummyTexture.SetData(new Color[] { Color.White });
+
+            pixel = new Texture2D(_spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            pixel.SetData(new[] { Color.White });
+
+            Colori = Color.White;
+        }
+
+        public Filter filterMatch
+        {
+            get { return new Filter().AllOf(typeof(Positionable), typeof(Drawable)); }
+        }
+
+        public void Execute(Entity modifiedEntity)
+        {
+            receivedEntity = modifiedEntity;
+        }
+
+        public void DrawIntro(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            var introTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            //spriteBatch.Draw(texture, pos, null, Color.White, 0f, new Vector2(texture.Width / 2, texture.Height / 2), Vector2.One, SpriteEffects.None, position.ZOrder);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            foreach (Entity e in EntityMatcher.GetMatchedEntities(filterMatch))
             {
                 var position = e.GetComponent<Positionable>();
                 var animatable = e.GetComponent<Drawable>();
@@ -85,6 +86,7 @@ namespace EfD2.Systems
 
                             //position.Rect = new RectangleF(position.CurrentPosition.X, position.CurrentPosition.Y, a.FrameList[a.CurrentFrame].Width, a.FrameList[a.CurrentFrame].Height);
 
+                            #region Debug
                             if (DEBUG == true)
                             {
                                 var openSpot = EntityMatcher.GetEntity("OpenSpaceNextToEntrance");
@@ -106,38 +108,80 @@ namespace EfD2.Systems
                                     DrawBorder(playerRect.ToRectangle());
                                 }
                             }
+                            #endregion
 
-                            var texture = a.FrameList[a.CurrentFrame];
-                            var pos = position.CurrentPosition;
+                            if (position.PositionMode == PositionModeEnum.Absolute)
+                            {
+                                var texture = a.FrameList[a.CurrentFrame];
+                                var pos = position.CurrentPosition;
 
-                            if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
-                                spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+                                if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
+                                    spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, animatable.ZOrder);
+                                else
+                                    spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, animatable.ZOrder);
+                            }
                             else
-                                spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, (float)animatable.ZOrder / (float)DisplayLayer.MAX_LAYER);
+                            {
+                                Entity relativeOwner = position.RelativeReference;
+                                var texture = a.FrameList[a.CurrentFrame];
+                                var pos = position.RelativePosition;
+                                var relative = relativeOwner.GetComponent<Positionable>();
+
+                                // FIXME - We need to add a new field or component that represents the direction the Entity is facing...not moving.
+                                switch (relativeOwner.GetComponent<Movable>().PreviousDirection)
+                                {
+                                    case Direction.Up:
+                                        pos.X = relative.CurrentPosition.X;
+                                        pos.Y = relative.CurrentPosition.Y - pos.Y;
+                                        break;
+
+                                    case Direction.Down:
+                                        pos.X = relative.CurrentPosition.X;
+                                        pos.Y = relative.CurrentPosition.Y + pos.Y;
+                                        break;
+
+                                    case Direction.Right:
+                                        pos.Y = relative.CurrentPosition.Y;
+                                        pos.X = relative.CurrentPosition.X + pos.X;
+                                        break;
+
+                                    case Direction.Left:
+                                        pos.Y = relative.CurrentPosition.Y;
+                                        pos.X = relative.CurrentPosition.X - pos.X;
+                                        break;
+                                }
+
+                                if (animatable.FlipOnXAxis == false) // new Vector2(texture.Width, texture.Height)
+                                    spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.None, animatable.ZOrder);
+                                else
+                                    spriteBatch.Draw(texture, new Vector2(pos.X, pos.Y), null, Color.White, 0f, Vector2.One, Vector2.One, SpriteEffects.FlipHorizontally, animatable.ZOrder);
+                            }
                         }
                     }
                 }
             }
-		}
+        }
 
-		private void DrawBorder(Rectangle rectangleToDraw)
-		{
-			// Draw top line
-			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, 1), Color.White);
 
-			// Draw left line
-			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, 1, rectangleToDraw.Height), Color.White);
+        private void DrawBorder(Rectangle rectangleToDraw)
+        {
+            // Draw top line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, rectangleToDraw.Width, 1), Color.White);
 
-			// Draw right line
-			spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - 1),
-											rectangleToDraw.Y,
-											1,
-											rectangleToDraw.Height), Color.White);
-			// Draw bottom line
-			spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
-											rectangleToDraw.Y + rectangleToDraw.Height - 1,
-											rectangleToDraw.Width,
-											1), Color.White);
-		}
-	}
+            // Draw left line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X, rectangleToDraw.Y, 1, rectangleToDraw.Height), Color.White);
+
+            // Draw right line
+            spriteBatch.Draw(pixel, new Rectangle((rectangleToDraw.X + rectangleToDraw.Width - 1),
+                                            rectangleToDraw.Y,
+                                            1,
+                                            rectangleToDraw.Height), Color.White);
+            // Draw bottom line
+            spriteBatch.Draw(pixel, new Rectangle(rectangleToDraw.X,
+                                            rectangleToDraw.Y + rectangleToDraw.Height - 1,
+                                            rectangleToDraw.Width,
+                                            1), Color.White);
+        }
+    }
 }
+
